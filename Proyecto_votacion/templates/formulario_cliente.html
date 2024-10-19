@@ -1,0 +1,24 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<center>
+        <h1>Nuevo Cliente</h1>
+</center>
+<div class="container mt-4">
+        <div class="card">
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    
+                    <center>
+                        <input type="submit" class="mt-10 btn btn-primary" value="Registrar">
+                        <a href="{% url 'ver_pcliente' %}" class="btn btn-primary">Regresar</a>
+                    </center>
+                    
+                </form>
+</div>
+</div>
+      
+{% endblock %}

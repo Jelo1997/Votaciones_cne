@@ -1,0 +1,93 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <title> {{title}}| Veltrix - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+        <meta content="Themesbrand" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+
+        <!-- Bootstrap Css -->
+        <link href="{% static 'css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css">
+        <!-- Icons Css -->
+        <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css">
+        <!-- App Css-->
+        <link href="{% static 'css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css">
+
+    </head>
+
+    <body>
+        <div class="home-btn d-none d-sm-block">
+            <a href="index.html" class="text-dark"><i class="fas fa-home h2"></i></a>
+        </div>
+        <!-- Begin page -->
+        <div class="authentication-bg d-flex align-items-center pb-0 vh-100">
+            <div class="content-center w-100">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <div class="home-wrapper text-center">
+                                    <a href="{% url 'dashboard' %}" class="logo-dark">
+                                        <span class="logo-lg">
+                                            <img src="{% static 'images/logo-dark.png' %}" alt="" height="22">
+                                        </span>
+                                    </a>
+    
+                                    <a href="{% url 'dashboard' %}" class="logo-light">
+                                        <span class="logo-lg">
+                                            <img src="{% static 'images/logo-light.png' %}" alt="" height="22">
+                                        </span>
+                                    </a>
+                                    <h3 class="mt-4">Let's get started with Veltrix</h3>
+                                    <p class="mb-5">It will be as simple as Occidental in fact it will be Occidental.</p>
+    
+                                    <div class="row justify-content-center mt-5">
+                                        <div class="col-md-8">
+                                            <div data-countdown="2024/12/31" class="counter-number"></div>
+                                        </div> <!-- end col-->
+                                    </div>
+                                    <!-- end row -->
+                                    <div class="text-center coming-soon-search-form pt-4">
+                                        <form action="#">
+                                            <input type="text" placeholder="Enter email address">
+                                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                                        </form>
+                                        <!-- end form -->
+                                    </div>
+                                </div>
+                                <!-- end home wrapper -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end container -->
+                </div>
+            </div>
+
+
+        <!-- JAVASCRIPT -->
+     
+        <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'libs/metismenu/dist/metisMenu.min.js' %}"></script>
+        <script src="{% static 'libs/simplebar/dist/simplebar.min.js' %}"></script>
+        <script src="{% static 'libs/node-waves/dist/waves.min.js' %}"></script>
+        <script src="{% static 'libs/jquery-sparkline/jquery.sparkline.min.js' %}"></script> 
+
+        <!-- Plugins js-->
+        <script src="{% static 'libs/jquery-countdown/dist/jquery.countdown.min.js' %}"></script>
+
+        <!-- Countdown js -->
+        <script src="{% static 'js/pages/coming-soon.init.js' %}"></script>
+
+        <script src="{% static 'js/app.js' %}"></script>
+
+    </body>
+</html>

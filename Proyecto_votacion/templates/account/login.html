@@ -1,0 +1,69 @@
+{% extends 'account/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block title %}Sign in{% endblock title %}
+    
+{% block content %}
+                    
+                    <div class="card overflow-hidden">
+                        <div class="bg-primary">
+                            <div class="text-primary text-center p-4">
+                                <h3 class="text-white font-size-20">Bienvenido</h3>
+                                
+                                <a href="{% url 'dashboard' %}" class="logo logo-admin">
+                                    <img src="{% static 'images/crea3.png' %}" height="70" alt="logo">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="p-3">
+                                <form class="mt-4 needs-validation" novalidate method="POST" action="{% url 'account_login' %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        {{ form.login|as_crispy_field }}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        {{ form.password|as_crispy_field }}
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <div class="col-sm-6">
+                                            <div class="form-check">
+                                                {{ form.remember|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 text-end">
+                                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Ingresar</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2 mb-0 row">
+                                        <div class="col-12 mt-4">
+                                            <a href="{% url 'account_reset_password' %}"><i class="mdi mdi-lock"></i> Olvidaste tu contraseña?</a>
+                                        </div>
+                                    </div>
+                                    
+
+                                </form>
+                                <center>
+                                    <div class="card-body p-4">
+                                        <a class="btn btn-success" href='/consultapersona'>Consultar Proceso</a> 
+                                   </div>
+                                </center>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+{% endblock content %}
+
+  
+  
+

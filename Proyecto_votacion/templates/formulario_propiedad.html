@@ -1,0 +1,32 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<center>
+        <h1>Nueva Propiedad</h1>
+</center>
+
+<div class="container mt-4">
+        <div class="card">
+                <div class="card-header">
+
+                        <h5 class="card-title"></h5>
+        
+                </div>
+                
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {{ form|crispy }}
+                    <center>
+                        <input type="submit" class="mt-10 btn btn-primary" value="Registrar">
+                        <a href="{% url 'ver_propiedades_posible' %}" class="btn btn-primary">Regresar</a>
+                    </center>
+                    
+                    
+            </form>
+
+
+</div>
+</div>
+        
+{% endblock %}

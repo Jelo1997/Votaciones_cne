@@ -1,0 +1,107 @@
+{% load static %} 
+{% block sidebar %}
+            <div class="vertical-menu">
+
+                <div data-simplebar class="h-100">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title" key="Main">Main</li>
+
+                            <li>
+                                {% if user.empleado %}
+                                    <a href="{% url 'ver_perfil_empleado' %}" class="waves-effect">
+                                        <i class="ti-user"></i><span class="badge rounded-pill bg-primary float-end"></span>
+                                        <span key="Dashboard">Perfil</span>
+                                    </a>
+                                {% endif %}
+                            </li>
+                            {% if user.empleado %}
+                                {% if user.empleado.es_aprovicionamiento %}
+                                    <li>
+                                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                            <i class="ti-email"></i>
+                                            <span key="Email">Aprovicionamiento</span>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            <li><a href="{% url 'ver_pcliente' %}" key="Inbox">Clientes</a></li>
+                                            <li><a href="{% url 'ver_propiedades_posible' %}" key="Email_Read">Propiedades Posibles</a></li>
+                                            <li><a href="{% url 'ver_propiedades_disponible' %}" key="Email_Compose">Propiedades Disponibles</a></li>
+                                            
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                                {% if user.empleado.es_ventas %}
+                                    <li>
+                                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                            <i class="ti-email"></i>
+                                            <span key="Email">Ventas</span>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            <li><a href="{% url 'ver_pcliente' %}" key="Inbox">Clientes</a></li>
+                                            <li><a href="{% url 'ver_propiedades_disponible' %}" key="Inbox">Propiedades Disponibles</a></li>
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                                {% if user.empleado.es_tramites %}
+                                    <li>
+                                        <a href="{% url 'procesos propiedades' %}" class=" waves-effect">
+                                            <i class="ti-calendar"></i>
+                                            <span key="Calendar">Tramites</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if user.empleado.es_gerencia %}
+                                    <li>
+                                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                            <i class="ti-email"></i>
+                                            <span key="Email">Aprovicionamiento</span>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            <li><a href="{% url 'ver_pcliente' %}" key="Inbox">Clientes</a></li>
+                                            <li><a href="{% url 'ver_propiedades_posible' %}" key="Email_Read">Propiedades Posibles</a></li>
+                                            <li><a href="{% url 'ver_propiedades_disponible' %}" key="Email_Compose">Propiedades Disponibles</a></li>
+                                            
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                            <i class="ti-email"></i>
+                                            <span key="Email">Ventas</span>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            <li><a href="{% url 'ver_pcliente' %}" key="Inbox">Clientes</a></li>
+                                            <li><a href="{% url 'ver_propiedades_disponible' %}" key="Inbox">Propiedades Disponibles</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                            <i class="ti-email"></i>
+                                            <span key="Email">Tramites</span>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            <li><a href="{% url 'procesos propiedades' %}" >Tramites</a></li>
+                                            <li><a href="{% url 'venta' %}" key="Inbox">Ventas</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'ver_empleado' %}" class=" waves-effect">
+                                            <i class="ti-user"></i>
+                                            <span key="Calendar">Empleados</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+
+                            
+                            
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+
+{% endblock %}
