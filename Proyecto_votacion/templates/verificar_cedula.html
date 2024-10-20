@@ -13,6 +13,9 @@
             <h2>Ingresar Cédula</h2>
         </div>
         <div class="card-body">
+            {% if mensaje %}
+                <div class="alert alert-warning">{{ mensaje }}</div>  <!-- Mostrar el mensaje aquí -->
+            {% endif %}
             <form method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
@@ -23,4 +26,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

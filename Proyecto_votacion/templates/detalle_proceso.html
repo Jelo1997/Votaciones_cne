@@ -15,29 +15,107 @@
             <h2>Emitir Voto</h2>
         </div>
         <div class="card-body">
-            <form method="post">
+            <form method="post" id="votoForm">
                 {% csrf_token %}
 
                 <h3>Seleccione un candidato:</h3>
-                <div class="list-group mb-4">
+                <div class="row mb-4">
                     {% for candidato in candidatos %}
-                    <div class="list-group-item d-flex align-items-center">
-                        <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="me-3">
-                        <label for="candidato_{{ candidato.id }}">
-                            <img src="{{ candidato.logo.url }}" alt="Logo de {{ candidato.nombre }}" class="img-thumbnail me-2" width="60" height="60">
-                            {{ candidato.nombre }}
+                    <div class="col-6 col-md-4 text-center mb-3">
+                        <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="me-2" style="transform: scale(1.5);">
+                        <label for="candidato_{{ candidato.id }}" style="font-size: 1.2rem;">  <!-- Tamaño de fuente aumentado -->
+                            <img src="{{ candidato.logo.url }}" alt="Logo de {{ candidato.nombre }}" class="img-thumbnail mb-2" width="150" height="150" style="object-fit: cover; width: 150px; height: 150px;">
+                            <div style="min-height: 50px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
                         </label>
                     </div>
                     {% endfor %}
                 </div>
 
                 <h3>O seleccione una de las siguientes opciones:</h3>
-                <button type="submit" name="tipo_voto" value="blanco" class="btn btn-primary">Voto en Blanco</button>
-                <button type="submit" name="tipo_voto" value="nulo" class="btn btn-danger">Voto Nulo</button>
-                <button type="submit" class="btn btn-success">Confirmar Voto</button>
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-primary btn-lg me-2" data-bs-toggle="modal" data-bs-target="#votoBlancoModal">Voto en Blanco</button>
+                    <button type="button" class="btn btn-danger btn-lg me-2" data-bs-toggle="modal" data-bs-target="#votoNuloModal">Voto Nulo</button>
+                    <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#confirmarModal">Confirmar Voto</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
-{% endblock %}
 
+<!-- Modal de Confirmación para Voto en Blanco -->
+<div class="modal fade" id="votoBlancoModal" tabindex="-1" aria-labelledby="votoBlancoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="votoBlancoModalLabel">Confirmar Voto en Blanco</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas emitir un voto en blanco?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmarVotoBlancoBtn">Confirmar Voto en Blanco</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmación para Voto Nulo -->
+<div class="modal fade" id="votoNuloModal" tabindex="-1" aria-labelledby="votoNuloModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="votoNuloModalLabel">Confirmar Voto Nulo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas emitir un voto nulo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmarVotoNuloBtn">Confirmar Voto Nulo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmarModalLabel">Confirmar Voto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas confirmar tu voto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmarBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para manejar el envío del formulario al confirmar -->
+<script>
+    // Enviar el formulario al confirmar voto en blanco
+    document.getElementById('confirmarVotoBlancoBtn').onclick = function() {
+        document.getElementById('votoForm').innerHTML += '<input type="hidden" name="tipo_voto" value="blanco">';
+        document.getElementById('votoForm').submit();
+    };
+
+    // Enviar el formulario al confirmar voto nulo
+    document.getElementById('confirmarVotoNuloBtn').onclick = function() {
+        document.getElementById('votoForm').innerHTML += '<input type="hidden" name="tipo_voto" value="nulo">';
+        document.getElementById('votoForm').submit();
+    };
+
+    // Enviar el formulario al confirmar voto
+    document.getElementById('confirmarBtn').onclick = function() {
+        document.getElementById('votoForm').submit();  // Enviar el formulario
+    };
+</script>
+{% endblock %}

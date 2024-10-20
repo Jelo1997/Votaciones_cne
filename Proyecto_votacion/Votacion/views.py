@@ -69,21 +69,31 @@ def registrar_sufragante(request):
 
 def verificar_cedula(request, proceso_id):
     proceso = get_object_or_404(ProcesoElectoral, pk=proceso_id)
-    
+    mensaje = None  # Inicializamos el mensaje
+
     if request.method == 'POST':
         form = CedulaForm(request.POST)
         if form.is_valid():
             cedula = form.cleaned_data['cedula']
             try:
                 sufragante = Sufragante.objects.get(cedula=cedula)
-                request.session['cedula'] = sufragante.cedula  
-                return redirect('detalle_proceso_electoral', proceso_id=proceso.id)  
+                
+                # Verificar si el sufragante ya ha votado en este proceso
+                if Voto.objects.filter(sufragante=sufragante, proceso=proceso).exists():
+                    mensaje = 'La cédula {} ya ha registrado un voto en este proceso electoral. No puedes votar nuevamente.'.format(sufragante.cedula)
+                else:
+                    request.session['cedula'] = sufragante.cedula  
+                    return redirect('detalle_proceso_electoral', proceso_id=proceso.id)  
             except Sufragante.DoesNotExist:
                 form.add_error('cedula', 'Cédula no encontrada')
     else:
         form = CedulaForm()
 
-    return render(request, 'verificar_cedula.html', {'form': form, 'proceso': proceso})
+    return render(request, 'verificar_cedula.html', {
+        'form': form,
+        'proceso': proceso,
+        'mensaje': mensaje,  # Pasamos el mensaje al contexto
+    })
 
 def detalle_proceso_electoral(request, proceso_id):
     proceso = get_object_or_404(ProcesoElectoral, pk=proceso_id)
