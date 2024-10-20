@@ -9,6 +9,9 @@ from django.views.generic import DetailView, FormView
 from django.core.validators import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView
+from io import BytesIO
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 from .models import ProcesoElectoral, Candidato, Sufragante, Voto
 from .forms import ProcesoElectoralForm, CandidatoForm, SufraganteForm, VotoForm, CedulaForm
@@ -133,3 +136,65 @@ def detalle_proceso_electoral(request, proceso_id):
         'candidatos': candidatos,
         'sufragante': sufragante
     })
+
+def resultados_votacion(request, proceso_id):
+    proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
+    candidatos = Candidato.objects.filter(proceso=proceso)
+    votos = Voto.objects.filter(proceso=proceso)
+
+    # Contar los votos por candidato y tipo de voto
+    resultados = {}
+    for candidato in candidatos:
+        votos_validos = votos.filter(candidato=candidato, tipo_voto='valido').count()
+        resultados[candidato] = votos_validos
+
+    votos_blanco = votos.filter(tipo_voto='blanco').count()
+    votos_nulo = votos.filter(tipo_voto='nulo').count()
+
+    context = {
+        'proceso': proceso,
+        'resultados': resultados,
+        'votos_blanco': votos_blanco,
+        'votos_nulo': votos_nulo,
+    }
+
+    return render(request, 'resultados.html', context)
+
+def resultados_pdf(request, proceso_id):
+    proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
+    candidatos = Candidato.objects.filter(proceso=proceso)
+    votos = Voto.objects.filter(proceso=proceso)
+
+    # Contar los votos por candidato y tipo de voto
+    resultados = {}
+    for candidato in candidatos:
+        votos_validos = votos.filter(candidato=candidato, tipo_voto='valido').count()
+        resultados[candidato] = votos_validos
+
+    votos_blanco = votos.filter(tipo_voto='blanco').count()
+    votos_nulo = votos.filter(tipo_voto='nulo').count()
+
+    context = {
+        'proceso': proceso,
+        'resultados': resultados,
+        'votos_blanco': votos_blanco,
+        'votos_nulo': votos_nulo,
+    }
+
+    # Renderizar la plantilla a un string
+    template = get_template('resultados_pdf.html')
+    html = template.render(context)
+
+    # Crear el PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="resultados_{proceso.nombre}.pdf"'
+    pisa_status = pisa.CreatePDF(
+        BytesIO(html.encode('UTF-8')),
+        dest=response
+    )
+
+    # Comprobar si hubo algún error
+    if pisa_status.err:
+        return HttpResponse(f'Error al generar PDF: {pisa_status.err}', content_type='text/plain')
+
+    return response

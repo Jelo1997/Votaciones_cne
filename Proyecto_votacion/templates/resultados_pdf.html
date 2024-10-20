@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados en PDF</title>
+</head>
+<body>
+    <h1>Resultados del proceso: {{ proceso.nombre }}</h1>
+    <h2>Votos por candidato:</h2>
+    <ul>
+        {% for candidato, votos in resultados.items %}
+        <li>{{ candidato.nombre }}: {{ votos }} votos</li>
+        {% endfor %}
+    </ul>
+    <h2>Votos en blanco: {{ votos_blanco }}</h2>
+    <h2>Votos nulos: {{ votos_nulo }}</h2>
+</body>
+</html>

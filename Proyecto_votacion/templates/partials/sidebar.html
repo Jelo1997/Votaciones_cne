@@ -14,8 +14,21 @@
                             <li><a href="{% url 'verificar_cedula' proceso_id=1 %}">Verificar Cédula</a></li> 
                             <li><a href="{% url 'agregar_candidato' proceso_id=1 %}">Agregar Candidato</a></li> 
                             <li><a href="{% url 'detalle_proceso_electoral' proceso_id=1 %}">Detalles de Proceso</a></li> 
+                            <li><a href="{% url 'resultados_votacion' proceso_id=1 %}">Resultados</a></li> 
+                            <li><a href="{% url 'resultados_pdf' proceso_id=1 %}">Imprimir Resultados</a></li> 
                             <li><a href="{% url 'registrar_sufragante' %}">Registrar Sufragante</a></li>
                             <li>
+                            
+                            {% if user.is_authenticated %}
+                                {% if user.has_usable_password %}
+                                    <a  href="{% url 'account_change_password' %}"><i></i> Cambiar Contraseña</a>
+                                    <a  href="{% url 'account_logout' %}"><i key="Logout"></i>Salir</a>
+                                {% endif %}
+                                {% else %}
+                                    <a class="dropdown-item" href="{% url 'account_login' %}"><i
+                                            class="bx bx-log-in font-size-16 align-middle me-1 mdi mdi-login-variant"></i> Log In</a>
+                            {% endif %}
+
                                 {% if user.empleado %}
                                     <a href="{% url 'ver_perfil_empleado' %}" class="waves-effect">
                                         <i class="ti-user"></i><span class="badge rounded-pill bg-primary float-end"></span>

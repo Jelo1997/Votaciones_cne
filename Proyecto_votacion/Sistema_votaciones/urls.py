@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView
 from django.conf import settings
 from django.conf.urls.static import static
-from Votacion.views import index, lista_procesos_electorales, detalle_proceso_electoral, agregar_candidato, registrar_sufragante, crear_proceso_electoral, verificar_cedula
+from Votacion.views import index, lista_procesos_electorales, detalle_proceso_electoral, agregar_candidato, registrar_sufragante, crear_proceso_electoral, verificar_cedula, resultados_votacion,resultados_pdf
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -58,6 +58,8 @@ urlpatterns = [
     path('proceso/<int:proceso_id>/agregar_candidato/', agregar_candidato, name='agregar_candidato'),
     path('registrar_sufragante/', registrar_sufragante, name='registrar_sufragante'),
     path('procesos/<int:proceso_id>/verificar_cedula/', verificar_cedula, name='verificar_cedula'),
+    path('resultados/<int:proceso_id>/', resultados_votacion, name='resultados_votacion'),
+    path('resultados/<int:proceso_id>/pdf/', resultados_pdf, name='resultados_pdf'),
     
 ]
 
