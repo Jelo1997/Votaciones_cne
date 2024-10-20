@@ -1,0 +1,43 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="text-center mb-5">
+        <h1>{{ proceso.nombre }}</h1>
+        <h3><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
+        <h3>Cédula: {{ sufragante.cedula }}</h3>
+    </div>
+
+    <!-- Formulario para Emitir Voto -->
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h2>Emitir Voto</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <h3>Seleccione un candidato:</h3>
+                <div class="list-group mb-4">
+                    {% for candidato in candidatos %}
+                    <div class="list-group-item d-flex align-items-center">
+                        <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="me-3">
+                        <label for="candidato_{{ candidato.id }}">
+                            <img src="{{ candidato.logo.url }}" alt="Logo de {{ candidato.nombre }}" class="img-thumbnail me-2" width="60" height="60">
+                            {{ candidato.nombre }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3>O seleccione una de las siguientes opciones:</h3>
+                <button type="submit" name="tipo_voto" value="blanco" class="btn btn-primary">Voto en Blanco</button>
+                <button type="submit" name="tipo_voto" value="nulo" class="btn btn-danger">Voto Nulo</button>
+                <button type="submit" class="btn btn-success">Confirmar Voto</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

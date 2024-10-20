@@ -135,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 
@@ -175,7 +175,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 #  All Auth Configurations
-LOGIN_REDIRECT_URL = "/accounts/profile/"
+LOGIN_REDIRECT_URL = "procesos/"
 LOGIN_URL = "account_login"
 ACCOUNT_LOGOUT_ON_GET = False
 ACCOUNT_EMAIL_REQUIRED = True

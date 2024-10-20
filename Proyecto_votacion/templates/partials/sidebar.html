@@ -9,7 +9,12 @@
                         <!-- Left Menu Start -->
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" key="Main">Main</li>
-
+                            <li><a href="{% url 'lista_procesos_electorales' %}">Lista de Procesos Electorales</a></li>
+                            <li><a href="{% url 'crear_proceso_electoral' %}">Crear proceso electoral</a></li> 
+                            <li><a href="{% url 'verificar_cedula' proceso_id=1 %}">Verificar Cédula</a></li> 
+                            <li><a href="{% url 'agregar_candidato' proceso_id=1 %}">Agregar Candidato</a></li> 
+                            <li><a href="{% url 'detalle_proceso_electoral' proceso_id=1 %}">Detalles de Proceso</a></li> 
+                            <li><a href="{% url 'registrar_sufragante' %}">Registrar Sufragante</a></li>
                             <li>
                                 {% if user.empleado %}
                                     <a href="{% url 'ver_perfil_empleado' %}" class="waves-effect">

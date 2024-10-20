@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView
 from django.conf import settings
 from django.conf.urls.static import static
-from Votacion.views import index
+from Votacion.views import index, lista_procesos_electorales, detalle_proceso_electoral, agregar_candidato, registrar_sufragante, crear_proceso_electoral, verificar_cedula
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -52,6 +52,12 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     #sistema
+    path('procesos/crear/', crear_proceso_electoral, name='crear_proceso_electoral'),
+    path('procesos/', lista_procesos_electorales, name='lista_procesos_electorales'),
+    path('proceso/<int:proceso_id>/', detalle_proceso_electoral, name='detalle_proceso_electoral'),
+    path('proceso/<int:proceso_id>/agregar_candidato/', agregar_candidato, name='agregar_candidato'),
+    path('registrar_sufragante/', registrar_sufragante, name='registrar_sufragante'),
+    path('procesos/<int:proceso_id>/verificar_cedula/', verificar_cedula, name='verificar_cedula'),
     
 ]
 

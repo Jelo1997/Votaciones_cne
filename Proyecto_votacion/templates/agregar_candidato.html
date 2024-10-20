@@ -1,0 +1,13 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>Agregar Candidato al Proceso: {{ proceso.nombre }}</h1>
+<div class="container mt-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }} 
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+{% endblock %}

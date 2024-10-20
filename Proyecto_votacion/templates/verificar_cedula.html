@@ -1,0 +1,26 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="text-center mb-5">
+        <h1>Verificación de Cédula</h1>
+        <p>Por favor, ingresa tu cédula para participar en el proceso electoral: <strong>{{ proceso.nombre }}</strong></p>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h2>Ingresar Cédula</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-lg btn-info">Verificar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
