@@ -8,8 +8,8 @@ class UserLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.fields['login'].widget = forms.TextInput(attrs={'class': 'form-control mb-2','placeholder':'Enter Username','id':'username'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control mb-2 position-relative','placeholder':'Enter Password','id':'password'})
+        self.fields['login'].widget = forms.TextInput(attrs={'class': 'form-control mb-2','placeholder':'Usuario','id':'username'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control mb-2 position-relative','placeholder':'Contraseña','id':'password'})
         self.fields['remember'].widget = forms.CheckboxInput(attrs={'class': 'form-check-input'})
         
 class UserRegistrationForm(SignupForm):

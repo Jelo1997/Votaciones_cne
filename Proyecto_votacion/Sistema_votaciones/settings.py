@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'America/Guayaquil'
 
@@ -175,7 +175,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 #  All Auth Configurations
-LOGIN_REDIRECT_URL = "/procesos/"
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = "account_login"
 ACCOUNT_LOGOUT_ON_GET = False
 ACCOUNT_EMAIL_REQUIRED = True

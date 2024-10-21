@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Padrón Electoral - {{ proceso.nombre }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Padrón Electoral - {{ proceso.nombre }}</h1>
+    <p>Total de votantes: {{ votantes|length }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cédula</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for votante in votantes %}
+            <tr>
+                <td>{{ votante.nombre }}</td>
+                <td>{{ votante.apellido }}</td>
+                <td>{{ votante.cedula }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Total de no votantes: {{ no_votantes|length }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cédula</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for no_votante in no_votantes %}
+            <tr>
+                <td>{{ no_votante.nombre }}</td>
+                <td>{{ no_votante.apellido }}</td>
+                <td>{{ no_votante.cedula }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,26 +1,72 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados del Proceso Electoral</title>
-</head>
-<body>
-    <h1>Resultados del proceso: {{ proceso.nombre }}</h1>
-    <p>Descripción: {{ proceso.descripcion }}</p>
-    <p>Fecha de inicio: {{ proceso.fecha_inicio }}</p>
-    <p>Fecha de fin: {{ proceso.fecha_fin }}</p>
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
 
-    <h2>Votos por candidato:</h2>
-    <ul>
-        {% for candidato, votos in resultados.items %}
-        <li>{{ candidato.nombre }}: {{ votos }} votos</li>
-        {% endfor %}
-    </ul>
+{% block content %}
+<div class="container">
+    <h2>Proceso Electoral: {{ proceso.nombre }}</h2>
 
-    <h2>Votos en blanco: {{ votos_blanco }}</h2>
-    <h2>Votos nulos: {{ votos_nulo }}</h2>
+    <h2>Resultados por Candidato</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Candidato</th>
+                <th>Votos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidato, votos in resultados.items %}
+            <tr>
+                <td>{{ candidato.nombre }}</td>
+                <td>{{ votos }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <a href="{% url 'resultados_pdf' proceso.id %}">Descargar resultados en PDF</a>
-</body>
-</html>
+    <h2>Votos Blancos/Nulos</h2>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>Votos en Blanco</td>
+                <td>{{ votos_blanco }}</td>
+            </tr>
+            <tr>
+                <td>Votos Nulos</td>
+                <td>{{ votos_nulo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Total de Sufragantes: {{ total_sufragantes }}</h2>
+    
+
+    <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post" style="margin-top: 20px;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Reiniciar Votación</button>
+        
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+        h2 {
+            color: #003366;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            margin-bottom: 20px;
+        }
+    </style>
+
+
+{% endblock %}
+

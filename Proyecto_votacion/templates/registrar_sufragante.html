@@ -2,12 +2,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Registrar Sufragante</h1>
+<h1>Registrar Sufragantes mediante Excel</h1>
 <div class="container mt-4">
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form|crispy }} 
-    <button type="submit">Registrar</button>
+    <div class="form-group">
+        <label for="archivo_excel">Subir archivo Excel:</label>
+        <input type="file" name="archivo_excel" id="archivo_excel" class="form-control" accept=".xls, .xlsx">
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Registrar</button>
 </form>
 </div>
 {% endblock %}

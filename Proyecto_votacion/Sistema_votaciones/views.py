@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class DashboardView(LoginRequiredMixin,View):
     def get(self, request):
         greeting = {}
-        greeting['title'] = "Dashboard"
+        greeting['title'] = "Inicio"
         greeting['heading'] = "Sistema_votaciones" 
         greeting['subheading'] = "Dashboard" 
         return render(request, 'dashboard.html',greeting)

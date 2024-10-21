@@ -4,7 +4,7 @@
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
 
-{% block title %}Sign in{% endblock title %}
+{% block title %}Ingresar{% endblock title %}
     
 {% block content %}
                     
@@ -14,7 +14,7 @@
                                 <h3 class="text-white font-size-20">Bienvenido</h3>
                                 
                                 <a href="{% url 'dashboard' %}" class="logo logo-admin">
-                                    <img src="{% static 'images/crea3.png' %}" height="70" alt="logo">
+                                    <img src="{% static 'images/LOGO_CNE.png' %}" height="30" alt="logo">
                                 </a>
                             </div>
                         </div>
@@ -41,23 +41,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-2 mb-0 row">
-                                        <div class="col-12 mt-4">
-                                            <a href="{% url 'account_reset_password' %}"><i class="mdi mdi-lock"></i> Olvidaste tu contraseña?</a>
-                                        </div>
-                                    </div>
+                                    
                                     
 
                                 </form>
-                                <center>
-                                    <div class="card-body p-4">
-                                        <a class="btn btn-success" href='/consultapersona'>Consultar Proceso</a> 
-                                   </div>
-                                </center>
-                                
                             </div>
                         </div>
-
                     </div>
 
 

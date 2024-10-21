@@ -2,15 +2,62 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Procesos Electorales</h1>
-<div class="container mt-4">
-<ul>
-    {% for proceso in procesos %}
-    <li>
-        <a href="{% url 'detalle_proceso_electoral' proceso.id %}">{{ proceso.nombre }}</a> - 
-        del {{ proceso.fecha_inicio }} al {{ proceso.fecha_fin }}
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h1 class="text-center mb-5" style="color: #003366;">Procesos Electorales</h1>
+
+    <div class="row justify-content-center">
+        {% for proceso in procesos %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h3 class="card-title text-center" style="color: #006699;">{{ proceso.nombre }}</h3>
+                    <p class="card-text text-center">
+                        <strong>Fechas:</strong> <br>
+                        Del {{ proceso.fecha_inicio }} al {{ proceso.fecha_fin }}
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'resultados_votacion' proceso.id %}" class="btn btn-primary btn-lg">Ver Resultados</a>
+                    </div>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <i class="fas fa-calendar-alt me-1"></i> Proceso electoral activo
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    h1 {
+        font-weight: bold;
+    }
+
+    .card {
+        border: none;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        background-color: #003366;
+        border-color: #003366;
+    }
+
+    .btn-primary:hover {
+        background-color: #005599;
+        border-color: #005599;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa;
+        font-size: 0.9rem;
+    }
+</style>
 {% endblock %}

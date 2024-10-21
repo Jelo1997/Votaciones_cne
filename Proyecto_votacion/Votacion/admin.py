@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
 from .models import ProcesoElectoral, Candidato, Sufragante, Voto
 
 
@@ -18,7 +17,7 @@ class ProcesoElectoralAdmin(admin.ModelAdmin):
 
 @admin.register(Candidato)
 class CandidatoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'proceso', 'nombre', 'logo', 'imagen')
+    list_display = ('id', 'proceso', 'nombre', 'slogan', 'imagen')
     list_filter = ('proceso',)
 
 

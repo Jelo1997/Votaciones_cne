@@ -7,27 +7,27 @@
                     <div class="card overflow-hidden">
                         <div class="bg-primary">
                             <div class="text-primary text-center p-4">
-                                <h5 class="text-white font-size-20">Log Out</h5>
-                                <p class="text-white-50">Get your free Veltrix account now.</p>
+                                <h5 class="text-white font-size-20">Salir</h5>
+                                <p class="text-white-50">Consejo Nacional Electoral Pastaza.</p>
                                 <a href="{% url 'dashboard' %}" class="logo logo-admin">
-                                    <img src="{% static 'images/logo-sm.png' %}" height="24" alt="logo">
+                                    <img src="{% static 'images/LOGO_CNE.png' %}" height="24" alt="logo">
                                 </a>
                             </div>
                         </div>
 
                         <div class="mt-4">
-                            <h5>{% trans "Sign Out" %}</h5>
-                            <p class="text-muted">{% trans 'Are you sure you want to sign out?' %}</p>
+                            <h5>{% trans "Salir" %}</h5>
+                            <p class="text-muted">{% trans 'Esta seguro que quiere salir?' %}</p>
                             <form method="post" action="{% url 'account_logout' %}">
                                 {% csrf_token %}
                                 {% if redirect_field_value %}
                                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
                                 {% endif %}
-                                <button type="submit" class="btn btn-success w-100">{% trans 'Sign Out' %}</button>
+                                <button type="submit" class="btn btn-success w-100">{% trans 'Salir' %}</button>
                             </form>
                         </div>
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Back to home ? <a href="{% url 'dashboard' %}" class="fw-semibold text-primary text-decoration-underline"> Dashboard </a> </p>
+                            <p class="mb-0">Regresar al inicio ? <a href="{% url 'dashboard' %}" class="fw-semibold text-primary text-decoration-underline"> Regresar </a> </p>
                         </div>
                     </div>
                                

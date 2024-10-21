@@ -8,8 +8,7 @@
         <h3><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
         <h3>Cédula: {{ sufragante.cedula }}</h3>
     </div>
-
-    <!-- Formulario para Emitir Voto -->
+    
     <div class="card">
         <div class="card-header bg-success text-white">
             <h2>Emitir Voto</h2>
@@ -22,10 +21,12 @@
                 <div class="row mb-4">
                     {% for candidato in candidatos %}
                     <div class="col-6 col-md-4 text-center mb-3">
-                        <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="me-2" style="transform: scale(1.5);">
-                        <label for="candidato_{{ candidato.id }}" style="font-size: 1.2rem;">  <!-- Tamaño de fuente aumentado -->
-                            <img src="{{ candidato.logo.url }}" alt="Logo de {{ candidato.nombre }}" class="img-thumbnail mb-2" width="150" height="150" style="object-fit: cover; width: 150px; height: 150px;">
+                        <label for="candidato_{{ candidato.id }}" style="font-size: 1.2rem;">
                             <div style="min-height: 50px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
+                            <div style="min-height: 50px; display: flex; align-items: center; justify-content: center;">{{ candidato.slogan }}</div>  <!-- Mostrar el slogan aquí -->
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-2" width="150" height="150" style="object-fit: cover; width: 150px; height: 150px;">
+                            <br>
+                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-2" style="transform: scale(1.5);">
                         </label>
                     </div>
                     {% endfor %}
@@ -42,7 +43,7 @@
     </div>
 </div>
 
-<!-- Modal de Confirmación para Voto en Blanco -->
+<!-- Modal para confirmar voto en blanco -->
 <div class="modal fade" id="votoBlancoModal" tabindex="-1" aria-labelledby="votoBlancoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -61,7 +62,7 @@
     </div>
 </div>
 
-<!-- Modal de Confirmación para Voto Nulo -->
+<!-- Modal para confirmar voto nulo -->
 <div class="modal fade" id="votoNuloModal" tabindex="-1" aria-labelledby="votoNuloModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -80,7 +81,7 @@
     </div>
 </div>
 
-<!-- Modal de Confirmación -->
+<!-- Modal para confirmar cualquier voto -->
 <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -99,23 +100,22 @@
     </div>
 </div>
 
-<!-- Script para manejar el envío del formulario al confirmar -->
 <script>
-    // Enviar el formulario al confirmar voto en blanco
+    // Confirmar voto en blanco
     document.getElementById('confirmarVotoBlancoBtn').onclick = function() {
         document.getElementById('votoForm').innerHTML += '<input type="hidden" name="tipo_voto" value="blanco">';
         document.getElementById('votoForm').submit();
     };
 
-    // Enviar el formulario al confirmar voto nulo
+    // Confirmar voto nulo
     document.getElementById('confirmarVotoNuloBtn').onclick = function() {
         document.getElementById('votoForm').innerHTML += '<input type="hidden" name="tipo_voto" value="nulo">';
         document.getElementById('votoForm').submit();
     };
 
-    // Enviar el formulario al confirmar voto
+    // Confirmar cualquier voto
     document.getElementById('confirmarBtn').onclick = function() {
-        document.getElementById('votoForm').submit();  // Enviar el formulario
+        document.getElementById('votoForm').submit();  
     };
 </script>
 {% endblock %}
