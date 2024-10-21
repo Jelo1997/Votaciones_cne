@@ -164,9 +164,9 @@ def resultados_votacion(request, proceso_id):
     votos_blanco = total_votos.filter(tipo_voto='blanco').count()
     votos_nulo = total_votos.filter(tipo_voto='nulo').count()
     
-    # Total de sufragantes
+    
     total_sufragantes = total_votos.values('sufragante').distinct().count()
-    #Datos para el template
+   
     context = {
         'proceso': proceso,
         'resultados': resultados,
@@ -250,8 +250,8 @@ def generar_pdf_padron(request, proceso_id):
 def reiniciar_votacion(request, proceso_id):
     proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
     
-    
     Voto.objects.filter(proceso=proceso).delete()
     
-    
     return redirect('resultados_votacion', proceso_id=proceso.id)
+
+    

@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block content %}
 <div class="container">
     <h2>Proceso Electoral: {{ proceso.nombre }}</h2>
@@ -42,11 +42,50 @@
 
     <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post" style="margin-top: 20px;">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Reiniciar Votación</button>
+        <button type="submit" class="btn btn-danger">Encerar La Base de datos</button>
         
     </form>
 </div>
+<div class="row">
+    <div class="col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Elecciones del Gobierno estudiantil de la unidad educativa</h4>
 
+                <div class="cleafix">
+                    <p class="float-start"><i class="mdi mdi-calendar me-1 text-primary"></i> Oct 21 - Oct 21</p>
+                    <h5 class="font-18 text-end">Votos:200</h5>
+                </div>
+
+                <div id="ct-donut" class="ct-chart wid"></div>
+
+                <div class="mt-4">
+                    <table class="table mb-0">
+                        <tbody>
+                            <tr>
+                                <td><span class="badge bg-primary">1</span></td>
+                                <td>Candidato 1</td>
+                                <td class="text-end">54.5%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-success">2</span></td>
+                                <td>Candidato 2</td>
+                                <td class="text-end">28.0%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-warning">3</span></td>
+                                <td>Candidato 3</td>
+                                <td class="text-end">17.5%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end row -->
 
 {% endblock %}
 
@@ -66,7 +105,21 @@
             margin-bottom: 20px;
         }
     </style>
+    <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_javascript %}
 
+    <!-- Peity chart-->
+    <script src="{% static 'libs/peity/jquery.peity.min.js' %}"></script>
+
+    <!-- Plugin Js-->
+    <script src="{% static 'libs/chartist/dist/chartist.min.js' %}"></script>
+    <script src="{% static 'libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
+
+    <script src="{% static 'js/pages/dashboard.init.js' %}"></script>
 
 {% endblock %}
+
+
+
 
