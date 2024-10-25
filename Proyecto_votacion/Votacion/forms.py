@@ -13,7 +13,7 @@ class ProcesoElectoralForm(forms.ModelForm):
 class CandidatoForm(forms.ModelForm):
     class Meta:
         model = Candidato
-        fields = ['nombre', 'slogan', 'imagen']
+        fields = ['nombre', 'imagen_slogan', 'imagen']
 
 
 class SufraganteForm(forms.ModelForm):

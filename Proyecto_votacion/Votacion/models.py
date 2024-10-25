@@ -18,7 +18,7 @@ class ProcesoElectoral(models.Model):
 class Candidato(models.Model):
     proceso = models.ForeignKey(ProcesoElectoral, on_delete=models.CASCADE, related_name='candidatos')
     nombre = models.CharField(max_length=255)  
-    slogan = models.CharField(max_length=255)  
+    imagen_slogan = models.ImageField(upload_to='imagenes_candidatos_slogan/')  
     imagen = models.ImageField(upload_to='imagenes_candidatos/')  
 
     def __str__(self):

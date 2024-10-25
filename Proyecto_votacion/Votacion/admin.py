@@ -17,7 +17,7 @@ class ProcesoElectoralAdmin(admin.ModelAdmin):
 
 @admin.register(Candidato)
 class CandidatoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'proceso', 'nombre', 'slogan', 'imagen')
+    list_display = ('id', 'proceso', 'nombre', 'imagen_slogan', 'imagen')
     list_filter = ('proceso',)
 
 
