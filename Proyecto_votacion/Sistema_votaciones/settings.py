@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-doz02dujj0g!6lc!b1ib)ja4jxztl-5#hwgi$iym-seyc9paxn
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sfk.pythonanywhere.com']
 
 
 # Application definition
@@ -97,27 +97,28 @@ WSGI_APPLICATION = 'Sistema_votaciones.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-import dj_database_url
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'votos_bd',
-#        'USER': 'root',
-#        'PASSWORD': '',
-#        'HOST': 'localhost',
-#        'PORT': '3306',
-#    }
-#}
+
+'''DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'votos_bd',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Sistemacne$votos_bd',
-        'USER': 'Sistemacne',
-        'PASSWORD': '',
-        'HOST': 'Sistemacne.mysql.pythonanywhere-services.com',
+        'NAME': 'sistemacne$votos_bd',
+        'USER': 'sistemacne',
+        'PASSWORD': 'Pastaza16*',
+        'HOST': 'sistemacne.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
