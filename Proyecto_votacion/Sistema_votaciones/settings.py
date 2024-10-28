@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-doz02dujj0g!6lc!b1ib)ja4jxztl-5#hwgi$iym-seyc9paxn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['cnevotos.pythonanywhere.com']
 
 
 # Application definition
@@ -79,7 +79,7 @@ ROOT_URLCONF = 'Sistema_votaciones.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates','/Votaciones_cne/Proyecto_votacion/templates'],
+        'DIRS': ['templates','/home/cnevotos/Votaciones_cne/Proyecto_votacion/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'Sistema_votaciones.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'votos_bd',
@@ -107,8 +107,17 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     }
+}'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'scnevotos$votos_bd',
+        'USER': 'cnevotos',
+        'PASSWORD': 'jelo1997',
+        'HOST': 'cnevotos.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -169,9 +178,7 @@ STATICFILES_DIRS = [
                     
                     ]
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-    STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage'
+
     
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
