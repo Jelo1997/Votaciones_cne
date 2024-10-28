@@ -114,7 +114,7 @@ import dj_database_url
 #}
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'mysql://root:@localhost:3306/votos_bd'),
+        default='postgresql://postgres:postgres@localhost/postgres',
         conn_max_age=600
     )
 }
