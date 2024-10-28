@@ -5,6 +5,5 @@ set -o errexit
 #poetry install
 cd Proyecto_votacion
 pip install -r requirements.txt
-python manage.py collectstatic --noinput
 python manage.py migrate
 python manage.py makemigrations
