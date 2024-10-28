@@ -102,16 +102,16 @@ WSGI_APPLICATION = 'Sistema_votaciones.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 import dj_database_url
-'DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'votos_bd',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}'
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'votos_bd',
+#        'USER': 'root',
+#        'PASSWORD': '',
+#        'HOST': 'localhost',
+#        'PORT': '3306',
+#    }
+#}
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL', 'mysql://root:@localhost:3306/votos_bd'),
