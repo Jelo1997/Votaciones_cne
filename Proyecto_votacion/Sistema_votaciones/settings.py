@@ -47,11 +47,11 @@ INSTALLED_APPS = [
     'email_templates',
     'layouts',
     'authentication',
-    
+
     "crispy_forms",
     'crispy_bootstrap5',
 
-    
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -111,7 +111,7 @@ WSGI_APPLICATION = 'Sistema_votaciones.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'scnevotos$votos_bd',
+        'NAME': 'cnevotos$votos_bd',
         'USER': 'cnevotos',
         'PASSWORD': 'jelo1997',
         'HOST': 'cnevotos.mysql.pythonanywhere-services.com',
@@ -175,11 +175,13 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
                     os.path.join(BASE_DIR,'static'),
-                    
+
                     ]
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+    STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
@@ -204,7 +206,7 @@ ACCOUNT_FORMS = {
     "set_password": "Sistema_votaciones.forms.PasswordSetForm",
     "reset_password": "Sistema_votaciones.forms.PasswordResetForm",
     "reset_password_from_key": "Sistema_votaciones.PasswordResetKeyForm",
-    
+
 }
 
 # SMTP Configure
@@ -235,7 +237,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': ''
         }
     }
-    
+
 }
 
 
