@@ -1,106 +1,137 @@
 {% extends 'partials/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
+
 {% block content %}
 <div class="container">
-    <h2>Proceso Electoral: {{ proceso.nombre }}</h2>
+    <header class="text-center mb-4">
+        <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
+        <h1>Consejo Nacional Electoral</h1>
+        <h2>Delegación Provincial de Pastaza</h2>
+    </header>
 
-    <h2>Resultados por Candidato</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Candidato</th>
-                <th>Votos</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for candidato, votos in resultados.items %}
-            <tr>
-                <td>{{ candidato.nombre }}</td>
-                <td>{{ votos }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h2 class="text-primary">Proceso Electoral: {{ proceso.nombre }}</h2>
 
-    <h2>Votos Blancos/Nulos</h2>
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <td>Votos en Blanco</td>
-                <td>{{ votos_blanco }}</td>
-            </tr>
-            <tr>
-                <td>Votos Nulos</td>
-                <td>{{ votos_nulo }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive mt-4">
+        <h3 class="text-secondary">Resultados por Candidato</h3>
+        <table class="table table-bordered table-hover">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Candidato</th>
+                    <th>Votos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidato, votos in resultados.items %}
+                <tr>
+                    <td>{{ candidato.nombre }}</td>
+                    <td>{{ votos }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <h2>Total de Sufragantes: {{ total_sufragantes }}</h2>
+    <div class="table-responsive mt-4">
+        <h3 class="text-secondary">Votos en Blanco y Nulos</h3>
+        <table class="table table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <td>Votos en Blanco</td>
+                    <td>{{ votos_blanco }}</td>
+                </tr>
+                <tr>
+                    <td>Votos Nulos</td>
+                    <td>{{ votos_nulo }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <h2>Gráfico de Resultados</h2>
-    <div id="votacion-chart" class="ct-chart" style="height: 400px;"></div>
+    <h3 class="text-secondary mt-4">Total de Sufragantes: {{ total_sufragantes }}</h3>
 
-    <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post" style="margin-top: 20px;">
+    <div class="mt-4">
+        <h3 class="text-secondary">Gráfico de Resultados</h3>
+        <div id="votacion-chart" class="ct-chart ct-major-tenth" style="height: 400px;"></div>
+    </div>
+
+    <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post" class="text-center mt-5">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Encerar la Base de Datos</button>
+        <button type="submit" class="btn btn-danger btn-lg">Encerar la Base de Datos</button>
     </form>
 </div>
+
 {% block extra_css %}
     <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
     <style>
-        h2 {
+        h1, h2, h3 {
             color: #003366;
         }
         .container {
             background-color: white;
-            padding: 20px;
+            padding: 30px;
             margin: 20px auto;
-            max-width: 800px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         table {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn-danger {
+            padding: 10px 40px;
+            font-size: 1.2em;
+        }
+        header img {
+            margin-bottom: 10px;
         }
     </style>
 {% endblock %}
 
 {% block extra_javascript %}
-    <!-- Plugin Js -->
     <script src="{% static 'libs/chartist/dist/chartist.min.js' %}"></script>
     <script src="{% static 'libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Datos para el gráfico
             var data = {
                 labels: [
                     {% for candidato, votos in resultados.items %}
                     '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                    , 'Votos en Blanco', 'Votos Nulos'
+                    {% endfor %},
+                    'Votos en Blanco', 'Votos Nulos'
                 ],
                 series: [[
                     {% for candidato, votos in resultados.items %}
                     {{ votos }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                    , {{ votos_blanco }}, {{ votos_nulo }}
+                    {% endfor %},
+                    {{ votos_blanco }}, {{ votos_nulo }}
                 ]]
             };
 
             var options = {
-                high: Math.max({{ total_sufragantes }}, 300), // Ajuste la altura máxima para el gráfico
+                high: Math.max({{ total_sufragantes }}, 300),
                 plugins: [
-                    Chartist.plugins.tooltip() // Añade tooltips para mostrar los valores
-                ]
+                    Chartist.plugins.tooltip()
+                ],
+                axisX: {
+                    offset: 30
+                },
+                axisY: {
+                    offset: 40,
+                    onlyInteger: true
+                }
             };
 
-            // Crear el gráfico
             new Chartist.Bar('#votacion-chart', data, options);
         });
     </script>
 {% endblock %}
 {% endblock %}
+
 
 
