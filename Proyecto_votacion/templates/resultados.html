@@ -40,7 +40,7 @@
     <h2>Total de Sufragantes: {{ total_sufragantes }}</h2>
 
     <h2>Gráfico de Resultados</h2>
-    <div id="votacion-chart" class="ct-chart" style="height: 400px;"></div>
+    <div id="votacion-chart" class="ct-chart" style="height: 300px;"></div> <!-- Ajuste de altura a 300px -->
 
     <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post" style="margin-top: 20px;">
         {% csrf_token %}
@@ -66,6 +66,19 @@
         table {
             margin-bottom: 20px;
         }
+        .ct-chart .ct-bar {
+            stroke-width: 20px; /* Reduce el ancho de las barras */
+        }
+        .ct-chart .ct-label {
+            font-size: 12px; /* Tamaño de las etiquetas del gráfico */
+        }
+        .ct-tooltip {
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
     </style>
 {% endblock %}
 
@@ -80,22 +93,41 @@
             var data = {
                 labels: [
                     {% for candidato, votos in resultados.items %}
-                    '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}
+                    '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %},
                     {% endfor %}
-                    , 'Votos en Blanco', 'Votos Nulos'
+                    'Votos en Blanco', 'Votos Nulos'
                 ],
                 series: [[
                     {% for candidato, votos in resultados.items %}
-                    {{ votos }}{% if not forloop.last %}, {% endif %}
+                    {{ votos }}{% if not forloop.last %}, {% endif %},
                     {% endfor %}
-                    , {{ votos_blanco }}, {{ votos_nulo }}
+                    {{ votos_blanco }}, {{ votos_nulo }}
                 ]]
             };
 
             var options = {
-                high: Math.max({{ total_sufragantes }}, 300), // Ajuste la altura máxima para el gráfico
+                high: Math.max({{ total_sufragantes }}, 300), // Ajuste de la altura máxima para el gráfico
+                low: 0, // Altura mínima para las barras
+                chartPadding: {
+                    top: 20,
+                    right: 20,
+                    bottom: 30,
+                    left: 20
+                },
+                axisX: {
+                    offset: 50, // Espacio adicional para las etiquetas
+                },
+                axisY: {
+                    offset: 60, // Espacio adicional para las etiquetas
+                },
+                height: 300, // Altura del gráfico ajustada a 300px
                 plugins: [
-                    Chartist.plugins.tooltip() // Añade tooltips para mostrar los valores
+                    Chartist.plugins.tooltip({
+                        anchorToPoint: true, // Fija el tooltip al punto del gráfico
+                        tooltipFnc: function(meta, value) {
+                            return meta + ": " + value + " votos"; // Custom tooltip format
+                        }
+                    })
                 ]
             };
 
