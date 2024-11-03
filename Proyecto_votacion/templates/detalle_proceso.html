@@ -4,37 +4,36 @@
 {% block content %}
 <div class="container-fluid mt-4"> <!-- container-fluid para ocupar más espacio horizontal -->
     <div class="text-center mb-3">
-        <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1> <!-- Texto más pequeño para el título -->
+        <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1>
         <h3 style="font-size: 1.2rem;"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
         <h3 style="font-size: 1.1rem;">Cédula: {{ sufragante.cedula }}</h3>
     </div>
     
     <div class="card">
         <div class="card-header bg-success text-white">
-            <h2 style="font-size: 1.5rem;">Emitir Voto</h2> <!-- Reducir el tamaño del texto -->
+            <h2 style="font-size: 1.5rem;">Emitir Voto</h2>
         </div>
         <div class="card-body">
             <form method="post" id="votoForm">
                 {% csrf_token %}
 
-                <h3 style="font-size: 1.2rem;">Seleccione un candidato:</h3> <!-- Reducir el tamaño del texto -->
-                <div class="row mb-4 justify-content-center"> <!-- Alinear al centro -->
+                <h3 style="font-size: 1.2rem;">Seleccione un candidato:</h3>
+                <div class="row mb-4 justify-content-center text-center"> 
                     {% for candidato in candidatos %}
-                    <div class="col-6 col-md-3 text-center mb-3"> <!-- Ajustar el tamaño para más imágenes por fila -->
-                        <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> <!-- Texto más pequeño para los nombres -->
-                            <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <!-- Imagen principal encima -->
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" width="220" height="220" style="object-fit: cover; width: 220px; height: 220px;">
-                            <!-- Imagen del logo debajo -->
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" width="220" height="220" style="object-fit: cover; width: 220px; height: 220px;">
-                            <br>
-                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
-                        </label>
+                    <div class="col-6 col-md-4 mb-4"> <!-- Ajuste del tamaño para más imágenes por fila -->
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail me-2" width="120" height="120" style="object-fit: cover;">
+                                <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-thumbnail" width="120" height="120" style="object-fit: cover;">
+                            </div>
+                            <div style="min-height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">{{ candidato.nombre }}</div>
+                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.5);">
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
 
-                <h3 style="font-size: 1.2rem;">O seleccione una de las siguientes opciones:</h3> <!-- Reducir el tamaño del texto -->
+                <h3 style="font-size: 1.2rem;">O seleccione una de las siguientes opciones:</h3>
                 <div class="text-center mb-2">
                     <button type="button" class="btn btn-primary btn-md me-2" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 0.9rem;">Voto en Blanco</button>
                     <button type="button" class="btn btn-danger btn-md me-2" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 0.9rem;">Voto Nulo</button>
