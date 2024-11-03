@@ -15,7 +15,7 @@ from xhtml2pdf import pisa
 from .decorators import login_required_and_staff
 from django.template.loader import render_to_string
 from django.utils import timezone
-
+import matplotlib.pyplot as plt
 
 from .models import ProcesoElectoral, Candidato, Sufragante, Voto
 from .forms import ProcesoElectoralForm, CandidatoForm, SufraganteForm, VotoForm, CedulaForm
@@ -198,19 +198,34 @@ def resultados_pdf(request, proceso_id):
 
     total_sufragantes = votos.values('sufragante').distinct().count()
 
+    # Crear gráfica
+    labels = [candidato.nombre for candidato in candidatos] + ['Votos en Blanco', 'Votos Nulos']
+    data = [resultados[candidato] for candidato in candidatos] + [votos_blanco, votos_nulo]
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(labels, data, color=['blue'] * len(candidatos) + ['gray', 'red'])
+    plt.ylabel('Número de Votos')
+    plt.title('Resultados de la Votación')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    # Guardar la gráfica como imagen
+    graph_path = f"media/resultado_{proceso_id}.png"
+    plt.savefig(graph_path)
+    plt.close()
+
     context = {
         'proceso': proceso,
         'resultados': resultados,
         'votos_blanco': votos_blanco,
         'votos_nulo': votos_nulo,
         'total_sufragantes': total_sufragantes,
+        'graph_path': graph_path,  # Pasar la ruta de la imagen
     }
 
-    
     template = get_template('resultados_pdf.html')
     html = template.render(context)
 
-   
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="resultados_{proceso.nombre}.pdf"'
     pisa_status = pisa.CreatePDF(
@@ -218,7 +233,6 @@ def resultados_pdf(request, proceso_id):
         dest=response
     )
 
-    
     if pisa_status.err:
         return HttpResponse(f'Error al generar PDF: {pisa_status.err}', content_type='text/plain')
 
