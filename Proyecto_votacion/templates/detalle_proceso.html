@@ -3,65 +3,41 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid mt-4">
-    <div class="text-center mb-3">
-        <h1 style="font-size: 1.2rem;">{{ proceso.nombre }}</h1>
-        <h3 style="font-size: 1rem;"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
-        <h4 style="font-size: 0.9rem;">Cédula: {{ sufragante.cedula }}</h4>
+    <div class="text-center mb-4">
+        <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1>
+        <h3 style="font-size: 1.2rem;"><strong>¡Bienvenido!</strong></h3>
+        <h4 style="font-size: 1rem;">Cédula: {{ sufragante.cedula }}</h4>
     </div>
     
     <div class="card">
-        <div class="card-header bg-success text-white">
-            <h2 style="font-size: 1.2rem; margin: 0;">Emitir Voto</h2>
+        <div class="card-header bg-success text-white text-center">
+            <h2 style="font-size: 1.5rem; margin: 0;">Emitir Voto</h2>
         </div>
         <div class="card-body">
             <form method="post" id="votoForm">
                 {% csrf_token %}
 
-                <h4 style="font-size: 1rem;">Seleccione un candidato:</h4>
-                <div class="table-responsive">
-                    <table class="table table-bordered text-center">
-                        <tbody>
-                            <tr>
-                                {% for candidato in candidatos %}
-                                <td>
-                                    <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;">
-                                        <div style="min-height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem;">
-                                            {{ candidato.nombre }}
-                                        </div>
-                                        <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 200px; max-height: 200px; object-fit: contain;">
-                                        <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-fluid mt-2" style="max-width: 200px; max-height: 200px; object-fit: contain;">
-                                        <br>
-                                        <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
-                                    </label>
-                                </td>
-                                {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                            </tr><tr>
-                                {% endif %}
-                                {% endfor %}
-                            </tr>
-                        </tbody>
-                    </table>
+                <h4 style="font-size: 1.2rem;" class="text-center">Seleccione un candidato:</h4>
+                <div class="row text-center">
+                    {% for candidato in candidatos %}
+                    <div class="col-4 mb-4">
+                        <label for="candidato_{{ candidato.id }}" style="font-size: 1rem;">
+                            <div style="min-height: 50px; font-weight: bold;">
+                                {{ candidato.nombre }}
+                            </div>
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 200px; max-height: 200px; object-fit: contain;">
+                            <br>
+                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-2" style="transform: scale(1.5);">
+                        </label>
+                    </div>
+                    {% endfor %}
                 </div>
 
-                <h4 style="font-size: 1rem;">O seleccione una de las siguientes opciones:</h4>
-                <div class="text-center mb-2">
-                    <div class="row">
-                        <div class="col-4">
-                            <button type="button" class="btn btn-outline-primary btn-block" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 1rem; height: 100px;">
-                                Voto en Blanco
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-outline-danger btn-block" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 1rem; height: 100px;">
-                                Voto Nulo
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-outline-success btn-block" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 1rem; height: 100px;">
-                                Confirmar Voto
-                            </button>
-                        </div>
-                    </div>
+                <h4 style="font-size: 1.2rem;" class="text-center">O seleccione una de las siguientes opciones:</h4>
+                <div class="text-center mb-4">
+                    <button type="button" class="btn btn-primary btn-lg me-3" data-bs-toggle="modal" data-bs-target="#votoBlancoModal">Voto en Blanco</button>
+                    <button type="button" class="btn btn-danger btn-lg me-3" data-bs-toggle="modal" data-bs-target="#votoNuloModal">Voto Nulo</button>
+                    <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#confirmarModal">Confirmar Voto</button>
                 </div>
             </form>
         </div>
