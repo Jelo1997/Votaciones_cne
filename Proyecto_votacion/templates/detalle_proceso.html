@@ -34,7 +34,7 @@
                                         <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
                                     </label>
                                 </td>
-                                {% if forloop.counter % 4 == 0 %}
+                                {% if forloop.counter|divisibleby:4 and not forloop.last %}
                             </tr><tr>
                                 {% endif %}
                                 {% endfor %}
