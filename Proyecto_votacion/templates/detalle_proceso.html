@@ -27,7 +27,7 @@
                                 <td>
                                     <label for="candidato_{{ candidato.id }}" style="font-size: 1rem;">
                                         <div style="min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
-                                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 250px; max-height: 250px; object-fit: contain;">
+                                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 200px; max-height: 200px; object-fit: contain;">
                                             <div style="font-size: 1.1rem;">{{ candidato.nombre }}</div>
                                             <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-fluid mt-2" style="max-width: 150px; max-height: 150px; object-fit: contain;">
                                             <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" style="transform: scale(1.5);">
@@ -44,11 +44,15 @@
                 </div>
 
                 <h4 style="font-size: 1.2rem;">O seleccione una de las siguientes opciones:</h4>
-                <div class="text-center mb-2">
-                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 1rem; width: 200px;">Voto en Blanco</button>
-                        <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 1rem; width: 200px;">Voto Nulo</button>
-                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 1rem; width: 200px;">Confirmar Voto</button>
+                <div class="row text-center">
+                    <div class="col-md-4 mb-3">
+                        <button type="button" class="btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 1rem; height: 200px;">Voto en Blanco</button>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button type="button" class="btn btn-danger btn-lg w-100" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 1rem; height: 200px;">Voto Nulo</button>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button type="button" class="btn btn-success btn-lg w-100" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 1rem; height: 200px;">Confirmar Voto</button>
                     </div>
                 </div>
             </form>
