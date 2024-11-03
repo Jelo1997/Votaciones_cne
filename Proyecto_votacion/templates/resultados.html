@@ -9,7 +9,8 @@
         <h1 class="mb-0" style="color: #002b5c; font-size: 2.5em;">Consejo Nacional Electoral Delegación Provincial de Pastaza</h1>
         <h2 class="mb-0" style="color: #002b5c; font-size: 2em;">{{ proceso.nombre }}</h2>
     </header>
-    <section>
+
+    <section class="mb-5">
         <h3 class="mb-4" style="color: #4a4a4a; font-size: 1.8em;">Total de Sufragantes: <strong style="color: #002b5c;">{{ total_sufragantes }}</strong></h3>
 
         <div class="table-responsive mb-5">
@@ -75,6 +76,9 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+        h3 {
+            text-align: left;
+        }
         table {
             margin-bottom: 30px;
             border: 1px solid #ddd;
@@ -100,6 +104,10 @@
             height: 400px; 
             width: 100%; 
         }
+        /* Mejora de estilos para el gráfico */
+        .ct-series .ct-bar {
+            stroke-width: 30px; /* Aumentar el grosor de las barras */
+        }
     </style>
 {% endblock %}
 
@@ -112,14 +120,12 @@
             var data = {
                 labels: [
                     {% for candidato, votos in resultados.items %}
-                    '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}
-                    {% endfor %},
+                    '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}{% endfor %},
                     'Votos en Blanco', 'Votos Nulos'
                 ],
                 series: [[
                     {% for candidato, votos in resultados.items %}
-                    {{ votos }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %},
+                    {{ votos }}{% if not forloop.last %}, {% endif %}{% endfor %},
                     {{ votos_blanco }}, {{ votos_nulo }}
                 ]]
             };
@@ -129,7 +135,6 @@
                 plugins: [Chartist.plugins.tooltip()],
                 axisX: {
                     offset: 30,
-                    // Cambia el espacio entre las barras
                     labelInterpolationFnc: function(value, index) {
                         return value.length > 10 ? value.slice(0, 10) + '...' : value;
                     },
@@ -138,13 +143,10 @@
                     offset: 40,
                     onlyInteger: true
                 },
-                
-                seriesBarDistance: 10, 
+                seriesBarDistance: 10,
             };
 
             new Chartist.Bar('#votacion-chart', data, options);
         });
     </script>
 {% endblock %}
-
-
