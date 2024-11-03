@@ -129,10 +129,12 @@
                 axisY: {
                     offset: 40,
                     onlyInteger: true
-                }
+                },
+                barWidth: '50px', 
             };
 
             new Chartist.Bar('#votacion-chart', data, options);
         });
     </script>
 {% endblock %}
+
