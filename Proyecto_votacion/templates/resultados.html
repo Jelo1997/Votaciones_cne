@@ -84,7 +84,7 @@
         .table th, .table td {
             text-align: center;
             vertical-align: middle;
-            padding: 15px; /* Añadir padding para más espacio */
+            padding: 15px; 
         }
         .table-striped tbody tr:nth-of-type(odd) {
             background-color: #e9ecef;
@@ -95,6 +95,10 @@
         }
         header img {
             margin-bottom: 15px;
+        }
+        .ct-chart {
+            height: 400px; 
+            width: 100%; 
         }
     </style>
 {% endblock %}
@@ -124,17 +128,23 @@
                 high: Math.max({{ total_sufragantes }}, 300),
                 plugins: [Chartist.plugins.tooltip()],
                 axisX: {
-                    offset: 30
+                    offset: 30,
+                    // Cambia el espacio entre las barras
+                    labelInterpolationFnc: function(value, index) {
+                        return value.length > 10 ? value.slice(0, 10) + '...' : value;
+                    },
                 },
                 axisY: {
                     offset: 40,
                     onlyInteger: true
                 },
-                barWidth: '500px', 
+                
+                seriesBarDistance: 10, 
             };
 
             new Chartist.Bar('#votacion-chart', data, options);
         });
     </script>
 {% endblock %}
+
 
