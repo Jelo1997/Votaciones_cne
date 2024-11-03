@@ -209,10 +209,11 @@ def resultados_pdf(request, proceso_id):
     # Calcular el total de votos emitidos
     total_votos_emitidos = total_votos_validos + votos_blanco + votos_nulo
 
-    # Calcular el número total de sufragantes registrados (padron completo)
-    total_sufragantes_registrados = Sufragante.objects.count()
+    # Aquí el total de sufragantes será igual al total de votos emitidos
+    total_sufragantes = total_votos_emitidos
 
     # Calcular el número de no sufragantes
+    total_sufragantes_registrados = Sufragante.objects.count()
     no_sufragantes = total_sufragantes_registrados - total_votos_emitidos
 
     # Calcular porcentajes para cada candidato
@@ -245,7 +246,7 @@ def resultados_pdf(request, proceso_id):
         'porcentaje_nulo': round(porcentaje_nulo, 2),
         'no_sufragantes': no_sufragantes,
         'porcentaje_no_sufragantes': round(porcentaje_no_sufragantes, 2),
-        'total_sufragantes': total_sufragantes_registrados,
+        'total_sufragantes': total_sufragantes,  # Aquí está el total de votantes reales
         'total_votos': total_votos_emitidos,
         'fecha_generacion': fecha_generacion,
     }
