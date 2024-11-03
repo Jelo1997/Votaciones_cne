@@ -19,8 +19,8 @@
                     <div class="col-4 col-md-2 text-center mb-1"> 
                         <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> 
                             <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: contain; width: 300px; height: 300px;"> <!-- Aumentar tamaño de imagen -->
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: contain; width: 300px; height: 300px;"> <!-- Aumentar tamaño de imagen -->
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: cover; width: 300px; height: 300px;"> <!-- Ajustado para mostrar imagen completa -->
+                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: cover; width: 300px; height: 300px;"> <!-- Ajustado para mostrar imagen completa -->
                             <br>
                             <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
                         </label>
