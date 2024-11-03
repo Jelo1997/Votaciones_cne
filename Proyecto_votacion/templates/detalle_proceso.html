@@ -6,13 +6,9 @@
         <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1> 
         <h3 style="font-size: 1.1rem;"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
         <h3 style="font-size: 1rem;">Cédula: {{ sufragante.cedula }}</h3>
-        <img src="{{ proceso.logo.url }}" alt="Logo" class="img-fluid my-2" style="max-width: 200px;"> <!-- Logo del proceso -->
     </div>
     
     <div class="card">
-        <div class="card-header bg-success text-white">
-            <h2 style="font-size: 1.5rem;">Emitir Voto</h2> 
-        </div>
         <div class="card-body">
             <form method="post" id="votoForm">
                 {% csrf_token %}
@@ -23,8 +19,8 @@
                     <div class="col-4 col-md-2 text-center mb-1"> 
                         <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> 
                             <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: contain; width: 160px; height: 160px;"> <!-- Aumentar tamaño de imagen -->
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: contain; width: 160px; height: 160px;"> <!-- Aumentar tamaño de imagen -->
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: contain; width: 300px; height: 300px;"> <!-- Aumentar tamaño de imagen -->
+                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: contain; width: 300px; height: 300px;"> <!-- Aumentar tamaño de imagen -->
                             <br>
                             <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
                         </label>
