@@ -19,40 +19,31 @@
                 {% csrf_token %}
 
                 <h4 style="font-size: 1.2rem;">Seleccione un candidato:</h4>
-                <div class="table-responsive">
-                    <table class="table text-center">
-                        <tbody>
-                            <tr>
-                                {% for candidato in candidatos %}
-                                <td>
-                                    <label for="candidato_{{ candidato.id }}" style="font-size: 1rem;">
-                                        <div style="min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
-                                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 200px; max-height: 200px; object-fit: contain;">
-                                            <div style="font-size: 1.1rem;">{{ candidato.nombre }}</div>
-                                            <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-fluid mt-2" style="max-width: 150px; max-height: 150px; object-fit: contain;">
-                                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" style="transform: scale(1.5);">
-                                        </div>
-                                    </label>
-                                </td>
-                                {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                            </tr><tr>
-                                {% endif %}
-                                {% endfor %}
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row text-center">
+                    {% for candidato in candidatos %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card" style="width: 100%;">
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="card-img-top" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ candidato.nombre }}</h5>
+                                <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-fluid mt-2" style="max-width: 100%; max-height: 100px; object-fit: contain;">
+                                <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" style="transform: scale(1.5); margin-top: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
 
                 <h4 style="font-size: 1.2rem;">O seleccione una de las siguientes opciones:</h4>
                 <div class="row text-center">
                     <div class="col-md-4 mb-3">
-                        <button type="button" class="btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 1rem; height: 200px;">Voto en Blanco</button>
+                        <button type="button" class="btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 1rem; height: 100px;">Voto en Blanco</button>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <button type="button" class="btn btn-danger btn-lg w-100" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 1rem; height: 200px;">Voto Nulo</button>
+                        <button type="button" class="btn btn-danger btn-lg w-100" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 1rem; height: 100px;">Voto Nulo</button>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <button type="button" class="btn btn-success btn-lg w-100" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 1rem; height: 200px;">Confirmar Voto</button>
+                        <button type="button" class="btn btn-success btn-lg w-100" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 1rem; height: 100px;">Confirmar Voto</button>
                     </div>
                 </div>
             </form>
