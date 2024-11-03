@@ -140,9 +140,39 @@
                     onlyInteger: true
                 },
                 seriesBarDistance: 15, // Aumentar espacio entre barras
+                chartPadding: {
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                    bottom: 20
+                }
             };
 
-            new Chartist.Bar('#votacion-chart', data, options);
+            var responsiveOptions = [
+                ['screen and (max-width: 640px)', {
+                    seriesBarDistance: 5,
+                    axisX: {
+                        labelInterpolationFnc: function(value) {
+                            return value.split(' ').slice(0, 1).join(' ');
+                        }
+                    }
+                }]
+            ];
+
+            new Chartist.Bar('#votacion-chart', data, options, responsiveOptions);
+
+            // Personalizar colores de las barras
+            data.series[0].forEach((value, index) => {
+                let color;
+                if (index < {{ resultados|length }}) {
+                    color = '#007bff'; // Color para candidatos
+                } else if (index === {{ resultados|length }}) {
+                    color = '#28a745'; // Color para votos en blanco
+                } else {
+                    color = '#dc3545'; // Color para votos nulos
+                }
+                document.querySelector(`#votacion-chart .ct-bar.ct-bar-${index}`).style.fill = color;
+            });
         });
     </script>
 {% endblock %}
