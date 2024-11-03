@@ -14,7 +14,7 @@
         <h3 class="mb-4" style="color: #4a4a4a; font-size: 1.8em;">Total de Sufragantes: <strong style="color: #002b5c;">{{ total_sufragantes }}</strong></h3>
 
         <div class="table-responsive mb-5">
-            <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Resultados por Candidato</h3>
+            <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Resultados Totales</h3>
             <table class="table table-striped table-hover">
                 <thead class="bg-dark text-white">
                     <tr>
@@ -29,21 +29,13 @@
                         <td style="font-size: 1.2em;">{{ votos }}</td>
                     </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <div class="table-responsive mb-5">
-            <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Votos en Blanco y Nulos</h3>
-            <table class="table table-striped table-hover">
-                <tbody>
                     <tr>
-                        <td style="font-size: 1.5em;">Votos en Blanco</td>
-                        <td style="font-size: 1.5em;">{{ votos_blanco }}</td>
+                        <td style="font-size: 1.2em;">Votos en Blanco</td>
+                        <td style="font-size: 1.2em;">{{ votos_blanco }}</td>
                     </tr>
                     <tr>
-                        <td style="font-size: 1.5em;">Votos Nulos</td>
-                        <td style="font-size: 1.5em;">{{ votos_nulo }}</td>
+                        <td style="font-size: 1.2em;">Votos Nulos</td>
+                        <td style="font-size: 1.2em;">{{ votos_nulo }}</td>
                     </tr>
                 </tbody>
             </table>
