@@ -204,6 +204,7 @@ def resultados_pdf(request, proceso_id):
         'votos_blanco': votos_blanco,
         'votos_nulo': votos_nulo,
         'total_sufragantes': total_sufragantes,
+        'fecha_generacion': fecha_generacion,
     }
 
     
