@@ -52,7 +52,11 @@
 
     <section class="mb-5">
         <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Gráfico de Resultados</h3>
-        <div id="votacion-chart" class="ct-chart ct-major-tenth" style="height: 400px;"></div>
+        <div class="card" style="max-width: 800px; margin: auto;">
+            <div class="card-body">
+                <div id="votacion-chart" class="ct-chart ct-major-tenth" style="height: 400px;"></div>
+            </div>
+        </div>
     </section>
 
     <div class="text-center">
@@ -106,7 +110,7 @@
         }
         /* Mejora de estilos para el gráfico */
         .ct-series .ct-bar {
-            stroke-width: 30px; /* Aumentar el grosor de las barras */
+            stroke-width: 40px; /* Aumentar el grosor de las barras */
         }
     </style>
 {% endblock %}
@@ -131,7 +135,7 @@
             };
 
             var options = {
-                high: Math.max({{ total_sufragantes }}, 300),
+                high: Math.max({{ total_sufragantes }}, 350),
                 plugins: [Chartist.plugins.tooltip()],
                 axisX: {
                     offset: 30,
@@ -143,7 +147,7 @@
                     offset: 40,
                     onlyInteger: true
                 },
-                seriesBarDistance: 10,
+                seriesBarDistance: 15, // Aumentar espacio entre barras
             };
 
             new Chartist.Bar('#votacion-chart', data, options);
