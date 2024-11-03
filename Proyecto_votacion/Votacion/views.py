@@ -197,7 +197,7 @@ def resultados_pdf(request, proceso_id):
     votos_nulo = votos.filter(tipo_voto='nulo').count()
 
     total_sufragantes = votos.values('sufragante').distinct().count()
-
+    fecha_generacion = timezone.now()
     context = {
         'proceso': proceso,
         'resultados': resultados,
