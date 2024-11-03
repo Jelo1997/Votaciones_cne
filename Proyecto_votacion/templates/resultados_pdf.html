@@ -36,11 +36,14 @@
             color: #080808;
             font-size: 1.2em;
         }
+        
         .container {
             background-color: white;
             padding: 20px;
             margin: 0 auto;
             max-width: 800px;
+            box-shadow: none;
+            border: none;
         }
         table {
             width: 100%;
@@ -67,6 +70,22 @@
             font-size: 0.8em;
             margin-top: 10px;
         }
+        .signature-table {
+            width: 100%;
+            margin-top: 50px;
+            border: none;
+        }
+        .signature-table td {
+            text-align: center;
+            font-size: 1em;
+            display: flex;
+        }
+        .signature p {
+            margin: 0;
+        }
+        .signature br {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -82,7 +101,7 @@
     <h2>Fecha de generación: {{ fecha_generacion|date:"d/m/Y H:i:s" }}</h2>
     <h2>Total de Sufragantes: {{ total_sufragantes }}</h2>
 
-    <!-- Tabla de Resultados -->
+    <!-- Tabla combinada -->
     <h2>Resultados del Proceso Electoral</h2>
     <table>
         <thead>
@@ -93,6 +112,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Votos por candidato -->
             {% for candidato, data in resultados.items %}
             <tr>
                 <td>{{ candidato.nombre }}</td>
@@ -100,22 +120,41 @@
                 <td>{{ data.porcentaje | floatformat:2 }}%</td>
             </tr>
             {% endfor %}
+
+            <!-- Votos en blanco -->
             <tr>
                 <td>Votos en Blanco</td>
                 <td>{{ votos_blanco }}</td>
-                <td>{{ porcentaje_blanco }}%</td>
+                <td>{{ porcentaje_blanco | floatformat:2 }}%</td>
             </tr>
+
+            <!-- Votos nulos -->
             <tr>
                 <td>Votos Nulos</td>
                 <td>{{ votos_nulo }}</td>
-                <td>{{ porcentaje_nulo }}%</td>
+                <td>{{ porcentaje_nulo | floatformat:2 }}%</td>
             </tr>
+
+            <!-- No sufragantes -->
             <tr>
                 <td>No Sufragantes</td>
                 <td>{{ no_sufragantes }}</td>
-                <td>{{ porcentaje_no_sufragantes }}%</td>
+                <td>{{ porcentaje_no_sufragantes | floatformat:2 }}%</td>
             </tr>
         </tbody>
+    </table>
+    
+    <table class="signature-table">
+        <tr>
+            <td>
+                <div class="signature-line"></div>
+                <p><strong>Firma 1</strong><br>Consejo Nacional Electoral</p>
+            </td>
+            <td>
+                <div class="signature-line"></div>
+                <p><strong>Firma 2</strong><br>Consejo Nacional Electoral</p>
+            </td>
+        </tr>
     </table>
 </div>
 

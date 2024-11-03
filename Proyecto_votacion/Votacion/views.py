@@ -184,20 +184,21 @@ def resultados_votacion(request, proceso_id):
 
 @login_required_and_staff
 def resultados_pdf(request, proceso_id):
-    # Obtener el proceso electoral y los candidatos
+    # Obtener el proceso y los candidatos
     proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
     candidatos = Candidato.objects.filter(proceso=proceso)
     votos = Voto.objects.filter(proceso=proceso)
 
-    # Inicializar el diccionario de resultados y contar votos
+    # Inicializar diccionario de resultados
     resultados = {}
     total_votos_validos = 0
 
+    # Contar votos por candidato
     for candidato in candidatos:
         votos_validos = votos.filter(candidato=candidato, tipo_voto='valido').count()
         resultados[candidato] = {
             'votos': votos_validos,
-            'porcentaje': 0  # Porcentaje inicializado a 0
+            'porcentaje': 0  # Inicializar porcentaje
         }
         total_votos_validos += votos_validos
 
@@ -205,36 +206,36 @@ def resultados_pdf(request, proceso_id):
     votos_blanco = votos.filter(tipo_voto='blanco').count()
     votos_nulo = votos.filter(tipo_voto='nulo').count()
 
-    # Calcular el total de votos
-    total_votos = total_votos_validos + votos_blanco + votos_nulo
+    # Calcular el total de votos emitidos
+    total_votos_emitidos = total_votos_validos + votos_blanco + votos_nulo
 
-    # Total de sufragantes registrados
-    total_sufragantes = Sufragante.objects.filter(proceso=proceso).count()
+    # Calcular el número total de sufragantes registrados (padron completo)
+    total_sufragantes_registrados = Sufragante.objects.count()
 
-    # Calcular los no sufragantes
-    no_sufragantes = total_sufragantes - total_votos
+    # Calcular el número de no sufragantes
+    no_sufragantes = total_sufragantes_registrados - total_votos_emitidos
 
-    # Calcular porcentajes para los candidatos
+    # Calcular porcentajes para cada candidato
     for candidato, data in resultados.items():
-        if total_votos > 0:
-            data['porcentaje'] = (data['votos'] / total_votos) * 100
+        if total_votos_emitidos > 0:
+            data['porcentaje'] = (data['votos'] / total_votos_emitidos) * 100
 
-    # Calcular porcentajes de votos en blanco, nulos, y no sufragantes
-    if total_votos > 0:
-        porcentaje_blanco = (votos_blanco / total_votos) * 100
-        porcentaje_nulo = (votos_nulo / total_votos) * 100
+    # Calcular porcentajes de votos en blanco, nulos y no sufragantes
+    if total_votos_emitidos > 0:
+        porcentaje_blanco = (votos_blanco / total_votos_emitidos) * 100
+        porcentaje_nulo = (votos_nulo / total_votos_emitidos) * 100
     else:
         porcentaje_blanco = porcentaje_nulo = 0
 
-    if total_sufragantes > 0:
-        porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes) * 100
+    if total_sufragantes_registrados > 0:
+        porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes_registrados) * 100
     else:
         porcentaje_no_sufragantes = 0
 
-    # Fecha de generación del informe
+    # Obtener la fecha de generación
     fecha_generacion = timezone.now()
 
-    # Contexto para la plantilla
+    # Pasar los datos al contexto
     context = {
         'proceso': proceso,
         'resultados': resultados,
@@ -244,18 +245,21 @@ def resultados_pdf(request, proceso_id):
         'porcentaje_nulo': round(porcentaje_nulo, 2),
         'no_sufragantes': no_sufragantes,
         'porcentaje_no_sufragantes': round(porcentaje_no_sufragantes, 2),
-        'total_sufragantes': total_sufragantes,
-        'total_votos': total_votos,
+        'total_sufragantes': total_sufragantes_registrados,
+        'total_votos': total_votos_emitidos,
         'fecha_generacion': fecha_generacion,
     }
 
-    # Renderizar el PDF usando pisa
+    # Renderizar la plantilla y generar el PDF
     template = get_template('resultados_pdf.html')
     html = template.render(context)
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="resultados_{proceso.nombre}.pdf"'
-    pisa_status = pisa.CreatePDF(BytesIO(html.encode('UTF-8')), dest=response)
+    pisa_status = pisa.CreatePDF(
+        BytesIO(html.encode('UTF-8')),
+        dest=response
+    )
 
     if pisa_status.err:
         return HttpResponse(f'Error al generar PDF: {pisa_status.err}', content_type='text/plain')
