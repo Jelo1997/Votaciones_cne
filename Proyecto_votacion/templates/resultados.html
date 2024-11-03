@@ -59,6 +59,7 @@
         <button type="submit" class="btn btn-danger btn-lg">Encerar la Base de Datos</button>
     </form>
 </div>
+{% endblock %}
 
 {% block extra_css %}
     <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
@@ -135,5 +136,4 @@
             new Chartist.Bar('#votacion-chart', data, options);
         });
     </script>
-{% endblock %}
 {% endblock %}
