@@ -2,37 +2,35 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container-fluid mt-3"> 
-    <div class="text-center mb-1"> 
-        <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1> 
-        <h3 style="font-size: 1.1rem;"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
-        <h3 style="font-size: 1rem;">Cédula: {{ sufragante.cedula }}</h3>
+    <div class="text-center mb-3"> 
+        <h1 class="display-4">{{ proceso.nombre }}</h1> 
+        <h3 class="lead"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
+        <h4>Cédula: {{ sufragante.cedula }}</h4>
     </div>
     
     <div class="card">
         <div class="card-body">
             <form method="post" id="votoForm">
                 {% csrf_token %}
-
-                <h3 style="font-size: 1.2rem;">Seleccione un candidato:</h3> 
-                <div class="row mb-2 justify-content-center"> 
+                <h3 class="mb-3">Seleccione un candidato:</h3> 
+                <div class="row mb-4 justify-content-center"> 
                     {% for candidato in candidatos %}
-                    <div class="col-4 col-md-2 text-center mb-1"> 
-                        <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> 
-                            <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: cover; width: 300px; height: 300px;"> <!-- Ajustado para mostrar imagen completa -->
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="object-fit: cover; width: 300px; height: 300px;"> <!-- Ajustado para mostrar imagen completa -->
-                            <br>
-                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
+                    <div class="col-6 col-md-3 text-center mb-4"> 
+                        <label for="candidato_{{ candidato.id }}" class="d-block">
+                            <div class="font-weight-bold mb-2">{{ candidato.nombre }}</div>
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="object-fit: cover; width: 100%; height: 200px;"> <!-- Ajustado para mostrar imagen completa -->
+                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mt-2" style="object-fit: cover; width: 100%; height: 100px;"> <!-- Ajustado para mostrar imagen completa -->
+                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-2" style="transform: scale(1.2);">
                         </label>
                     </div>
                     {% endfor %}
                 </div>
 
-                <h3 style="font-size: 1.2rem;">O seleccione una de las siguientes opciones:</h3> 
-                <div class="text-center mb-1"> 
-                    <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 0.9rem;">Voto en Blanco</button>
-                    <button type="button" class="btn btn-danger btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 0.9rem;">Voto Nulo</button>
-                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 0.9rem;">Confirmar Voto</button>
+                <h3 class="mb-3">O seleccione una de las siguientes opciones:</h3> 
+                <div class="text-center mb-4"> 
+                    <button type="button" class="btn btn-outline-primary btn-lg me-1" data-bs-toggle="modal" data-bs-target="#votoBlancoModal">Voto en Blanco</button>
+                    <button type="button" class="btn btn-outline-danger btn-lg me-1" data-bs-toggle="modal" data-bs-target="#votoNuloModal">Voto Nulo</button>
+                    <button type="button" class="btn btn-outline-success btn-lg" data-bs-toggle="modal" data-bs-target="#confirmarModal">Confirmar Voto</button>
                 </div>
             </form>
         </div>
