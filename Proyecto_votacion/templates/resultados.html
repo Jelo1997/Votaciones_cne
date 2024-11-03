@@ -6,16 +6,16 @@
 <div class="container-fluid py-5">
     <header class="text-center mb-5">
         <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-        <h1 class="mb-0">Consejo Nacional Electoral</h1>
-        <h2 class="text-muted">Delegación Provincial de Pastaza</h2>
+        <h1 class="mb-0" style="color: #002b5c;">Consejo Nacional Electoral</h1>
+        <h2 class="mb-0" style="color: #4a4a4a;">Delegación Provincial de Pastaza</h2>
     </header>
 
     <section>
-        <h2 class="text-primary mb-3">Proceso Electoral: {{ proceso.nombre }}</h2>
-        <h3 class="text-muted mb-4">Total de Sufragantes: {{ total_sufragantes }}</h3>
+        <h2 class="mb-3" style="color: #002b5c;">Proceso Electoral: {{ proceso.nombre }}</h2>
+        <h3 class="mb-4" style="color: #4a4a4a;">Total de Sufragantes: {{ total_sufragantes }}</h3>
 
         <div class="table-responsive mb-5">
-            <h3 class="text-secondary mb-3">Resultados por Candidato</h3>
+            <h3 class="mb-3" style="color: #002b5c;">Resultados por Candidato</h3>
             <table class="table table-striped table-hover">
                 <thead class="bg-dark text-white">
                     <tr>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="table-responsive mb-5">
-            <h3 class="text-secondary mb-3">Votos en Blanco y Nulos</h3>
+            <h3 class="mb-3" style="color: #002b5c;">Votos en Blanco y Nulos</h3>
             <table class="table table-striped table-hover">
                 <tbody>
                     <tr>
@@ -52,7 +52,7 @@
     </section>
 
     <section class="mb-5">
-        <h3 class="text-secondary mb-3">Gráfico de Resultados</h3>
+        <h3 class="mb-3" style="color: #002b5c;">Gráfico de Resultados</h3>
         <div id="votacion-chart" class="ct-chart ct-major-tenth" style="height: 400px;"></div>
     </section>
 
@@ -70,9 +70,6 @@
     <style>
         body {
             background-color: #f4f4f9;
-        }
-        h1, h2, h3 {
-            color: #002b5c;
         }
         .container-fluid {
             background-color: white;
