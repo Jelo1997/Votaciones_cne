@@ -25,11 +25,11 @@
                                 {% for candidato in candidatos %}
                                 <td>
                                     <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;">
-                                        <div style="min-height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                        <div style="min-height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem;">
                                             {{ candidato.nombre }}
                                         </div>
-                                        <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 150px; max-height: 150px; object-fit: contain;">
-                                        <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-fluid mt-2" style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                        <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 200px; max-height: 200px; object-fit: contain;">
+                                        <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-fluid mt-2" style="max-width: 200px; max-height: 200px; object-fit: contain;">
                                         <br>
                                         <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
                                     </label>
