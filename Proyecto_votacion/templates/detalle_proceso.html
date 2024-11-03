@@ -18,18 +18,29 @@
                 {% csrf_token %}
 
                 <h4 style="font-size: 1rem;">Seleccione un candidato:</h4>
-                <div class="row mb-4 justify-content-center">
-                    {% for candidato in candidatos %}
-                    <div class="col-6 col-md-3 text-center mb-3">
-                        <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;">
-                            <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" width="150" height="150" style="object-fit: cover;">
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" width="150" height="150" style="object-fit: cover;">
-                            <br>
-                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
-                        </label>
-                    </div>
-                    {% endfor %}
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <tbody>
+                            <tr>
+                                {% for candidato in candidatos %}
+                                <td>
+                                    <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;">
+                                        <div style="min-height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                            {{ candidato.nombre }}
+                                        </div>
+                                        <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid" style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                        <img src="{{ candidato.imagen_slogan.url }}" alt="logo de {{ candidato.nombre }}" class="img-fluid mt-2" style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                        <br>
+                                        <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
+                                    </label>
+                                </td>
+                                {% if forloop.counter % 4 == 0 %}
+                            </tr><tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <h4 style="font-size: 1rem;">O seleccione una de las siguientes opciones:</h4>
