@@ -166,13 +166,16 @@ def resultados_votacion(request, proceso_id):
     
     
     total_sufragantes = total_votos.values('sufragante').distinct().count()
-   
+    
+    fecha_generacion = timezone.now().strftime('%d de %B de %Y')
+
     context = {
         'proceso': proceso,
         'resultados': resultados,
         'votos_blanco': votos_blanco,
         'votos_nulo': votos_nulo,
         'total_sufragantes': total_sufragantes,  
+        'fecha_generacion': fecha_generacion,
     }
     
     return render(request, 'resultados.html', context)
