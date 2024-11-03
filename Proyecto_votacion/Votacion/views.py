@@ -15,6 +15,7 @@ from xhtml2pdf import pisa
 from .decorators import login_required_and_staff
 from django.template.loader import render_to_string
 from django.utils import timezone
+import matplotlib.pyplot as plt
 
 from .models import ProcesoElectoral, Candidato, Sufragante, Voto
 from .forms import ProcesoElectoralForm, CandidatoForm, SufraganteForm, VotoForm, CedulaForm
@@ -258,4 +259,25 @@ def reiniciar_votacion(request, proceso_id):
     
     return redirect('resultados_votacion', proceso_id=proceso.id)
 
+
+def generar_grafica(resultados, votos_blanco, votos_nulo):
+    candidatos = [candidato.nombre for candidato in resultados.keys()]
+    votos = [votos for votos in resultados.values()]
     
+    # Agregar votos en blanco y nulos
+    candidatos.append('Votos en Blanco')
+    candidatos.append('Votos Nulos')
+    votos.append(votos_blanco)
+    votos.append(votos_nulo)
+
+    plt.figure(figsize=(10, 5))
+    plt.bar(candidatos, votos, color=['blue']*len(resultados) + ['grey', 'red'])
+    plt.xlabel('Candidatos')
+    plt.ylabel('Número de Votos')
+    plt.title('Resultados por Candidato')
+    plt.xticks(rotation=45)
+    
+    # Guardar la figura
+    plt.tight_layout()
+    plt.savefig('static/images/grafica.png')
+    plt.close()
