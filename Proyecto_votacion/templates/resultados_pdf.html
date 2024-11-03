@@ -113,11 +113,11 @@
         </thead>
         <tbody>
             <!-- Votos por candidato -->
-            {% for candidato, votos in resultados.items %}
+            {% for candidato, data in resultados.items %}
             <tr>
                 <td>{{ candidato.nombre }}</td>
-                <td>{{ votos }}</td>
-                <td>{{ (votos/total_votos) | floatformat:2 }}%</td>
+                <td>{{ data.votos }}</td>
+                <td>{{ data.porcentaje | floatformat:2 }}%</td>
             </tr>
             {% endfor %}
 
@@ -125,21 +125,21 @@
             <tr>
                 <td>Votos en Blanco</td>
                 <td>{{ votos_blanco }}</td>
-                <td>{{ (votos_blanco/total_votos) | floatformat:2 }}%</td>
+                <td>{{ porcentaje_blanco | floatformat:2 }}%</td>
             </tr>
 
             <!-- Votos nulos -->
             <tr>
                 <td>Votos Nulos</td>
                 <td>{{ votos_nulo }}</td>
-                <td>{{ (votos_nulo/total_votos) | floatformat:2 }}%</td>
+                <td>{{ porcentaje_nulo | floatformat:2 }}%</td>
             </tr>
 
             <!-- No sufragantes -->
             <tr>
                 <td>No Sufragantes</td>
                 <td>{{ no_sufragantes }}</td>
-                <td>{{ (no_sufragantes/total_votos) | floatformat:2 }}%</td>
+                <td>{{ porcentaje_no_sufragantes | floatformat:2 }}%</td>
             </tr>
         </tbody>
     </table>

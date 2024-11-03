@@ -184,34 +184,76 @@ def resultados_votacion(request, proceso_id):
 
 @login_required_and_staff
 def resultados_pdf(request, proceso_id):
+    # Obtener el proceso y los candidatos
     proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
     candidatos = Candidato.objects.filter(proceso=proceso)
     votos = Voto.objects.filter(proceso=proceso)
 
+    # Inicializar diccionario de resultados
     resultados = {}
+    total_votos_validos = 0
+
+    # Contar votos por candidato
     for candidato in candidatos:
         votos_validos = votos.filter(candidato=candidato, tipo_voto='valido').count()
-        resultados[candidato] = votos_validos
+        resultados[candidato] = {
+            'votos': votos_validos,
+            'porcentaje': 0  # Inicializar porcentaje
+        }
+        total_votos_validos += votos_validos
 
+    # Contar votos en blanco y nulos
     votos_blanco = votos.filter(tipo_voto='blanco').count()
     votos_nulo = votos.filter(tipo_voto='nulo').count()
 
+    # Calcular el total de votos
+    total_votos = total_votos_validos + votos_blanco + votos_nulo
+
+    # Calcular el número total de sufragantes
     total_sufragantes = votos.values('sufragante').distinct().count()
+
+    # Calcular el número de no sufragantes
+    no_sufragantes = total_sufragantes - total_votos
+
+    # Calcular porcentajes para cada candidato
+    for candidato, data in resultados.items():
+        if total_votos > 0:
+            data['porcentaje'] = (data['votos'] / total_votos) * 100
+
+    # Calcular porcentajes de votos en blanco, nulos y no sufragantes
+    if total_votos > 0:
+        porcentaje_blanco = (votos_blanco / total_votos) * 100
+        porcentaje_nulo = (votos_nulo / total_votos) * 100
+    else:
+        porcentaje_blanco = porcentaje_nulo = 0
+
+    if total_sufragantes > 0:
+        porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes) * 100
+    else:
+        porcentaje_no_sufragantes = 0
+
+    # Obtener la fecha de generación
     fecha_generacion = timezone.now()
+
+    # Pasar los datos al contexto
     context = {
         'proceso': proceso,
         'resultados': resultados,
         'votos_blanco': votos_blanco,
+        'porcentaje_blanco': round(porcentaje_blanco, 2),
         'votos_nulo': votos_nulo,
+        'porcentaje_nulo': round(porcentaje_nulo, 2),
+        'no_sufragantes': no_sufragantes,
+        'porcentaje_no_sufragantes': round(porcentaje_no_sufragantes, 2),
         'total_sufragantes': total_sufragantes,
+        'total_votos': total_votos,
         'fecha_generacion': fecha_generacion,
     }
 
-    
+    # Renderizar la plantilla y generar el PDF
     template = get_template('resultados_pdf.html')
     html = template.render(context)
 
-   
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="resultados_{proceso.nombre}.pdf"'
     pisa_status = pisa.CreatePDF(
@@ -219,7 +261,6 @@ def resultados_pdf(request, proceso_id):
         dest=response
     )
 
-    
     if pisa_status.err:
         return HttpResponse(f'Error al generar PDF: {pisa_status.err}', content_type='text/plain')
 
