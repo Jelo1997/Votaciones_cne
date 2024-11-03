@@ -6,26 +6,26 @@
 
     <header class="text-center mb-5">
         <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-        <h1 class="mb-0" style="color: #002b5c;">Consejo Nacional Electoral Delegación Provincial de Pastaza</h1>
-        <h2 class="mb-0" style="color: #002b5c;">{{ proceso.nombre }}</h2>
+        <h1 class="mb-0" style="color: #002b5c; font-size: 2.5em;">Consejo Nacional Electoral Delegación Provincial de Pastaza</h1>
+        <h2 class="mb-0" style="color: #002b5c; font-size: 2em;">{{ proceso.nombre }}</h2>
     </header>
     <section>
-        <h3 class="mb-4" style="color: #4a4a4a;">Total de Sufragantes: {{ total_sufragantes }}</h3>
+        <h3 class="mb-4" style="color: #4a4a4a; font-size: 1.8em;">Total de Sufragantes: <strong style="color: #002b5c;">{{ total_sufragantes }}</strong></h3>
 
         <div class="table-responsive mb-5">
-            <h3 class="mb-3" style="color: #002b5c;">Resultados por Candidato</h3>
+            <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Resultados por Candidato</h3>
             <table class="table table-striped table-hover">
                 <thead class="bg-dark text-white">
                     <tr>
-                        <th>Candidato</th>
-                        <th>Votos</th>
+                        <th style="font-size: 1.5em;">Candidato</th>
+                        <th style="font-size: 1.5em;">Votos</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for candidato, votos in resultados.items %}
                     <tr>
-                        <td>{{ candidato.nombre }}</td>
-                        <td>{{ votos }}</td>
+                        <td style="font-size: 1.2em;">{{ candidato.nombre }}</td>
+                        <td style="font-size: 1.2em;">{{ votos }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -33,16 +33,16 @@
         </div>
 
         <div class="table-responsive mb-5">
-            <h3 class="mb-3" style="color: #002b5c;">Votos en Blanco y Nulos</h3>
+            <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Votos en Blanco y Nulos</h3>
             <table class="table table-striped table-hover">
                 <tbody>
                     <tr>
-                        <td>Votos en Blanco</td>
-                        <td>{{ votos_blanco }}</td>
+                        <td style="font-size: 1.5em;">Votos en Blanco</td>
+                        <td style="font-size: 1.5em;">{{ votos_blanco }}</td>
                     </tr>
                     <tr>
-                        <td>Votos Nulos</td>
-                        <td>{{ votos_nulo }}</td>
+                        <td style="font-size: 1.5em;">Votos Nulos</td>
+                        <td style="font-size: 1.5em;">{{ votos_nulo }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -50,14 +50,14 @@
     </section>
 
     <section class="mb-5">
-        <h3 class="mb-3" style="color: #002b5c;">Gráfico de Resultados</h3>
+        <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Gráfico de Resultados</h3>
         <div id="votacion-chart" class="ct-chart ct-major-tenth" style="height: 400px;"></div>
     </section>
 
     <div class="text-center">
         <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger btn-lg">Encerar la Base de Datos</button>
+            <button type="submit" class="btn btn-danger btn-lg">Encerrar la Base de Datos</button>
         </form>
     </div>
 
@@ -77,10 +77,14 @@
         }
         table {
             margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
         }
         .table th, .table td {
             text-align: center;
             vertical-align: middle;
+            padding: 15px; /* Añadir padding para más espacio */
         }
         .table-striped tbody tr:nth-of-type(odd) {
             background-color: #e9ecef;
