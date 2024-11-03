@@ -14,6 +14,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .decorators import login_required_and_staff
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 from .models import ProcesoElectoral, Candidato, Sufragante, Voto
 from .forms import ProcesoElectoralForm, CandidatoForm, SufraganteForm, VotoForm, CedulaForm
