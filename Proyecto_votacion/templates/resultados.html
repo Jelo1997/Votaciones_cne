@@ -3,15 +3,13 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid py-5">
+
     <header class="text-center mb-5">
         <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-        <h1 class="mb-0" style="color: #002b5c;">Consejo Nacional Electoral</h1>
-        <h2 class="mb-0" style="color: #4a4a4a;">Delegación Provincial de Pastaza</h2>
+        <h1 class="mb-0" style="color: #002b5c;">Consejo Nacional Electoral Delegación Provincial de Pastaza</h1>
+        <h2 class="mb-0" style="color: #002b5c;">{{ proceso.nombre }}</h2>
     </header>
-
     <section>
-        <h2 class="mb-3" style="color: #002b5c;">Proceso Electoral: {{ proceso.nombre }}</h2>
         <h3 class="mb-4" style="color: #4a4a4a;">Total de Sufragantes: {{ total_sufragantes }}</h3>
 
         <div class="table-responsive mb-5">
@@ -62,7 +60,7 @@
             <button type="submit" class="btn btn-danger btn-lg">Encerar la Base de Datos</button>
         </form>
     </div>
-</div>
+
 {% endblock %}
 
 {% block extra_css %}
