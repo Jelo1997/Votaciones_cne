@@ -2,29 +2,29 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container-fluid mt-4"> 
-    <div class="text-center mb-2"> <!-- Reduce el margen inferior -->
-        <h1 style="font-size: 1.2rem;">{{ proceso.nombre }}</h1> <!-- Texto más pequeño para el título -->
-        <h3 style="font-size: 1rem;"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
-        <h3 style="font-size: 0.9rem;">Cédula: {{ sufragante.cedula }}</h3>
+<div class="container-fluid mt-3"> <!-- Ajuste en el margen superior -->
+    <div class="text-center mb-1"> <!-- Reduce el margen inferior -->
+        <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1> <!-- Aumentar tamaño del título -->
+        <h3 style="font-size: 1.1rem;"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
+        <h3 style="font-size: 1rem;">Cédula: {{ sufragante.cedula }}</h3>
     </div>
     
     <div class="card">
         <div class="card-header bg-success text-white">
-            <h2 style="font-size: 1.2rem;">Emitir Voto</h2> <!-- Reducir el tamaño del texto -->
+            <h2 style="font-size: 1.5rem;">Emitir Voto</h2> <!-- Aumentar tamaño del texto -->
         </div>
         <div class="card-body">
             <form method="post" id="votoForm">
                 {% csrf_token %}
 
-                <h3 style="font-size: 1.1rem;">Seleccione un candidato:</h3> <!-- Reducir el tamaño del texto -->
-                <div class="row mb-3 justify-content-center"> <!-- Alinear al centro -->
+                <h3 style="font-size: 1.2rem;">Seleccione un candidato:</h3> <!-- Aumentar tamaño del texto -->
+                <div class="row mb-2 justify-content-center"> <!-- Reduce el margen inferior -->
                     {% for candidato in candidatos %}
-                    <div class="col-4 col-md-2 text-center mb-2"> <!-- Ajustar el tamaño para más imágenes por fila -->
-                        <label for="candidato_{{ candidato.id }}" style="font-size: 0.8rem;"> <!-- Texto más pequeño para los nombres -->
+                    <div class="col-4 col-md-2 text-center mb-1"> <!-- Reduce el margen inferior en cada candidato -->
+                        <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> <!-- Aumentar tamaño del texto de los nombres -->
                             <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" style="object-fit: cover; width: 120px; height: 120px;"> <!-- Reducir tamaño de imagen -->
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" style="object-fit: cover; width: 120px; height: 120px;"> <!-- Reducir tamaño de imagen -->
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" style="object-fit: cover; width: 160px; height: 160px;"> <!-- Aumentar tamaño de imagen -->
+                            <img src="{{ candidato.imagen_slogan.url }}" alt="imagen de {{ candidato.nombre }}" class="img-thumbnail mb-1" style="object-fit: cover; width: 160px; height: 160px;"> <!-- Aumentar tamaño de imagen -->
                             <br>
                             <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
                         </label>
@@ -32,11 +32,11 @@
                     {% endfor %}
                 </div>
 
-                <h3 style="font-size: 1.1rem;">O seleccione una de las siguientes opciones:</h3> <!-- Reducir el tamaño del texto -->
-                <div class="text-center mb-2">
-                    <button type="button" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 0.8rem;">Voto en Blanco</button>
-                    <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 0.8rem;">Voto Nulo</button>
-                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 0.8rem;">Confirmar Voto</button>
+                <h3 style="font-size: 1.2rem;">O seleccione una de las siguientes opciones:</h3> <!-- Aumentar tamaño del texto -->
+                <div class="text-center mb-1"> <!-- Reduce el margen inferior -->
+                    <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 0.9rem;">Voto en Blanco</button>
+                    <button type="button" class="btn btn-danger btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 0.9rem;">Voto Nulo</button>
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 0.9rem;">Confirmar Voto</button>
                 </div>
             </form>
         </div>
