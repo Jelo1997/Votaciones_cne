@@ -210,7 +210,7 @@ def resultados_pdf(request, proceso_id):
     plt.tight_layout()
 
     # Guardar la gráfica como imagen
-    graph_path = f"media/resultado_{proceso_id}.png"
+    graph_path = f"/media/resultado_{proceso_id}.png"
     plt.savefig(graph_path)
     plt.close()
 
