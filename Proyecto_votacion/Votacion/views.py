@@ -183,16 +183,6 @@ def resultados_votacion(request, proceso_id):
     
     return render(request, 'resultados.html', context)
 
-import matplotlib.pyplot as plt
-from matplotlib import rcParams
-from io import BytesIO
-import base64
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from xhtml2pdf import pisa
-from .models import ProcesoElectoral, Candidato, Voto, Sufragante
-from django.utils import timezone
-
 @login_required_and_staff
 def resultados_pdf(request, proceso_id):
     # Obtener el proceso y los candidatos
@@ -234,14 +224,9 @@ def resultados_pdf(request, proceso_id):
     porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes_registrados) * 100 if total_sufragantes_registrados > 0 else 0
 
     # Generar gráfico con Matplotlib
-    fig, ax = plt.subplots(figsize=(4, 3))
+    fig, ax = plt.subplots(figsize=(3, 2))
     labels = [candidato.nombre for candidato in candidatos] + ['Blanco', 'Nulo']
     votos_data = [data['votos'] for data in resultados.values()] + [votos_blanco, votos_nulo]
-
-    # Ajustar la fuente y el tamaño
-    rcParams['font.family'] = 'serif'
-    rcParams['font.serif'] = ['Times New Roman']
-    rcParams['font.size'] = 10  # Cambiar el tamaño de la fuente a un tamaño más pequeño
 
     ax.bar(labels, votos_data, color=['#007bff', '#28a745', '#dc3545'])  # Colores para barras
     ax.set_ylabel('Votos')
@@ -283,7 +268,6 @@ def resultados_pdf(request, proceso_id):
         return HttpResponse(f'Error al generar PDF: {pisa_status.err}', content_type='text/plain')
 
     return response
-
 
 
 @login_required_and_staff
