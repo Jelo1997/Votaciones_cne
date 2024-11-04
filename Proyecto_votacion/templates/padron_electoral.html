@@ -11,6 +11,14 @@
             background-color: #f4f4f9;
             color: #333;
         }
+        header {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        header img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
         h1 {
             color: #002b5c;
             text-align: center;
@@ -43,6 +51,11 @@
     </style>
 </head>
 <body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/CNE_Ecuador.svg" alt="Logo CNE">
+        <h1>Consejo Nacional Electoral</h1>
+        <h1>Delegación Provincial de Pastaza</h1>
+    </header>
     <h1>Padrón Electoral - {{ proceso.nombre }}</h1>
     <p>Total de votantes: <strong>{{ votantes|length }}</strong></p>
     <table>
