@@ -6,50 +6,54 @@
 
 {% block content %}
 
-<header class="text-center mb-5">
+<header class="text-center mb-4">
     <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-    <h1 class="mb-0 text-primary display-4">Consejo Nacional Electoral</h1>
-    <h2 class="mb-0 text-primary display-5">Delegación Provincial de Pastaza</h2>
-    <h2 class="mb-4 text-primary">{{ proceso.nombre }}</h2>
+    <h1 class="text-primary">Consejo Nacional Electoral</h1>
+    <h2 class="text-primary">{{ proceso.nombre }}</h2>
+    <h3 class="mb-4 text-muted">Total de Sufragantes: <strong class="text-primary">{{ total_sufragantes }}</strong></h3>
 </header>
 
 <section class="mb-5">
-    <h3 class="mb-4 text-muted">Total de Sufragantes: <strong class="text-primary">{{ total_sufragantes }}</strong></h3>
-
     <div class="row">
-        <div class="col-md-6">
-            <div class="table-responsive mb-5">
-                <h3 class="mb-3 text-primary">Resultados Totales</h3>
-                <table class="table table-striped table-hover">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            <th scope="col" class="text-center">Candidato</th>
-                            <th scope="col" class="text-center">Votos</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for candidato, votos in resultados.items %}
-                        <tr>
-                            <td class="text-center">{{ candidato.nombre }}</td>
-                            <td class="text-center">{{ votos }}</td>
-                        </tr>
-                        {% endfor %}
-                        <tr>
-                            <td class="text-center"><strong>Votos en Blanco</strong></td>
-                            <td class="text-center">{{ votos_blanco }}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><strong>Votos Nulos</strong></td>
-                            <td class="text-center">{{ votos_nulo }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Resultados Totales</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Candidato</th>
+                                <th scope="col" class="text-center">Votos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for candidato, votos in resultados.items %}
+                            <tr>
+                                <td class="text-center">{{ candidato.nombre }}</td>
+                                <td class="text-center">{{ votos }}</td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td class="text-center"><strong>Votos en Blanco</strong></td>
+                                <td class="text-center">{{ votos_blanco }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><strong>Votos Nulos</strong></td>
+                                <td class="text-center">{{ votos_nulo }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <h3 class="mb-3 text-primary">Gráfico de Resultados</h3>
-            <div class="card mx-auto" style="max-width: 700px; background-color: #ffffff; border: 1px solid #dee2e6;">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Gráfico de Resultados</h4>
+                </div>
                 <div class="card-body">
                     <div id="votacion-chart" class="ct-chart" style="height: 450px; padding: 20px;"></div>
                 </div>
