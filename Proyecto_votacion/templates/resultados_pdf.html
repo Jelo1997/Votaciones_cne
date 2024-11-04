@@ -22,16 +22,17 @@
         header {
             text-align: center;
             margin-bottom: 5px;
+            padding: 0; /* Eliminar padding */
         }
 
         header img {
-            width: 80px; /* Reducir tamaño del logo */
-            margin-bottom: 5px;
+            width: 50px; /* Reducir tamaño del logo */
+            margin-bottom: 0; /* Eliminar margen inferior */
         }
 
         h1 {
             margin: 0;
-            font-size: 2em; /* Reducir el tamaño de los títulos */
+            font-size: 1.5em; /* Reducir el tamaño de los títulos */
             color: #003366;
         }
 
@@ -112,6 +113,12 @@
             height: auto;
             max-height: 300px; /* Limitar la altura */
         }
+
+        .centered-graph {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -171,7 +178,9 @@
     </table>
 
     <h2>Gráfico de Resultados</h2>
-    <img src="{{ image_uri }}" alt="Gráfico de Resultados">
+    <div class="centered-graph">
+        <img src="{{ image_uri }}" alt="Gráfico de Resultados">
+    </div>
 
     <table class="signature-table">
         <tr>
