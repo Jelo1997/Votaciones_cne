@@ -2,177 +2,179 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+{% block title %}Resultados de Votación{% endblock %}
+
 {% block content %}
 
-    <header class="text-center mb-5">
-        <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-        <h1 class="mb-0" style="color: #002b5c; font-size: 2.5em;">Consejo Nacional Electoral Delegación Provincial de Pastaza</h1>
-        <h2 class="mb-0" style="color: #002b5c; font-size: 2em;">{{ proceso.nombre }}</h2>
-    </header>
+<header class="text-center mb-5">
+    <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
+    <h1 class="mb-0" style="color: #002b5c; font-size: 2.5em;">Consejo Nacional Electoral Delegación Provincial de Pastaza</h1>
+    <h2 class="mb-0" style="color: #002b5c; font-size: 2em;">{{ proceso.nombre }}</h2>
+</header>
 
-    <section class="mb-5">
-        <h3 class="mb-4" style="color: #4a4a4a; font-size: 1.8em;">Total de Sufragantes: <strong style="color: #002b5c;">{{ total_sufragantes }}</strong></h3>
+<section class="mb-5">
+    <h3 class="mb-4" style="color: #4a4a4a; font-size: 1.8em;">Total de Sufragantes: <strong style="color: #002b5c;">{{ total_sufragantes }}</strong></h3>
 
-        <div class="table-responsive mb-5">
-            <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Resultados Totales</h3>
-            <table class="table table-striped table-hover">
-                <thead class="bg-dark text-white">
-                    <tr>
-                        <th style="font-size: 1.5em;">Candidato</th>
-                        <th style="font-size: 1.5em;">Votos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for candidato, votos in resultados.items %}
-                    <tr>
-                        <td style="font-size: 1.2em;">{{ candidato.nombre }}</td>
-                        <td style="font-size: 1.2em;">{{ votos }}</td>
-                    </tr>
-                    {% endfor %}
-                    <tr>
-                        <td style="font-size: 1.2em;">Votos en Blanco</td>
-                        <td style="font-size: 1.2em;">{{ votos_blanco }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: 1.2em;">Votos Nulos</td>
-                        <td style="font-size: 1.2em;">{{ votos_nulo }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <section class="mb-5">
-        <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Gráfico de Resultados</h3>
-        <div class="card" style="max-width: 800px; margin: auto;">
-            <div class="card-body">
-                <div id="votacion-chart" class="ct-chart ct-major-tenth" style="height: 400px;"></div>
-            </div>
-        </div>
-    </section>
-
-    <div class="text-center">
-        <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger btn-lg">Encerrar la Base de Datos</button>
-        </form>
+    <div class="table-responsive mb-5">
+        <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Resultados Totales</h3>
+        <table class="table table-striped table-hover">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th style="font-size: 1.5em;">Candidato</th>
+                    <th style="font-size: 1.5em;">Votos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidato, votos in resultados.items %}
+                <tr>
+                    <td style="font-size: 1.2em;">{{ candidato.nombre }}</td>
+                    <td style="font-size: 1.2em;">{{ votos }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td style="font-size: 1.2em;">Votos en Blanco</td>
+                    <td style="font-size: 1.2em;">{{ votos_blanco }}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 1.2em;">Votos Nulos</td>
+                    <td style="font-size: 1.2em;">{{ votos_nulo }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+</section>
 
+<section class="mb-5">
+    <h3 class="mb-3" style="color: #002b5c; font-size: 1.8em;">Gráfico de Resultados</h3>
+    <div class="card" style="max-width: 800px; margin: auto;">
+        <div class="card-body">
+            <div id="votacion-chart" class="ct-chart ct-major-tenth" style="height: 400px;"></div>
+        </div>
+    </div>
+</section>
 
+<div class="text-center">
+    <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-lg">Encerrar la Base de Datos</button>
+    </form>
+</div>
+
+{% endblock %}
 
 {% block extra_css %}
-    <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f4f4f9;
-        }
-        .container-fluid {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        h3 {
-            text-align: left;
-        }
-        table {
-            margin-bottom: 30px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
-            padding: 15px; 
-        }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #e9ecef;
-        }
-        .btn-danger {
-            padding: 12px 45px;
-            font-size: 1.2em;
-        }
-        header img {
-            margin-bottom: 15px;
-        }
-        .ct-chart {
-            height: 400px; 
-            width: 100%; 
-        }
-        /* Mejora de estilos para el gráfico */
-        .ct-series .ct-bar {
-            stroke-width: 40px; /* Aumentar el grosor de las barras */
-        }
-    </style>
+<link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
+<style>
+    body {
+        background-color: #f4f4f9;
+    }
+    .container-fluid {
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    h3 {
+        text-align: left;
+    }
+    table {
+        margin-bottom: 30px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 15px; 
+    }
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #e9ecef;
+    }
+    .btn-danger {
+        padding: 12px 45px;
+        font-size: 1.2em;
+    }
+    header img {
+        margin-bottom: 15px;
+    }
+    .ct-chart {
+        height: 400px; 
+        width: 100%; 
+    }
+    /* Mejora de estilos para el gráfico */
+    .ct-series .ct-bar {
+        stroke-width: 40px; /* Aumentar el grosor de las barras */
+    }
+</style>
 {% endblock %}
 
 {% block extra_javascript %}
-    <script src="{% static 'libs/chartist/dist/chartist.min.js' %}"></script>
-    <script src="{% static 'libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
+<script src="{% static 'libs/chartist/dist/chartist.min.js' %}"></script>
+<script src="{% static 'libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var data = {
-                labels: [
-                    {% for candidato, votos in resultados.items %}
-                    '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}{% endfor %},
-                    'Votos en Blanco', 'Votos Nulos'
-                ],
-                series: [[
-                    {% for candidato, votos in resultados.items %}
-                    {{ votos }}{% if not forloop.last %}, {% endif %}{% endfor %},
-                    {{ votos_blanco }}, {{ votos_nulo }}
-                ]]
-            };
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var data = {
+            labels: [
+                {% for candidato, votos in resultados.items %}
+                '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}{% endfor %},
+                'Votos en Blanco', 'Votos Nulos'
+            ],
+            series: [[
+                {% for candidato, votos in resultados.items %}
+                {{ votos }}{% if not forloop.last %}, {% endif %}{% endfor %},
+                {{ votos_blanco }}, {{ votos_nulo }}
+            ]]
+        };
 
-            var options = {
-                high: Math.max({{ total_sufragantes }}, 350),
-                plugins: [Chartist.plugins.tooltip()],
+        var options = {
+            high: Math.max({{ total_sufragantes }}, 350),
+            plugins: [Chartist.plugins.tooltip()],
+            axisX: {
+                offset: 30,
+                labelInterpolationFnc: function(value, index) {
+                    return value.length > 10 ? value.slice(0, 10) + '...' : value;
+                },
+            },
+            axisY: {
+                offset: 40,
+                onlyInteger: true
+            },
+            seriesBarDistance: 15, // Aumentar espacio entre barras
+            chartPadding: {
+                left: 20,
+                right: 20,
+                top: 20,
+                bottom: 20
+            }
+        };
+
+        var responsiveOptions = [
+            ['screen and (max-width: 640px)', {
+                seriesBarDistance: 5,
                 axisX: {
-                    offset: 30,
-                    labelInterpolationFnc: function(value, index) {
-                        return value.length > 10 ? value.slice(0, 10) + '...' : value;
-                    },
-                },
-                axisY: {
-                    offset: 40,
-                    onlyInteger: true
-                },
-                seriesBarDistance: 15, // Aumentar espacio entre barras
-                chartPadding: {
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                    bottom: 20
-                }
-            };
-
-            var responsiveOptions = [
-                ['screen and (max-width: 640px)', {
-                    seriesBarDistance: 5,
-                    axisX: {
-                        labelInterpolationFnc: function(value) {
-                            return value.split(' ').slice(0, 1).join(' ');
-                        }
+                    labelInterpolationFnc: function(value) {
+                        return value.split(' ').slice(0, 1).join(' ');
                     }
-                }]
-            ];
-
-            new Chartist.Bar('#votacion-chart', data, options, responsiveOptions);
-
-            // Personalizar colores de las barras
-            data.series[0].forEach((value, index) => {
-                let color;
-                if (index < {{ resultados|length }}) {
-                    color = '#007bff'; // Color para candidatos
-                } else if (index === {{ resultados|length }}) {
-                    color = '#28a745'; // Color para votos en blanco
-                } else {
-                    color = '#dc3545'; // Color para votos nulos
                 }
-                document.querySelector(`#votacion-chart .ct-bar.ct-bar-${index}`).style.fill = color;
-            });
+            }]
+        ];
+
+        new Chartist.Bar('#votacion-chart', data, options, responsiveOptions);
+
+        // Personalizar colores de las barras
+        data.series[0].forEach((value, index) => {
+            let color;
+            if (index < {{ resultados|length }}) {
+                color = '#007bff'; // Color para candidatos
+            } else if (index === {{ resultados|length }}) {
+                color = '#28a745'; // Color para votos en blanco
+            } else {
+                color = '#dc3545'; // Color para votos nulos
+            }
+            document.querySelector(`#votacion-chart .ct-bar.ct-bar-${index}`).style.fill = color;
         });
-    </script>
+    });
+</script>
 {% endblock %}
