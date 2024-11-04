@@ -8,9 +8,9 @@
 
 <header class="text-center mb-4">
     <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-    <h1 class="text-primary">Consejo Nacional Electoral</h1>
-    <h2 class="text-primary">{{ proceso.nombre }}</h2>
-    <h3 class="mb-4 text-muted">Total de Sufragantes: <strong class="text-primary">{{ total_sufragantes }}</strong></h3>
+    <h1>Consejo Nacional Electoral</h1>
+    <h2>{{ proceso.nombre }}</h2>
+    <h3 class="mb-4 text-muted">Total de Sufragantes: <strong>{{ total_sufragantes }}</strong></h3>
 </header>
 
 <section class="mb-5">
@@ -74,7 +74,6 @@
 {% block extra_css %}
 <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
 <style>
-    
     .container-fluid {
         padding: 40px;
         border-radius: 10px;
