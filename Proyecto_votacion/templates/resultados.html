@@ -8,8 +8,9 @@
 
 <header class="text-center mb-5">
     <img src="{% static 'images/LOGO_CNE.png' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-    <h1 class="mb-0 text-primary display-4">Consejo Nacional Electoral Delegación Provincial de Pastaza</h1>
-    <h2 class="mb-0 text-primary display-5">{{ proceso.nombre }}</h2>
+    <h1 class="mb-0 text-primary display-4">Consejo Nacional Electoral</h1>
+    <h2 class="mb-0 text-primary display-5">Delegación Provincial de Pastaza</h2>
+    <h2 class="mb-4 text-primary">{{ proceso.nombre }}</h2>
 </header>
 
 <section class="mb-5">
@@ -46,7 +47,7 @@
 
 <section class="mb-5">
     <h3 class="mb-3 text-primary">Gráfico de Resultados</h3>
-    <div class="card mx-auto" style="max-width: 800px;">
+    <div class="card mx-auto" style="max-width: 900px;">
         <div class="card-body">
             <div id="votacion-chart" class="ct-chart" style="height: 400px;"></div>
         </div>
@@ -101,7 +102,6 @@
         height: 400px; 
         width: 100%; 
     }
-    /* Mejora de estilos para el gráfico */
     .ct-series .ct-bar {
         stroke-width: 40px; /* Aumentar el grosor de las barras */
     }
@@ -140,7 +140,7 @@
                 offset: 40,
                 onlyInteger: true
             },
-            seriesBarDistance: 15, // Aumentar espacio entre barras
+            seriesBarDistance: 15,
             chartPadding: {
                 left: 20,
                 right: 20,
