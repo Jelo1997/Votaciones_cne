@@ -16,18 +16,16 @@
             margin: 0;
             padding: 10px;
             background-color: #fff;
-            font-size: 12px; /* Reducir tamaño de fuente */
+            font-size: 10px; /* Reducir tamaño de fuente */
         }
 
         header {
             text-align: center;
             margin-bottom: 5px;
-            padding: 0; /* Eliminar padding */
         }
 
         header img {
             width: 50px; /* Reducir tamaño del logo */
-            margin-bottom: 0; /* Eliminar margen inferior */
         }
 
         .header-container {
@@ -42,27 +40,27 @@
 
         .header-container h1 {
             margin: 0;
-            font-size: 1.8em; /* Tamaño más pequeño para títulos */
+            font-size: 1.5em; /* Tamaño más pequeño para títulos */
             color: #003366;
             text-align: center;
         }
 
         h2 {
             color: #003366;
-            margin-bottom: 8px; /* Reducir margen entre elementos */
+            margin-bottom: 5px; /* Reducir margen entre elementos */
             border-bottom: 1px solid #003366;
             padding-bottom: 5px;
-            font-size: 1em; /* Reducir tamaño del subtítulo */
+            font-size: 1.2em; /* Tamaño reducido para subtítulos */
         }
 
         p {
             color: #080808;
-            font-size: 1em; /* Reducir tamaño de las descripciones */
+            font-size: 0.9em; /* Reducir tamaño de las descripciones */
         }
 
         .container {
             background-color: white;
-            padding: 10px; /* Reducir el padding */
+            padding: 10px;
             margin: 0 auto;
             max-width: 100%; /* Usar todo el ancho disponible */
         }
@@ -71,11 +69,11 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 10px;
-            font-size: 1em; /* Reducir tamaño de las tablas */
+            font-size: 0.9em; /* Reducir tamaño de las tablas */
         }
 
         th, td {
-            padding: 3px; /* Reducir el padding de las celdas */
+            padding: 4px; /* Reducir el padding de las celdas */
             text-align: left;
             border: 1px solid #ccc;
         }
@@ -87,25 +85,25 @@
         }
 
         td {
-            font-size: 2em;
+            font-size: 0.9em; /* Ajustar tamaño de texto en celdas */
         }
 
         footer {
             text-align: center;
             color: #666;
-            font-size: 1em;
+            font-size: 0.9em; /* Ajustar tamaño de texto en pie de página */
             margin-top: 5px;
         }
 
         .signature-table {
             width: 100%;
-            margin-top: 50px; /* Restablecer espacio antes de las firmas */
+            margin-top: 50px; /* Espacio antes de las firmas */
             border: none;
         }
 
         .signature-table td {
             text-align: center;
-            font-size: 1em; /* Ajuste tamaño de texto en firmas */
+            font-size: 0.9em; /* Ajuste tamaño de texto en firmas */
         }
 
         .signature-line {
@@ -145,7 +143,6 @@
     <h2>Fecha de generación: {{ fecha_generacion|date:"d/m/Y H:i:s" }}</h2>
     <h2>Total de Sufragantes: {{ total_sufragantes }}</h2>
 
-    <!-- Tabla combinada -->
     <h2>Resultados del Proceso Electoral</h2>
     <table>
         <thead>
@@ -156,7 +153,6 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Votos por candidato -->
             {% for candidato, data in resultados.items %}
             <tr>
                 <td>{{ candidato.nombre }}</td>
@@ -164,22 +160,16 @@
                 <td>{{ data.porcentaje | floatformat:2 }}%</td>
             </tr>
             {% endfor %}
-
-            <!-- Votos en blanco -->
             <tr>
                 <td>Votos en Blanco</td>
                 <td>{{ votos_blanco }}</td>
                 <td>{{ porcentaje_blanco | floatformat:2 }}%</td>
             </tr>
-
-            <!-- Votos nulos -->
             <tr>
                 <td>Votos Nulos</td>
                 <td>{{ votos_nulo }}</td>
                 <td>{{ porcentaje_nulo | floatformat:2 }}%</td>
             </tr>
-
-            <!-- No sufragantes -->
             <tr>
                 <td>No Sufragantes</td>
                 <td>{{ no_sufragantes }}</td>
