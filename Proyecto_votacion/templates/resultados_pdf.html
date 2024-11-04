@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,85 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados Oficiales - CNE Ecuador</title>
     <style>
+        /* Ajustes para impresión */
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
         body {
             font-family: 'Times New Roman', serif;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background-color: #fff;
+            font-size: 12px; /* Reducir tamaño de fuente */
         }
+
         header {
             text-align: center;
             margin-bottom: 5px;
         }
+
         header img {
-            width: 100px;
-            margin-bottom: 10px;
+            width: 80px; /* Reducir tamaño del logo */
+            margin-bottom: 5px;
         }
+
         h1 {
             margin: 0;
-            font-size: 3em;
+            font-size: 2em; /* Reducir el tamaño de los títulos */
             color: #003366;
         }
+
         h2 {
             color: #003366;
-            margin-bottom: 15px;
+            margin-bottom: 8px; /* Reducir margen entre elementos */
             border-bottom: 1px solid #003366;
             padding-bottom: 5px;
-            font-size: 1.2em;
+            font-size: 1em; /* Reducir tamaño del subtítulo */
         }
+
         p {
             color: #080808;
-            font-size: 1.2em;
+            font-size: 1em; /* Reducir tamaño de las descripciones */
         }
-        
+
         .container {
             background-color: white;
-            padding: 20px;
+            padding: 10px; /* Reducir el padding */
             margin: 0 auto;
-            max-width: 800px;
-            box-shadow: none;
-            border: none;
+            max-width: 100%; /* Usar todo el ancho disponible */
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 10px;
-            font-size: 0.9em;
+            font-size: 0.8em; /* Reducir tamaño de las tablas */
         }
+
         th, td {
-            padding: 5px;
+            padding: 3px; /* Reducir el padding de las celdas */
             text-align: left;
             border: 1px solid #ccc;
         }
+
         th {
             background-color: #003366;
             color: white;
             font-weight: bold;
         }
+
         td {
-            font-size: 1.3em;
+            font-size: 1em;
         }
+
         footer {
             text-align: center;
             color: #666;
             font-size: 0.8em;
-            margin-top: 10px;
+            margin-top: 5px;
         }
+
         .signature-table {
             width: 100%;
-            margin-top: 50px;
+            margin-top: 20px; /* Reducir espacio antes de las firmas */
             border: none;
         }
+
         .signature-table td {
             text-align: center;
-            font-size: 1em;
-            display: flex;
+            font-size: 0.9em; /* Reducir tamaño de texto en firmas */
         }
-        .signature p {
-            margin: 0;
+
+        .signature-line {
+            border-top: 1px solid #000;
+            margin: 5px 0;
         }
-        .signature br {
-            margin: 0;
+
+        img {
+            max-width: 100%; /* Ajustar imagen a la pantalla */
+            height: auto;
         }
     </style>
 </head>
@@ -143,8 +162,10 @@
             </tr>
         </tbody>
     </table>
+
     <h2>Gráfico de Resultados</h2>
-    <img src="{{ image_uri }}" alt="Gráfico de Resultados" style="width: 100%; height: auto;">
+    <img src="{{ image_uri }}" alt="Gráfico de Resultados">
+
     <table class="signature-table">
         <tr>
             <td>
