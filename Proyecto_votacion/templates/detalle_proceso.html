@@ -13,12 +13,12 @@
             <form method="post" id="votoForm">
                 {% csrf_token %}
 
-                <h3 style="font-size: 1.2rem;">Seleccione un candidato:</h3> 
+                <h3 style="font-size: 1.2rem;">Candidatos:</h3> 
                 <div class="row mb-2 justify-content-center"> 
                     {% for candidato in candidatos %}
                     <div class="col-12 col-md-5 text-center mb-1"> 
                         <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> 
-                            <div style="min-height: 40px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
+                            <div style="min-height: 40px; font-size: 2rem; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
                             <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del candidato -->
                             <img src="{{ candidato.imagen_slogan.url }}" alt="slogan de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del slogan -->
                             <br>
@@ -28,7 +28,7 @@
                     {% endfor %}
                 </div>
 
-                <h3 style="font-size: 1.2rem;">O seleccione una de las siguientes opciones:</h3> 
+                <h3 style="font-size: 1.2rem;">Otras opciones:</h3> 
                 <div class="text-center mb-1"> 
                     <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 0.9rem;">Voto en Blanco</button>
                     <button type="button" class="btn btn-danger btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 0.9rem;">Voto Nulo</button>
