@@ -16,6 +16,7 @@ from .decorators import login_required_and_staff
 from django.template.loader import render_to_string
 from django.utils import timezone
 import matplotlib.pyplot as plt
+import base64
 
 from .models import ProcesoElectoral, Candidato, Sufragante, Voto
 from .forms import ProcesoElectoralForm, CandidatoForm, SufraganteForm, VotoForm, CedulaForm
@@ -208,11 +209,7 @@ def resultados_pdf(request, proceso_id):
 
     # Calcular el total de votos emitidos
     total_votos_emitidos = total_votos_validos + votos_blanco + votos_nulo
-
-    # Aquí el total de sufragantes será igual al total de votos emitidos
     total_sufragantes = total_votos_emitidos
-
-    # Calcular el número de no sufragantes
     total_sufragantes_registrados = Sufragante.objects.count()
     no_sufragantes = total_sufragantes_registrados - total_votos_emitidos
 
@@ -222,21 +219,30 @@ def resultados_pdf(request, proceso_id):
             data['porcentaje'] = (data['votos'] / total_votos_emitidos) * 100
 
     # Calcular porcentajes de votos en blanco, nulos y no sufragantes
-    if total_votos_emitidos > 0:
-        porcentaje_blanco = (votos_blanco / total_votos_emitidos) * 100
-        porcentaje_nulo = (votos_nulo / total_votos_emitidos) * 100
-    else:
-        porcentaje_blanco = porcentaje_nulo = 0
+    porcentaje_blanco = (votos_blanco / total_votos_emitidos) * 100 if total_votos_emitidos > 0 else 0
+    porcentaje_nulo = (votos_nulo / total_votos_emitidos) * 100 if total_votos_emitidos > 0 else 0
+    porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes_registrados) * 100 if total_sufragantes_registrados > 0 else 0
 
-    if total_sufragantes_registrados > 0:
-        porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes_registrados) * 100
-    else:
-        porcentaje_no_sufragantes = 0
+    # Generar gráfico con Matplotlib
+    fig, ax = plt.subplots()
+    labels = [candidato.nombre for candidato in candidatos] + ['Blanco', 'Nulo']
+    votos_data = [data['votos'] for data in resultados.values()] + [votos_blanco, votos_nulo]
 
-    # Obtener la fecha de generación
-    fecha_generacion = timezone.now()
+    ax.bar(labels, votos_data, color=['#007bff', '#28a745', '#dc3545'])  # Colores para barras
+    ax.set_ylabel('Votos')
+    ax.set_title('Resultados de Votación')
 
-    # Pasar los datos al contexto
+    # Guardar el gráfico en un buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close(fig)
+
+    # Codificar la imagen en base64
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
+    image_uri = 'data:image/png;base64,' + image_base64
+
+    # Preparar el contexto
     context = {
         'proceso': proceso,
         'resultados': resultados,
@@ -246,21 +252,17 @@ def resultados_pdf(request, proceso_id):
         'porcentaje_nulo': round(porcentaje_nulo, 2),
         'no_sufragantes': no_sufragantes,
         'porcentaje_no_sufragantes': round(porcentaje_no_sufragantes, 2),
-        'total_sufragantes': total_sufragantes,  # Aquí está el total de votantes reales
-        'total_votos': total_votos_emitidos,
-        'fecha_generacion': fecha_generacion,
+        'total_sufragantes': total_sufragantes,
+        'fecha_generacion': timezone.now(),
+        'image_uri': image_uri,  # Incluir la URI de la imagen en el contexto
     }
 
     # Renderizar la plantilla y generar el PDF
     template = get_template('resultados_pdf.html')
     html = template.render(context)
-
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="resultados_{proceso.nombre}.pdf"'
-    pisa_status = pisa.CreatePDF(
-        BytesIO(html.encode('UTF-8')),
-        dest=response
-    )
+    pisa_status = pisa.CreatePDF(BytesIO(html.encode('UTF-8')), dest=response)
 
     if pisa_status.err:
         return HttpResponse(f'Error al generar PDF: {pisa_status.err}', content_type='text/plain')
