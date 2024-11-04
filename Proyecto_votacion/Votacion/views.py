@@ -270,7 +270,6 @@ def resultados_pdf(request, proceso_id):
 
 @login_required_and_staff
 def generar_pdf_padron(request, proceso_id):
-    
     proceso = ProcesoElectoral.objects.get(id=proceso_id)
     sufragantes = Sufragante.objects.all()
     votantes = []
@@ -294,6 +293,7 @@ def generar_pdf_padron(request, proceso_id):
     if pisa_status.err:
         return HttpResponse('Error al generar el PDF.')
     return response
+
 
 @login_required_and_staff
 def reiniciar_votacion(request, proceso_id):
