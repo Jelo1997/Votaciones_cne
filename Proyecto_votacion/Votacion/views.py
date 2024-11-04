@@ -224,7 +224,7 @@ def resultados_pdf(request, proceso_id):
     porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes_registrados) * 100 if total_sufragantes_registrados > 0 else 0
 
     # Generar gráfico con Matplotlib
-    fig, ax = plt.subplots(figsize=(3, 2))
+    fig, ax = plt.subplots(figsize=(4, 3))
     labels = [candidato.nombre for candidato in candidatos] + ['Blanco', 'Nulo']
     votos_data = [data['votos'] for data in resultados.values()] + [votos_blanco, votos_nulo]
 
