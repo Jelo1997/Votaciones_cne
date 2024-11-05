@@ -12,7 +12,7 @@
         <div class="card-body">
             <form method="post" id="votoForm">
                 {% csrf_token %}
-
+            
                 <h3 style="font-size: 1.2rem;">Candidatos:</h3> 
                 <div class="row mb-2 justify-content-center"> 
                     {% for candidato in candidatos %}
@@ -22,65 +22,65 @@
                             <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del candidato -->
                             <img src="{{ candidato.imagen_slogan.url }}" alt="slogan de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del slogan -->
                             <br>
-                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
+                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);" required>
                         </label>
                     </div>
                     {% endfor %}
                 </div>
-
+            
                 <h3 style="font-size: 1.2rem;">Otras opciones:</h3> 
                 <div class="text-center mb-1"> 
-                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 0.9rem;">Confirmar Voto</button>
+                    <!-- Cambiamos el comportamiento del botón -->
+                    <button type="button" class="btn btn-success btn-sm" id="abrirModalBtn" style="font-size: 0.9rem;">Confirmar Voto</button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para confirmar cualquier voto -->
-<div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmarModalLabel">Confirmar Voto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+            <!-- Modal para confirmar cualquier voto -->
+            <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmarModalLabel">Confirmar Voto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Estás seguro de que deseas confirmar tu voto?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-success" id="confirmarBtn">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas confirmar tu voto?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmarBtn">Confirmar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
-     // Verificar si se seleccionó un candidato antes de abrir el modal
-     document.getElementById('abrirModalBtn').onclick = function() {
-        const candidatos = document.getElementsByName('candidato');
-        let seleccionado = false;
-        
-        // Verificamos si algún candidato está seleccionado
-        for (let i = 0; i < candidatos.length; i++) {
-            if (candidatos[i].checked) {
-                seleccionado = true;
-                break;
-            }
-        }
+      document.addEventListener('DOMContentLoaded', function() {
+        // Verificar si se seleccionó un candidato antes de abrir el modal
+        document.getElementById('abrirModalBtn').onclick = function() {
+            const candidatos = document.querySelectorAll('input[name="candidato"]');
+            let seleccionado = false;
 
-        // Si se seleccionó un candidato, abrimos el modal
-        if (seleccionado) {
-            var modal = new bootstrap.Modal(document.getElementById('confirmarModal'));
-            modal.show();
-        } else {
-            alert('Por favor selecciona un candidato antes de confirmar.');
-        }
-    };
-    // Confirmar cualquier voto
-    document.getElementById('confirmarBtn').onclick = function() {
-        document.getElementById('votoForm').submit();  
-    };
+            // Verificamos si algún candidato está seleccionado
+            candidatos.forEach(function(candidato) {
+                if (candidato.checked) {
+                    seleccionado = true;
+                }
+            });
+
+            // Si se seleccionó un candidato, abrimos el modal
+            if (seleccionado) {
+                var modal = new bootstrap.Modal(document.getElementById('confirmarModal'));
+                modal.show();
+            } else {
+                alert('Por favor selecciona un candidato antes de confirmar.');
+            }
+        };
+
+        // Confirmar el voto (envía el formulario)
+        document.getElementById('confirmarBtn').onclick = function() {
+            document.getElementById('votoForm').submit();
+        };
+    });
 </script>
 {% endblock %}
