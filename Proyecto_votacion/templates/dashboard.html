@@ -1,22 +1,78 @@
 {% extends 'partials/base.html' %}
 {% load static %}
+
 {% block extra_css %}
     <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
-{% endblock  %}
+    <style>
+        .welcome-container {
+            background-color: #f7f9fc;
+            padding: 3rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-title {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-subtitle {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.5rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            color: #495057;
+        }
+
+        .welcome-image {
+            max-width: 300px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            font-size: 1.2rem;
+            padding: 0.75rem 2rem;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.5);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .action-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .mt-5 {
+            margin-top: 3rem !important;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
 
-<div class="container mt-5 text-center">
-    <img src="{% static 'images/elecciones.jpg' %}" alt="Logo Voto" class="mb-4" style="max-width: 300px;">
-    <h1>Bienvenido al Sistema Unidad Educativa Pio Jaramillo Alvarado</h1>
-    <h1>Unidad Educativa Pio Jaramillo Alvarado</h1>
-    <p>Su participación es fundamental para la democracia.</p>
+<div class="container mt-5 text-center welcome-container">
+    <img src="{% static 'images/elecciones.jpg' %}" alt="Logo Voto" class="welcome-image">
+    <h1 class="welcome-title">Bienvenido al Sistema de Votación</h1>
+    <h2 class="welcome-subtitle">Unidad Educativa Pio Jaramillo Alvarado</h2>
+    <p class="welcome-text">Su participación es fundamental para fortalecer la democracia escolar. Asegúrese de votar responsablemente y ser parte de este proceso cívico.</p>
+
+    <a href="verificar_cedula.html" class="btn action-btn mt-4">Ir a la Votación</a>
 </div>
-                        
 
 {% endblock %}
-{% block extra_javascript %}
 
+{% block extra_javascript %}
     <!-- Peity chart-->
     <script src="{% static 'libs/peity/jquery.peity.min.js' %}"></script>
 
@@ -25,5 +81,4 @@
     <script src="{% static 'libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
 
     <script src="{% static 'js/pages/dashboard.init.js' %}"></script>
-
 {% endblock %}
