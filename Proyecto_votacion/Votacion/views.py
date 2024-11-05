@@ -206,8 +206,8 @@ def resultados_pdf(request, proceso_id):
 
     # Generar gráfico con Matplotlib
     fig, ax = plt.subplots(figsize=(4, 3))
-    labels = [candidato.nombre for candidato in candidatos] + ['Blanco', 'Nulo']
-    votos_data = [data['votos'] for data in resultados.values()] + [votos_blanco, votos_nulo]
+    labels = [candidato.nombre for candidato in candidatos] 
+    votos_data = [data['votos'] for data in resultados.values()]
 
     ax.bar(labels, votos_data, color=['#007bff', '#28a745', '#dc3545'])  # Colores para barras
     ax.set_ylabel('Votos')
