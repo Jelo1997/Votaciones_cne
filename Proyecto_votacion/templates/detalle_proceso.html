@@ -22,7 +22,7 @@
                             <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del candidato -->
                             <img src="{{ candidato.imagen_slogan.url }}" alt="slogan de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del slogan -->
                             <br>
-                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);">
+                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);" required>
                         </label>
                     </div>
                     {% endfor %}
@@ -57,26 +57,6 @@
 </div>
 
 <script>
-    document.getElementById('validarVoto').onclick = function() {
-        var radios = document.querySelectorAll('input[name="candidato"]');
-        var seleccionado = false;
-
-        for (var i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                seleccionado = true;
-                break;
-            }
-        }
-
-        if (seleccionado) {
-            
-            var modal = new bootstrap.Modal(document.getElementById('confirmarModal'));
-            modal.show();
-        } else {
-            
-            alert('Por favor, selecciona un candidato antes de confirmar tu voto.');
-        }
-    };
     // Confirmar cualquier voto
     document.getElementById('confirmarBtn').onclick = function() {
         document.getElementById('votoForm').submit();  
