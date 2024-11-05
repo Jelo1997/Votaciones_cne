@@ -19,8 +19,14 @@
                     <div class="col-12 col-md-4 text-center mb-3"> 
                         <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> 
                             <div style="min-height: 40px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-2" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);"> 
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="slogan de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 200px; height: 80px; object-fit: cover; border-radius: 5px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);"> 
+                            <div class="mb-2">
+                                <!-- Imagen del candidato -->
+                                <img src="{{ candidato.imagen.url }}" alt="Imagen de {{ candidato.nombre }}" class="img-fluid" style="width: 200px; height: 200px; object-fit: contain; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);">
+                            </div>
+                            <div>
+                                <!-- Logo o slogan del candidato -->
+                                <img src="{{ candidato.imagen_slogan.url }}" alt="Slogan de {{ candidato.nombre }}" class="img-fluid" style="width: 200px; height: 200px; object-fit: contain; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);">
+                            </div>
                             <br>
                             <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-2" style="transform: scale(1.2);" required>
                         </label>
@@ -84,4 +90,3 @@
     });
 </script>
 {% endblock %}
-
