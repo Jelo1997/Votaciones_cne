@@ -7,7 +7,7 @@
 {% block content %}
 
 <header class="text-center mb-4">
-    <h1 class="font-weight-bold">Unidad Provincial de Seguridad Informática y Proyectos Tecnológicos Electorales de Pastaza</h1>
+    <h1 class="font-weight-bold">Resultados Electorales</h1>
     <h2 class="font-weight-normal">{{ proceso.nombre }}</h2>
     <h3 class="mb-4 text-muted">Total de Sufragantes: <strong>{{ total_sufragantes }}</strong></h3>
 </header>
@@ -15,7 +15,7 @@
 <section class="mb-5">
     <div class="row">
         <div class="col-md-6 mb-4">
-            <div class="card border-primary">
+            <div class="card border-primary shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Resultados Totales</h4>
                 </div>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-md-6 mb-4">
-            <div class="card border-primary">
+            <div class="card border-primary shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Gráfico de Resultados</h4>
                 </div>
@@ -69,14 +69,18 @@
 
     body {
         font-family: 'Roboto', sans-serif;
-        background-color: #f8f9fa; /* Fondo más claro */
+        background: linear-gradient(to right, #e9ecef, #f8f9fa); /* Fondo degradado */
+        background-image: url('path/to/your/background-image.jpg'); /* Fondo opcional (puedes usar una imagen) */
+        background-size: cover; /* Para que la imagen cubra todo el fondo */
+        background-attachment: fixed; /* Para fijar la imagen de fondo */
+        color: #343a40; /* Texto oscuro */
     }
 
     .container-fluid {
         padding: 40px;
         border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        background-color: white; /* Fondo blanco */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
     }
 
     h1, h2, h3 {
@@ -102,7 +106,7 @@
     }
 
     .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #e9ecef; /* Color más claro */
+        background-color: #f2f2f2; /* Color más claro para filas impares */
     }
 
     .btn-danger {
