@@ -30,49 +30,9 @@
 
                 <h3 style="font-size: 1.2rem;">Otras opciones:</h3> 
                 <div class="text-center mb-1"> 
-                    <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoBlancoModal" style="font-size: 0.9rem;">Voto en Blanco</button>
-                    <button type="button" class="btn btn-danger btn-sm me-1" data-bs-toggle="modal" data-bs-target="#votoNuloModal" style="font-size: 0.9rem;">Voto Nulo</button>
                     <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarModal" style="font-size: 0.9rem;">Confirmar Voto</button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para confirmar voto en blanco -->
-<div class="modal fade" id="votoBlancoModal" tabindex="-1" aria-labelledby="votoBlancoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="votoBlancoModalLabel">Confirmar Voto en Blanco</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas emitir un voto en blanco?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmarVotoBlancoBtn">Confirmar Voto en Blanco</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para confirmar voto nulo -->
-<div class="modal fade" id="votoNuloModal" tabindex="-1" aria-labelledby="votoNuloModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="votoNuloModalLabel">Confirmar Voto Nulo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas emitir un voto nulo?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmarVotoNuloBtn">Confirmar Voto Nulo</button>
-            </div>
         </div>
     </div>
 </div>
@@ -97,18 +57,7 @@
 </div>
 
 <script>
-    // Confirmar voto en blanco
-    document.getElementById('confirmarVotoBlancoBtn').onclick = function() {
-        document.getElementById('votoForm').innerHTML += '<input type="hidden" name="tipo_voto" value="blanco">';
-        document.getElementById('votoForm').submit();
-    };
-
-    // Confirmar voto nulo
-    document.getElementById('confirmarVotoNuloBtn').onclick = function() {
-        document.getElementById('votoForm').innerHTML += '<input type="hidden" name="tipo_voto" value="nulo">';
-        document.getElementById('votoForm').submit();
-    };
-
+    
     // Confirmar cualquier voto
     document.getElementById('confirmarBtn').onclick = function() {
         document.getElementById('votoForm').submit();  

@@ -35,14 +35,6 @@
                                 <td class="text-center">{{ votos }}</td>
                             </tr>
                             {% endfor %}
-                            <tr>
-                                <td class="text-center"><strong>Votos en Blanco</strong></td>
-                                <td class="text-center">{{ votos_blanco }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Votos Nulos</strong></td>
-                                <td class="text-center">{{ votos_nulo }}</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -123,7 +115,6 @@
             labels: [
                 {% for candidato, votos in resultados.items %}
                 '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}{% endfor %},
-                'Votos en Blanco', 'Votos Nulos'
             ],
             series: [[
                 {% for candidato, votos in resultados.items %}

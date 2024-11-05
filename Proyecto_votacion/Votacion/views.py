@@ -37,7 +37,7 @@ def crear_proceso_electoral(request):
         form = ProcesoElectoralForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('lista_procesos_electorales')  
+            return redirect('lista_procesos_electorales')
     else:
         form = ProcesoElectoralForm()
 
@@ -129,58 +129,39 @@ def detalle_proceso_electoral(request, proceso_id):
     sufragante = get_object_or_404(Sufragante, cedula=cedula)
 
     if request.method == 'POST':
-        tipo_voto = request.POST.get('tipo_voto')  
-        candidato_id = request.POST.get('candidato')  
+        candidato_id = request.POST.get('candidato')
         
-        voto = Voto(sufragante=sufragante, proceso=proceso )
-
-        if tipo_voto in ['blanco', 'nulo']:  
-            voto.candidato = None  
-            voto.tipo_voto = tipo_voto  
-        elif candidato_id:  
+        voto = Voto(sufragante=sufragante, proceso=proceso)
+        if candidato_id:  
             candidato = get_object_or_404(Candidato, pk=candidato_id)
             voto.candidato = candidato
-            voto.tipo_voto = 'valido'  
-        else:  
-            voto.candidato = None  
-            voto.tipo_voto = 'blanco'  
+            voto.tipo_voto = 'valido'
         voto.save()
-        del request.session['cedula']  
+
+        del request.session['cedula']
         return redirect('verificar_cedula', proceso_id=proceso.id)
 
-    return render(request, 'detalle_proceso.html', {
-        'proceso': proceso,
-        'candidatos': candidatos,
-        'sufragante': sufragante
-    })
+    return render(request, 'detalle_proceso.html', {'proceso': proceso, 'candidatos': candidatos, 'sufragante': sufragante})
 
 @login_required_and_staff
 def resultados_votacion(request, proceso_id):
     proceso = ProcesoElectoral.objects.get(id=proceso_id)
     resultados = {}
     total_votos = Voto.objects.filter(proceso=proceso)
-    
-    #votos por candidato
+
     for candidato in proceso.candidatos.all():
         resultados[candidato] = total_votos.filter(candidato=candidato).count()
-    
-    votos_blanco = total_votos.filter(tipo_voto='blanco').count()
-    votos_nulo = total_votos.filter(tipo_voto='nulo').count()
-    
-    
+
     total_sufragantes = total_votos.values('sufragante').distinct().count()
-    
     fecha_generacion = timezone.now().strftime('%d de %B de %Y')
 
     context = {
         'proceso': proceso,
         'resultados': resultados,
-        'votos_blanco': votos_blanco,
-        'votos_nulo': votos_nulo,
-        'total_sufragantes': total_sufragantes,  
+        'total_sufragantes': total_sufragantes,
         'fecha_generacion': fecha_generacion,
     }
-    
+
     return render(request, 'resultados.html', context)
 
 @login_required_and_staff
@@ -246,9 +227,7 @@ def resultados_pdf(request, proceso_id):
     context = {
         'proceso': proceso,
         'resultados': resultados,
-        'votos_blanco': votos_blanco,
         'porcentaje_blanco': round(porcentaje_blanco, 2),
-        'votos_nulo': votos_nulo,
         'porcentaje_nulo': round(porcentaje_nulo, 2),
         'no_sufragantes': no_sufragantes,
         'porcentaje_no_sufragantes': round(porcentaje_no_sufragantes, 2),
