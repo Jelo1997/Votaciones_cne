@@ -67,7 +67,7 @@
     <h2 class="welcome-subtitle">Unidad Educativa Pio Jaramillo Alvarado</h2>
     <p class="welcome-text">Su participación es fundamental para fortalecer la democracia escolar. Asegúrese de votar responsablemente y ser parte de este proceso cívico.</p>
 
-    <a href="verificar_cedula.html" class="btn action-btn mt-4">Ir a la Votación</a>
+    <a href="{% url 'verificar_cedula' proceso_id=1 %}" class="btn action-btn mt-4">Ir a la Votación</a>
 </div>
 
 {% endblock %}
