@@ -16,13 +16,13 @@
                 <h3 style="font-size: 1.2rem;">Candidatos:</h3> 
                 <div class="row mb-2 justify-content-center"> 
                     {% for candidato in candidatos %}
-                    <div class="col-12 col-md-5 text-center mb-1"> 
+                    <div class="col-12 col-md-4 text-center mb-3"> 
                         <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> 
-                            <div style="min-height: 40px; font-size: 2rem; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
-                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del candidato -->
-                            <img src="{{ candidato.imagen_slogan.url }}" alt="slogan de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 250px; height: 250px; object-fit: cover;"> <!-- Imagen del slogan -->
+                            <div style="min-height: 40px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">{{ candidato.nombre }}</div>
+                            <img src="{{ candidato.imagen.url }}" alt="imagen de {{ candidato.nombre }}" class="img-fluid mb-2" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);"> 
+                            <img src="{{ candidato.imagen_slogan.url }}" alt="slogan de {{ candidato.nombre }}" class="img-fluid mb-1" style="width: 200px; height: 80px; object-fit: cover; border-radius: 5px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);"> 
                             <br>
-                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-1" style="transform: scale(1.2);" required>
+                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" class="mt-2" style="transform: scale(1.2);" required>
                         </label>
                     </div>
                     {% endfor %}
@@ -55,7 +55,7 @@
             </div>
 
 <script>
-      document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         // Verificar si se seleccionó un candidato antes de abrir el modal
         document.getElementById('abrirModalBtn').onclick = function() {
             const candidatos = document.querySelectorAll('input[name="candidato"]');
@@ -84,3 +84,4 @@
     });
 </script>
 {% endblock %}
+
