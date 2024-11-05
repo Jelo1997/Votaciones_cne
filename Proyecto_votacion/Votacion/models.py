@@ -37,8 +37,6 @@ class Sufragante(models.Model):
 class Voto(models.Model):
     TIPOS_VOTO = (
         ('valido', 'Válido'),
-        ('blanco', 'Blanco'),
-        ('nulo', 'Nulo'),
     )
 
     sufragante = models.ForeignKey(Sufragante, on_delete=models.CASCADE, related_name='votos')  
