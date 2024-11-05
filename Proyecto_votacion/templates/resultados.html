@@ -7,16 +7,15 @@
 {% block content %}
 
 <header class="text-center mb-4">
-    <img src="{% static 'images/elecciones.jpg' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-    <h1>Unidad Provincial de Seguridad Informática y Proyectos Tecnológicos Electorales de Pastaza</h1>
-    <h2>{{ proceso.nombre }}</h2>
+    <h1 class="font-weight-bold">Unidad Provincial de Seguridad Informática y Proyectos Tecnológicos Electorales de Pastaza</h1>
+    <h2 class="font-weight-normal">{{ proceso.nombre }}</h2>
     <h3 class="mb-4 text-muted">Total de Sufragantes: <strong>{{ total_sufragantes }}</strong></h3>
 </header>
 
 <section class="mb-5">
     <div class="row">
         <div class="col-md-6 mb-4">
-            <div class="card">
+            <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Resultados Totales</h4>
                 </div>
@@ -42,7 +41,7 @@
         </div>
 
         <div class="col-md-6 mb-4">
-            <div class="card">
+            <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Gráfico de Resultados</h4>
                 </div>
@@ -66,57 +65,68 @@
 {% block extra_css %}
 <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Cargar la fuente Roboto */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
     body {
-        font-family: 'Roboto', sans-serif; /* Aplicar la fuente a todo el cuerpo */
-        background-color: #f4f4f4; /* Fondo más claro para un mejor contraste */
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa; /* Fondo más claro */
     }
 
     .container-fluid {
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        background-color: white; /* Fondo blanco para el contenedor principal */
+        background-color: white; /* Fondo blanco */
     }
+
     h1, h2, h3 {
-        color: #333; /* Color más oscuro para los encabezados */
+        color: #343a40; /* Color más oscuro para los encabezados */
     }
+
     h3 {
         text-align: left;
     }
+
     table {
         margin-bottom: 30px;
         border-radius: 5px;
         overflow: hidden;
     }
+
     .table th, .table td {
         text-align: center;
         vertical-align: middle;
         padding: 15px; 
         border: 1px solid #dee2e6; /* Borde más suave */
-        color: #333; /* Texto más oscuro en la tabla */
+        color: #343a40; /* Texto más oscuro */
     }
+
     .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #f8f9fa; /* Color más claro */
+        background-color: #e9ecef; /* Color más claro */
     }
+
     .btn-danger {
         padding: 12px 45px;
         font-size: 1.2em;
+        transition: background-color 0.3s;
     }
-    header img {
-        margin-bottom: 15px;
+
+    .btn-danger:hover {
+        background-color: #c82333; /* Color más oscuro al pasar el mouse */
     }
+
     .ct-chart {
-        height: 450px; /* Altura aumentada */
+        height: 450px; 
         width: 100%; 
     }
+
     .ct-series .ct-bar {
         stroke-width: 40px; /* Aumentar el grosor de las barras */
     }
+
     .ct-label {
-        color: #000; /* Color de las etiquetas del gráfico más oscuro */
-        font-weight: bold; /* Negrita para mayor claridad */
+        color: #000; 
+        font-weight: bold; 
     }
 </style>
 {% endblock %}
@@ -176,13 +186,9 @@
 
         // Personalizar colores de las barras
         data.series[0].forEach((value, index) => {
-            let color;
-            if (index < {{ resultados|length }}) {
-                color = '#007bff'; // Color para candidatos
-            } 
+            let color = '#007bff'; // Color para candidatos
             document.querySelector(`#votacion-chart .ct-bar.ct-bar-${index}`).style.fill = color;
         });
     });
 </script>
 {% endblock %}
-
