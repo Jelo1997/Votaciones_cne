@@ -66,10 +66,18 @@
 {% block extra_css %}
 <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Cargar la fuente Roboto */
+
+    body {
+        font-family: 'Roboto', sans-serif; /* Aplicar la fuente a todo el cuerpo */
+        background-color: #f4f4f4; /* Fondo más claro para un mejor contraste */
+    }
+
     .container-fluid {
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: white; /* Fondo blanco para el contenedor principal */
     }
     h1, h2, h3 {
         color: #333; /* Color más oscuro para los encabezados */
@@ -126,8 +134,7 @@
             ],
             series: [[
                 {% for candidato, votos in resultados.items %}
-                {{ votos }}{% if not forloop.last %}, {% endif %}{% endfor %},
-                {{ votos_blanco }}, {{ votos_nulo }}
+                {{ votos }}{% if not forloop.last %}, {% endif %}{% endfor %}
             ]]
         };
 
@@ -137,7 +144,7 @@
             axisX: {
                 offset: 30,
                 labelInterpolationFnc: function(value, index) {
-                    return value.length > 10 ? value.slice(0, 10) + '...' : value;
+                    return value.length > 30 ? value.slice(0, 30) + '...' : value;
                 },
                 labelOffset: { x: 0, y: 10 }, // Espaciado de las etiquetas
             },
@@ -172,13 +179,10 @@
             let color;
             if (index < {{ resultados|length }}) {
                 color = '#007bff'; // Color para candidatos
-            } else if (index === {{ resultados|length }}) {
-                color = '#28a745'; // Color para votos en blanco
-            } else {
-                color = '#dc3545'; // Color para votos nulos
-            }
+            } 
             document.querySelector(`#votacion-chart .ct-bar.ct-bar-${index}`).style.fill = color;
         });
     });
 </script>
 {% endblock %}
+
