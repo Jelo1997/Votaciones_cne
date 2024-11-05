@@ -57,6 +57,27 @@
 </div>
 
 <script>
+     // Verificar si se seleccionó un candidato antes de abrir el modal
+     document.getElementById('abrirModalBtn').onclick = function() {
+        const candidatos = document.getElementsByName('candidato');
+        let seleccionado = false;
+        
+        // Verificamos si algún candidato está seleccionado
+        for (let i = 0; i < candidatos.length; i++) {
+            if (candidatos[i].checked) {
+                seleccionado = true;
+                break;
+            }
+        }
+
+        // Si se seleccionó un candidato, abrimos el modal
+        if (seleccionado) {
+            var modal = new bootstrap.Modal(document.getElementById('confirmarModal'));
+            modal.show();
+        } else {
+            alert('Por favor selecciona un candidato antes de confirmar.');
+        }
+    };
     // Confirmar cualquier voto
     document.getElementById('confirmarBtn').onclick = function() {
         document.getElementById('votoForm').submit();  
