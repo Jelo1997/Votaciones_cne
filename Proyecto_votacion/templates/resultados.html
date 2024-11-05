@@ -8,7 +8,7 @@
 
 <header class="text-center mb-4">
     <img src="{% static 'images/elecciones.jpg' %}" alt="Logo CNE" class="mb-3" style="width: 120px;">
-    <h1>Unidad Provincial de Seguridad Informática y Proyectos Tecnológicos Electorales de Pastaza	</h1>
+    <h1>Unidad Provincial de Seguridad Informática y Proyectos Tecnológicos Electorales de Pastaza</h1>
     <h2>{{ proceso.nombre }}</h2>
     <h3 class="mb-4 text-muted">Total de Sufragantes: <strong>{{ total_sufragantes }}</strong></h3>
 </header>
@@ -57,7 +57,7 @@
 <div class="text-center">
     <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger btn-lg">Encerar la Base de Datos</button>
+        <button type="submit" class="btn btn-danger btn-lg">Encerrar la Base de Datos</button>
     </form>
 </div>
 
@@ -70,6 +70,9 @@
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2, h3 {
+        color: #333; /* Color más oscuro para los encabezados */
     }
     h3 {
         text-align: left;
@@ -84,6 +87,7 @@
         vertical-align: middle;
         padding: 15px; 
         border: 1px solid #dee2e6; /* Borde más suave */
+        color: #333; /* Texto más oscuro en la tabla */
     }
     .table-striped tbody tr:nth-of-type(odd) {
         background-color: #f8f9fa; /* Color más claro */
@@ -101,6 +105,10 @@
     }
     .ct-series .ct-bar {
         stroke-width: 40px; /* Aumentar el grosor de las barras */
+    }
+    .ct-label {
+        color: #000; /* Color de las etiquetas del gráfico más oscuro */
+        font-weight: bold; /* Negrita para mayor claridad */
     }
 </style>
 {% endblock %}
@@ -131,6 +139,7 @@
                 labelInterpolationFnc: function(value, index) {
                     return value.length > 10 ? value.slice(0, 10) + '...' : value;
                 },
+                labelOffset: { x: 0, y: 10 }, // Espaciado de las etiquetas
             },
             axisY: {
                 offset: 40,
