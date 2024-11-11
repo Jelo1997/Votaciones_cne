@@ -70,6 +70,9 @@
             margin-top: 20px; 
             font-size: 0.9em; 
         }
+        .curso-section {
+            page-break-after: always; /* Esto asegura que haya un salto de página después de cada curso */
+        }
     </style>
 </head>
 <body>
@@ -77,52 +80,57 @@
     <h2>Votantes:</h2>
     <!-- Mostrar los votantes por curso -->
     {% for curso, votantes in votantes_por_curso.items %}
-    <h2>Curso: {{ curso }}</h2>
-    <p>Total de votantes en este curso: <strong>{{ votantes|length }}</strong></p>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Cédula</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for votante in votantes %}
-            <tr>
-                <td>{{ votante.nombre }}</td>
-                <td>{{ votante.apellido }}</td>
-                <td>{{ votante.cedula }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="curso-section">
+        <h2>Curso: {{ curso }}</h2>
+        <p>Total de votantes en este curso: <strong>{{ votantes|length }}</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Cédula</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for votante in votantes %}
+                <tr>
+                    <td>{{ votante.nombre }}</td>
+                    <td>{{ votante.apellido }}</td>
+                    <td>{{ votante.cedula }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% empty %}
     <p>No hay votantes en este curso.</p>
     {% endfor %}
+    
     <h2>No Votantes:</h2>
     <!-- Mostrar los no votantes por curso -->
     {% for curso, no_votantes in no_votantes_por_curso.items %}
-    <h2>Curso: {{ curso }}</h2>
-    <p>Total de no votantes en este curso: <strong>{{ no_votantes|length }}</strong></p>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Cédula</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for no_votante in no_votantes %}
-            <tr>
-                <td>{{ no_votante.nombre }}</td>
-                <td>{{ no_votante.apellido }}</td>
-                <td>{{ no_votante.cedula }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="curso-section">
+        <h2>Curso: {{ curso }}</h2>
+        <p>Total de no votantes en este curso: <strong>{{ no_votantes|length }}</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Cédula</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for no_votante in no_votantes %}
+                <tr>
+                    <td>{{ no_votante.nombre }}</td>
+                    <td>{{ no_votante.apellido }}</td>
+                    <td>{{ no_votante.cedula }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% empty %}
     <p>No hay no votantes en este curso.</p>
     {% endfor %}
