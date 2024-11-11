@@ -267,24 +267,38 @@ def resultados_pdf(request, proceso_id):
 def generar_pdf_padron(request, proceso_id):
     proceso = ProcesoElectoral.objects.get(id=proceso_id)
     sufragantes = Sufragante.objects.all()
-    votantes = []
-    no_votantes = []
+
+    # Diccionarios para agrupar votantes y no votantes por curso
+    votantes_por_curso = {}
+    no_votantes_por_curso = {}
 
     for sufragante in sufragantes:
-        if Voto.objects.filter(sufragante=sufragante, proceso=proceso).exists():
-            votantes.append(sufragante)
-        else:
-            no_votantes.append(sufragante)
+        # Obtener el curso del sufragante
+        curso = sufragante.curso
 
+        # Verificar si el sufragante ha votado
+        if Voto.objects.filter(sufragante=sufragante, proceso=proceso).exists():
+            if curso not in votantes_por_curso:
+                votantes_por_curso[curso] = []
+            votantes_por_curso[curso].append(sufragante)
+        else:
+            if curso not in no_votantes_por_curso:
+                no_votantes_por_curso[curso] = []
+            no_votantes_por_curso[curso].append(sufragante)
+
+    # Preparar el contexto con los datos agrupados
     context = {
-        'votantes': votantes,
-        'no_votantes': no_votantes,
-        'proceso': proceso  
+        'votantes_por_curso': votantes_por_curso,
+        'no_votantes_por_curso': no_votantes_por_curso,
+        'proceso': proceso
     }
+
+    # Renderizar el template y generar el PDF
     html = render_to_string('padron_electoral.html', context)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename=padron_electoral_{proceso_id}.pdf'
     pisa_status = pisa.CreatePDF(html, dest=response)
+
     if pisa_status.err:
         return HttpResponse('Error al generar el PDF.')
     return response
