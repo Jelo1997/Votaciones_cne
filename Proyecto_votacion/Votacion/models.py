@@ -30,7 +30,7 @@ class Sufragante(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     cedula = models.CharField(max_length=20, unique=True)  #única para identificar al votante
-    curso = models.CharField(max_length=100)  
+    curso = models.CharField(max_length=100, blank=True)  
     def __str__(self):
         return f"{self.nombre} {self.apellido} - {self.cedula}"
 
