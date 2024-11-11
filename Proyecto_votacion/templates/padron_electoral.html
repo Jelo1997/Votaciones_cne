@@ -105,7 +105,10 @@
             <p>Consejo Nacional Electoral - Delegación Pastaza | www.cne.gob.ec</p>
         </footer>
     </div>
-
+    {% empty %}
+    <p>No hay votantes en este curso.</p>
+    {% endfor %}
+    
     <h2>No Votantes:</h2>
     <!-- Mostrar los no votantes por curso -->
     {% for curso, no_votantes in no_votantes_por_curso.items %}
@@ -134,7 +137,9 @@
             <p>Consejo Nacional Electoral - Delegación Pastaza | www.cne.gob.ec</p>
         </footer>
     </div>
-    
+    {% empty %}
+    <p>No hay no votantes en este curso.</p>
+    {% endfor %}
 
     
 </body>
