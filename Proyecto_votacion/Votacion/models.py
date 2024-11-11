@@ -45,6 +45,7 @@ class Voto(models.Model):
     candidato = models.ForeignKey(Candidato, null=True, blank=True, on_delete=models.SET_NULL, related_name='votos')  
     tipo_voto = models.CharField(max_length=10, choices=TIPOS_VOTO, blank=True)  
     fecha_voto = models.DateTimeField(default=timezone.now) 
+    curso = models.CharField(max_length=100, blank=True)
     def clean(self):
         
         if self.candidato and self.tipo_voto != 'valido':
@@ -52,6 +53,12 @@ class Voto(models.Model):
         
         if not self.candidato and self.tipo_voto == 'valido':
             raise ValidationError('Debe seleccionar un candidato para un voto válido.')
+
+    def save(self, *args, **kwargs):
+        
+        if self.sufragante:
+            self.curso = self.sufragante.curso  
+        super(Voto, self).save(*args, **kwargs)
 
     def __str__(self):
         if self.tipo_voto == 'valido' and self.candidato:
