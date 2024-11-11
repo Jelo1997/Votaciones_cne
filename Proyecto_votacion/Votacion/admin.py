@@ -23,7 +23,7 @@ class CandidatoAdmin(admin.ModelAdmin):
 
 @admin.register(Sufragante)
 class SufraganteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'apellido', 'cedula', 'curso')
+    list_display = ('id', 'nombre', 'apellido', 'cedula', 'curso', 'proceso')
 
 
 @admin.register(Voto)
