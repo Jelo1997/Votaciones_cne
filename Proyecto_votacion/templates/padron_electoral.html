@@ -76,11 +76,11 @@
     </style>
 </head>
 <body>
-    <h1>Padrón Electoral - {{ proceso.nombre }}</h1>
-    <h2>Votantes:</h2>
     <!-- Mostrar los votantes por curso -->
     {% for curso, votantes in votantes_por_curso.items %}
     <div class="curso-section">
+        <h1>Padrón Electoral - {{ proceso.nombre }}</h1>
+        <h1>Votantes</h1>
         <h2>Curso: {{ curso }}</h2>
         <p>Total de votantes en este curso: <strong>{{ votantes|length }}</strong></p>
         <table>
@@ -113,6 +113,8 @@
     <!-- Mostrar los no votantes por curso -->
     {% for curso, no_votantes in no_votantes_por_curso.items %}
     <div class="curso-section">
+        <h1>Padrón Electoral - {{ proceso.nombre }}</h1>
+        <h1>NO Votantes</h1>
         <h2>Curso: {{ curso }}</h2>
         <p>Total de no votantes en este curso: <strong>{{ no_votantes|length }}</strong></p>
         <table>
