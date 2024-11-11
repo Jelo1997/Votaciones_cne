@@ -155,7 +155,7 @@ def detalle_proceso_electoral(request, proceso_id):
         del request.session['cedula']
         return redirect('verificar_cedula', proceso_id=proceso.id)
 
-    return render(request, 'detalle_proceso.html', {'proceso': proceso, 'candidatos': candidatos, 'sufragante': sufragante})
+    return render(request, 'detalle_proceso.html', {'proceso': proceso, 'candidatos': candidatos, 'sufragante': sufragante,'curso': sufragante.curso})
 
 @login_required_and_staff
 def resultados_votacion(request, proceso_id):
