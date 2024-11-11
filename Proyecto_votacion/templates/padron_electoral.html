@@ -10,6 +10,7 @@
             margin: 20px; 
             background-color: #f8f9fa; 
             color: #343a40; 
+            padding-bottom: 40px; /* Espacio para el footer */
         }
         header {
             text-align: center;
@@ -65,13 +66,35 @@
         tr:hover {
             background-color: #e2e6ea; 
         }
-        footer {
-            text-align: center; 
-            margin-top: 20px; 
-            font-size: 0.9em; 
-        }
+
         .curso-section {
-            page-break-after: always; /* Esto asegura que haya un salto de página después de cada curso */
+            page-break-after: always; /* Salto de página después de cada curso */
+        }
+
+        /* Estilos para el footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            font-size: 0.9em;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo de impresión */
+        @media print {
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                page-break-before: always;
+            }
+            body {
+                margin-bottom: 100px; /* Asegura que haya suficiente espacio para el footer */
+            }
         }
     </style>
 </head>
