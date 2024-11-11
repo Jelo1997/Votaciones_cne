@@ -36,4 +36,4 @@ class VotoAdmin(admin.ModelAdmin):
         'tipo_voto',
         'fecha_voto',
     )
-    list_filter = ('sufragante', 'proceso', 'candidato', 'fecha_voto')
+    list_filter = ('proceso', 'candidato', 'fecha_voto', 'curso')
