@@ -19,7 +19,7 @@ class CandidatoForm(forms.ModelForm):
 class SufraganteForm(forms.ModelForm):
     class Meta:
         model = Sufragante
-        fields = ['nombre', 'apellido', 'cedula']
+        fields = ['nombre', 'apellido', 'cedula', 'curso']
 
 
 class VotoForm(forms.ModelForm):

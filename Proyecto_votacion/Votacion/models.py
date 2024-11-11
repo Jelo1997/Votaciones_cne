@@ -26,10 +26,11 @@ class Candidato(models.Model):
 
 
 class Sufragante(models.Model):
+    proceso = models.ForeignKey(ProcesoElectoral, on_delete=models.CASCADE, related_name='sufragantes')  # Relación con el proceso
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     cedula = models.CharField(max_length=20, unique=True)  #única para identificar al votante
-
+    curso = models.CharField(max_length=100)  
     def __str__(self):
         return f"{self.nombre} {self.apellido} - {self.cedula}"
 
