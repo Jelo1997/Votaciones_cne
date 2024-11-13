@@ -65,6 +65,11 @@
         tr:hover {
             background-color: #e2e6ea; 
         }
+        .firma-col {
+            width: 200px; /* Espacio amplio para la firma */
+            text-align: center; 
+            padding: 20px; /* Añadir espacio vertical para facilitar la firma */
+        }
         footer {
             text-align: center; 
             margin-top: 20px; 
@@ -88,7 +93,7 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Cédula</th>
-                    <th>Firma</th>
+                    <th>Firma</th> <!-- Nueva columna con más espacio -->
                 </tr>
             </thead>
             <tbody>
@@ -97,7 +102,7 @@
                     <td>{{ votante.apellido }}</td>
                     <td>{{ votante.nombre }}</td>
                     <td>{{ votante.cedula }}</td>
-                    <td></td> <!-- Espacio para la firma del votante -->
+                    <td class="firma-col"></td> <!-- Espacio para la firma del votante -->
                 </tr>
                 {% endfor %}
             </tbody>
@@ -111,3 +116,4 @@
     {% endfor %}
 </body>
 </html>
+
