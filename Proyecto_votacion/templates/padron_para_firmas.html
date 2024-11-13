@@ -105,15 +105,15 @@
             </thead>
             <tbody>
                 {% for votante in votantes %}
-                    {% if forloop.counter0 != 0 and forloop.counter0 % 12 == 0 %}
-                        </tbody></table><div class="page-break"></div><table><tbody> 
+                    {% if forloop.counter|divisibleby:12 %}
+                        </tbody></table><div class="page-break"></div><table><tbody> <!-- Salto de página después de cada 12 filas -->
                     {% endif %}
-                <tr>
-                    <td>{{ votante.apellido }}</td>
-                    <td>{{ votante.nombre }}</td>
-                    <td>{{ votante.cedula }}</td>
-                    <td class="firma-col"></td> 
-                </tr>
+                    <tr>
+                        <td>{{ votante.apellido }}</td>
+                        <td>{{ votante.nombre }}</td>
+                        <td>{{ votante.cedula }}</td>
+                        <td class="firma-col"></td> <!-- Espacio flexible para firma o huella -->
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
