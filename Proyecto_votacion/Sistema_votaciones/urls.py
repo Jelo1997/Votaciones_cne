@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView
 from django.conf import settings
 from django.conf.urls.static import static
-from Votacion.views import index, lista_procesos_electorales, detalle_proceso_electoral, agregar_candidato, registrar_sufragante, crear_proceso_electoral, verificar_cedula, resultados_votacion,resultados_pdf, generar_pdf_padron, reiniciar_votacion
+from Votacion.views import index, lista_procesos_electorales, detalle_proceso_electoral, agregar_candidato, registrar_sufragante, crear_proceso_electoral, verificar_cedula, resultados_votacion,resultados_pdf, generar_pdf_padron, generar_pdf_padron_para_firmas, reiniciar_votacion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -61,6 +61,7 @@ urlpatterns = [
     path('resultados/<int:proceso_id>/', resultados_votacion, name='resultados_votacion'),
     path('resultados/<int:proceso_id>/pdf/', resultados_pdf, name='resultados_pdf'),
     path('generar-padron-pdf/<int:proceso_id>/', generar_pdf_padron, name='generar_padron_pdf'),
+    path('generar-padron-pdf/<int:proceso_id>/', generar_pdf_padron_para_firmas, name='generar_pdf_padron_para_firmas'),
     path('reiniciar_votacion/<int:proceso_id>/', reiniciar_votacion, name='reiniciar_votacion'),
     
 ]

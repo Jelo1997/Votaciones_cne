@@ -303,6 +303,45 @@ def generar_pdf_padron(request, proceso_id):
         return HttpResponse('Error al generar el PDF.')
     return response
 
+@login_required_and_staff
+def generar_pdf_padron_para_firmas(request, proceso_id):
+    # Obtener el proceso electoral
+    proceso = ProcesoElectoral.objects.get(id=proceso_id)
+    sufragantes = Sufragante.objects.all()
+
+    # Diccionario para agrupar sufragantes por curso
+    votantes_por_curso = {}
+
+    for sufragante in sufragantes:
+        # Obtener el curso del sufragante
+        curso = sufragante.curso
+
+        # Agrupar sufragantes por curso
+        if curso not in votantes_por_curso:
+            votantes_por_curso[curso] = []
+        votantes_por_curso[curso].append(sufragante)
+
+    # Preparar el contexto con los datos agrupados
+    context = {
+        'votantes_por_curso': votantes_por_curso,
+        'proceso': proceso
+    }
+
+    # Renderizar el template 'padron_para_firmas.html' con el contexto
+    html = render_to_string('padron_para_firmas.html', context)
+
+    # Configurar la respuesta para generar el PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename=padron_firmas_{proceso_id}.pdf'
+
+    # Generar el PDF usando xhtml2pdf (pisa)
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    # Verificar si hubo errores en la generación del PDF
+    if pisa_status.err:
+        return HttpResponse('Error al generar el PDF.')
+
+    return response
 
 @login_required_and_staff
 def reiniciar_votacion(request, proceso_id):

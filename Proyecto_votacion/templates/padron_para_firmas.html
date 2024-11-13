@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padrón Electoral - {{ proceso.nombre }}</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 20px; 
+            background-color: #f8f9fa; 
+            color: #343a40; 
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px; 
+            border-radius: 8px; 
+            background-color: white; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+        }
+        header img {
+            width: 100px; 
+            margin-bottom: 10px; 
+        }
+        h1 {
+            text-align: center; 
+            font-size: 24px; 
+            margin: 10px 0; 
+            color: #141414; 
+            background-color: white;
+        }
+        h2 {
+            font-size: 20px; 
+            margin: 10px 0; 
+            font-weight: normal; 
+            background-color: white;
+        }
+        p { 
+            margin: 10px 0; 
+        }
+        table {
+            width: 100%; 
+            max-width: 800px; 
+            border-collapse: collapse; 
+            margin: 20px auto; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+        th, td {
+            border: 1px solid #dee2e6; 
+            padding: 10px; 
+            text-align: left; 
+        }
+        th {
+            background-color: #343a40; 
+            color: white; 
+            text-transform: uppercase; 
+            font-weight: bold; 
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; 
+        }
+        tr:hover {
+            background-color: #e2e6ea; 
+        }
+        footer {
+            text-align: center; 
+            margin-top: 20px; 
+            font-size: 0.9em; 
+        }
+        .curso-section {
+            page-break-after: always; /* Esto asegura que haya un salto de página después de cada curso */
+        }
+    </style>
+</head>
+<body>
+    <!-- Mostrar los votantes por curso -->
+    {% for curso, votantes in votantes_por_curso.items %}
+    <div class="curso-section">
+        <h1>Padrón Electoral - {{ proceso.nombre }}</h1>
+        <h2>Curso: {{ curso }}</h2>
+        <p>Total de votantes en este curso: <strong>{{ votantes|length }}</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Cédula</th>
+                    <th>Firma</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for votante in votantes %}
+                <tr>
+                    <td>{{ votante.apellido }}</td>
+                    <td>{{ votante.nombre }}</td>
+                    <td>{{ votante.cedula }}</td>
+                    <td></td> <!-- Espacio para la firma del votante -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <footer>
+            <p>Consejo Nacional Electoral - Delegación Pastaza | www.cne.gob.ec</p>
+        </footer>
+    </div>
+    {% empty %}
+    <p>No hay votantes en este curso.</p>
+    {% endfor %}
+</body>
+</html>
