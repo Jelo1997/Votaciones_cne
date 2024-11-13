@@ -61,7 +61,7 @@ urlpatterns = [
     path('resultados/<int:proceso_id>/', resultados_votacion, name='resultados_votacion'),
     path('resultados/<int:proceso_id>/pdf/', resultados_pdf, name='resultados_pdf'),
     path('generar-padron-pdf/<int:proceso_id>/', generar_pdf_padron, name='generar_padron_pdf'),
-    path('generar-padron-pdf/<int:proceso_id>/', generar_pdf_padron_para_firmas, name='generar_pdf_padron_para_firmas'),
+    path('generar-padron-firmas-pdf/<int:proceso_id>/', generar_pdf_padron_para_firmas, name='generar_pdf_padron_para_firmas'),
     path('reiniciar_votacion/<int:proceso_id>/', reiniciar_votacion, name='reiniciar_votacion'),
     
 ]
