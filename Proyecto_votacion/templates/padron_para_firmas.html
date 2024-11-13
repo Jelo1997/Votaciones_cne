@@ -66,9 +66,10 @@
             background-color: #e2e6ea; 
         }
         .firma-col {
-            width: 200px; /* Espacio amplio para la firma */
+            height: 50px; 
             text-align: center; 
-            padding: 20px; /* Añadir espacio vertical para facilitar la firma */
+            border: 1px solid #000; 
+            box-sizing: border-box; 
         }
         footer {
             text-align: center; 
@@ -76,7 +77,14 @@
             font-size: 0.9em; 
         }
         .curso-section {
-            page-break-after: always; /* Esto asegura que haya un salto de página después de cada curso */
+            page-break-after: always; 
+        }
+        .page-break {
+            page-break-before: always; 
+        }
+        
+        .first-row-page {
+            border-top: none;
         }
     </style>
 </head>
@@ -90,19 +98,19 @@
         <table>
             <thead>
                 <tr>
-                    <th>Apellido</th>
                     <th>Nombre</th>
+                    <th>Apellido</th>
                     <th>Cédula</th>
-                    <th>Firma</th> <!-- Nueva columna con más espacio -->
+                    <th>Firma</th> 
                 </tr>
             </thead>
             <tbody>
                 {% for votante in votantes %}
-                <tr>
+                <tr class="{% if forloop.counter0 % 12 == 0 %}page-break first-row-page{% endif %}">
                     <td>{{ votante.apellido }}</td>
                     <td>{{ votante.nombre }}</td>
                     <td>{{ votante.cedula }}</td>
-                    <td class="firma-col"></td> <!-- Espacio para la firma del votante -->
+                    <td class="firma-col"></td> 
                 </tr>
                 {% endfor %}
             </tbody>
@@ -116,4 +124,3 @@
     {% endfor %}
 </body>
 </html>
-
