@@ -82,7 +82,6 @@
         .page-break {
             page-break-before: always; 
         }
-        
         .first-row-page {
             border-top: none;
         }
@@ -106,7 +105,10 @@
             </thead>
             <tbody>
                 {% for votante in votantes %}
-                <tr class="{% if forloop.counter0 % 12 == 0 %}page-break first-row-page{% endif %}">
+                    {% if forloop.counter0 != 0 and forloop.counter0 % 12 == 0 %}
+                        </tbody></table><div class="page-break"></div><table><tbody> 
+                    {% endif %}
+                <tr>
                     <td>{{ votante.apellido }}</td>
                     <td>{{ votante.nombre }}</td>
                     <td>{{ votante.cedula }}</td>
