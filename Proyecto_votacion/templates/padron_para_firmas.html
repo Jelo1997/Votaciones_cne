@@ -49,10 +49,10 @@
             overflow: hidden; 
         }
         td {
-            height: 80px; /* Se incrementó la altura de las filas */
+            height: 80px; 
             width: 180px; 
             border: 1px solid #dee2e6; 
-            padding: 12px 14px; /* Ajustamos el padding para las filas */
+            padding: 12px 14px; 
             text-align: left; 
         }
         th {
@@ -71,11 +71,10 @@
             background-color: #e2e6ea; 
         }
         .firma-col {
-            height: 80px; /* Se mantuvo la altura de la firma */
-            width: 180px; /* Ajustamos el ancho de la columna de firma */
-            border: 1px solid #dee2e6;
-            text-align: center; 
-            vertical-align: middle; /* Centrado vertical */
+            height: 80px; 
+            width: 180px; 
+            border: 1px solid #dee2e6; 
+            vertical-align: middle; 
             box-sizing: border-box; 
         }
         footer {
@@ -84,7 +83,7 @@
             font-size: 0.9em; 
         }
         .curso-section {
-            page-break-after: always; /* Salto de página después de cada curso */
+            page-break-after: always; 
         }
         .page-break {
             page-break-before: always; 
@@ -116,7 +115,7 @@
                         <td>{{ votante.apellido }}</td>
                         <td>{{ votante.nombre }}</td>
                         <td>{{ votante.cedula }}</td>
-                        <td class="firma-col"></td> <!-- Espacio flexible para firma o huella -->
+                        <td class="firma-col"></td> 
                     </tr>
                 {% endfor %}
             </tbody>
