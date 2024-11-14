@@ -56,7 +56,7 @@
 <div class="text-center mb-5">
     <form action="{% url 'reiniciar_votacion' proceso.id %}" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger btn-lg">Encerrar la Base de Datos</button>
+        <button type="submit" class="btn btn-danger btn-lg">Encerar la Base de Datos</button>
     </form>
 </div>
 
@@ -150,7 +150,7 @@
         };
 
         var options = {
-            high: Math.max({{ total_sufragantes }}, 350),
+            high: Math.max({{ total_sufragantes }}, 1500),
             plugins: [Chartist.plugins.tooltip()],
             axisX: {
                 offset: 30,

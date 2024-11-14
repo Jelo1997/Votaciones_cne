@@ -205,7 +205,7 @@ def resultados_pdf(request, proceso_id):
     # Calcular el total de votos emitidos
     total_votos_emitidos = total_votos_validos + votos_blanco + votos_nulo
     total_sufragantes = total_votos_emitidos
-    total_sufragantes_registrados = Sufragante.objects.count()
+    total_sufragantes_registrados = Sufragante.objects.filter(proceso=proceso).count()
     no_sufragantes = total_sufragantes_registrados - total_votos_emitidos
 
     # Calcular porcentajes para cada candidato
@@ -266,7 +266,7 @@ def resultados_pdf(request, proceso_id):
 @login_required_and_staff
 def generar_pdf_padron(request, proceso_id):
     proceso = ProcesoElectoral.objects.get(id=proceso_id)
-    sufragantes = Sufragante.objects.all()
+    sufragantes = Sufragante.objects.filter(proceso=proceso)
 
     # Diccionarios para agrupar votantes y no votantes por curso
     votantes_por_curso = {}
@@ -307,7 +307,7 @@ def generar_pdf_padron(request, proceso_id):
 def generar_pdf_padron_para_firmas(request, proceso_id):
     # Obtener el proceso electoral
     proceso = ProcesoElectoral.objects.get(id=proceso_id)
-    sufragantes = Sufragante.objects.all()
+    sufragantes = Sufragante.objects.filter(proceso=proceso)
 
     # Diccionario para agrupar sufragantes por curso
     votantes_por_curso = {}
