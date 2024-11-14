@@ -79,14 +79,14 @@ def registrar_sufragante(request, proceso_id):
 
                 # Iterar sobre las filas del archivo Excel (nombre, apellido, cédula, curso)
                 for row in sheet.iter_rows(min_row=2, values_only=True):
-                    nombre, apellido, cedula, curso = row  # Asegúrate de que la columna de curso esté en el Excel
+                    apellido, nombre, cedula, curso = row  # Asegúrate de que la columna de curso esté en el Excel
 
                     # Verificar si el sufragante ya está registrado por cédula
                     if not Sufragante.objects.filter(cedula=cedula).exists():
                         # Crear el sufragante y asociarlo al proceso y al curso
                         Sufragante.objects.create(
-                            nombre=nombre,
                             apellido=apellido,
+                            nombre=nombre,
                             cedula=cedula,
                             proceso=proceso,  # Relacionar con el proceso actual
                             curso=curso  # Registrar el curso

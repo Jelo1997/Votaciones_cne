@@ -25,9 +25,9 @@
                     
                 {% endif %}
                 
-                <li><a href="{% url 'verificar_cedula' proceso_id=1 %}"><i class="fas fa-id-card"></i> <span class="menu-text">Verificar Cédula</span></a></li> 
+                <li><a href="{% url 'verificar_cedula' proceso_id=2 %}"><i class="fas fa-id-card"></i> <span class="menu-text">Verificar Cédula</span></a></li> 
                 
-                <li><a href="{% url 'detalle_proceso_electoral' proceso_id=1 %}"><i class="fas fa-info-circle"></i> <span class="menu-text">Detalles de Proceso</span></a></li> 
+                <li><a href="{% url 'detalle_proceso_electoral' proceso_id=2 %}"><i class="fas fa-info-circle"></i> <span class="menu-text">Detalles de Proceso</span></a></li> 
 
                 <li>
                     {% if user.is_authenticated %}
