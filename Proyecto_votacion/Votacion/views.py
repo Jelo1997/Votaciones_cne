@@ -180,64 +180,53 @@ def resultados_votacion(request, proceso_id):
 
 @login_required_and_staff
 def resultados_pdf(request, proceso_id):
-    # Obtener el proceso y los candidatos
     proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
     candidatos = Candidato.objects.filter(proceso=proceso)
     votos = Voto.objects.filter(proceso=proceso)
 
-    # Inicializar diccionario de resultados
     resultados = {}
     total_votos_validos = 0
 
-    # Contar votos por candidato
     for candidato in candidatos:
         votos_validos = votos.filter(candidato=candidato, tipo_voto='valido').count()
         resultados[candidato] = {
             'votos': votos_validos,
-            'porcentaje': 0  # Inicializar porcentaje
+            'porcentaje': 0
         }
         total_votos_validos += votos_validos
 
-    # Contar votos en blanco y nulos
     votos_blanco = votos.filter(tipo_voto='blanco').count()
     votos_nulo = votos.filter(tipo_voto='nulo').count()
-
-    # Calcular el total de votos emitidos
+    
     total_votos_emitidos = total_votos_validos + votos_blanco + votos_nulo
     total_sufragantes = total_votos_emitidos
-    total_sufragantes_registrados = Sufragante.objects.count()
+    total_sufragantes_registrados = Sufragante.objects.filter(proceso=proceso).count()
     no_sufragantes = total_sufragantes_registrados - total_votos_emitidos
 
-    # Calcular porcentajes para cada candidato
     for candidato, data in resultados.items():
-        if total_votos_emitidos > 0:
-            data['porcentaje'] = (data['votos'] / total_votos_emitidos) * 100
+        data['porcentaje'] = calcular_porcentaje(data['votos'], total_votos_emitidos)
 
-    # Calcular porcentajes de votos en blanco, nulos y no sufragantes
-    porcentaje_blanco = (votos_blanco / total_votos_emitidos) * 100 if total_votos_emitidos > 0 else 0
-    porcentaje_nulo = (votos_nulo / total_votos_emitidos) * 100 if total_votos_emitidos > 0 else 0
-    porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes_registrados) * 100 if total_sufragantes_registrados > 0 else 0
+    porcentaje_blanco = calcular_porcentaje(votos_blanco, total_votos_emitidos)
+    porcentaje_nulo = calcular_porcentaje(votos_nulo, total_votos_emitidos)
+    porcentaje_no_sufragantes = calcular_porcentaje(no_sufragantes, total_sufragantes_registrados)
 
-    # Generar gráfico con Matplotlib
+    # Generar gráfico
     fig, ax = plt.subplots(figsize=(4, 3))
-    labels = [candidato.nombre for candidato in candidatos] 
+    labels = [candidato.nombre for candidato in candidatos]
     votos_data = [data['votos'] for data in resultados.values()]
 
-    ax.bar(labels, votos_data, color=['#007bff', '#28a745', '#dc3545'])  # Colores para barras
+    ax.bar(labels, votos_data, color=['#007bff', '#28a745', '#dc3545'])
     ax.set_ylabel('Votos')
     ax.set_title('Resultados de Votación')
 
-    # Guardar el gráfico en un buffer
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     plt.close(fig)
 
-    # Codificar la imagen en base64
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
     image_uri = 'data:image/png;base64,' + image_base64
 
-    # Preparar el contexto
     context = {
         'proceso': proceso,
         'resultados': resultados,
@@ -247,10 +236,9 @@ def resultados_pdf(request, proceso_id):
         'porcentaje_no_sufragantes': round(porcentaje_no_sufragantes, 2),
         'total_sufragantes': total_sufragantes,
         'fecha_generacion': timezone.now(),
-        'image_uri': image_uri,  # Incluir la URI de la imagen en el contexto
+        'image_uri': image_uri,
     }
 
-    # Renderizar la plantilla y generar el PDF
     template = get_template('resultados_pdf.html')
     html = template.render(context)
     response = HttpResponse(content_type='application/pdf')
@@ -261,7 +249,6 @@ def resultados_pdf(request, proceso_id):
         return HttpResponse(f'Error al generar PDF: {pisa_status.err}', content_type='text/plain')
 
     return response
-
 
 @login_required_and_staff
 def generar_pdf_padron(request, proceso_id):
