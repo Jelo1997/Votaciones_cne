@@ -94,8 +94,8 @@
             <tbody>
                 {% for votante in votantes %}
                 <tr>
-                    <td>{{ votante.nombre }}</td>
                     <td>{{ votante.apellido }}</td>
+                    <td>{{ votante.nombre }}</td>
                     <td>{{ votante.cedula }}</td>
                 </tr>
                 {% endfor %}
@@ -119,8 +119,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>Nombre</th>
                     <th>Apellido</th>
+                    <th>Nombre</th>
                     <th>Cédula</th>
                 </tr>
             </thead>
@@ -139,7 +139,7 @@
         </footer>
     </div>
     {% empty %}
-    <p>No hay no votantes en este curso.</p>
+    <p>No hay no votantes en este Proceso.</p>
     {% endfor %}
 
     
