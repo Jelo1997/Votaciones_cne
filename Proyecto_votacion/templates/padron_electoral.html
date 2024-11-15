@@ -71,7 +71,7 @@
             font-size: 0.9em; 
         }
         .curso-section {
-            page-break-after: always; /* Esto asegura que haya un salto de página después de cada curso */
+            page-break-after: always; 
         }
     </style>
 </head>
@@ -94,8 +94,8 @@
             <tbody>
                 {% for votante in votantes %}
                 <tr>
-                    <td>{{ votante.apellido }}</td>
                     <td>{{ votante.nombre }}</td>
+                    <td>{{ votante.apellido }}</td>
                     <td>{{ votante.cedula }}</td>
                 </tr>
                 {% endfor %}
@@ -106,7 +106,7 @@
         </footer>
     </div>
     {% empty %}
-    <p>No hay votantes en este curso.</p>
+    <p>No hay votantes en este Proceso.</p>
     {% endfor %}
 
     <!-- Mostrar los no votantes por curso -->
