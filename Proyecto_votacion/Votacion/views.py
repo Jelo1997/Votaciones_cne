@@ -246,6 +246,7 @@ def resultados_pdf(request, proceso_id):
         'no_sufragantes': no_sufragantes,
         'porcentaje_no_sufragantes': round(porcentaje_no_sufragantes, 2),
         'total_sufragantes': total_sufragantes,
+        'total_sufragantes_registrados': total_sufragantes_registrados,
         'fecha_generacion': timezone.now(),
         'image_uri': image_uri,  # Incluir la URI de la imagen en el contexto
     }
