@@ -79,7 +79,7 @@
     }
 
     h1, h2, h3 {
-        color: #343a40; /* Color más oscuro para los encabezados */
+        color: #343a40; 
     }
 
     h3 {
@@ -96,19 +96,19 @@
         text-align: center;
         vertical-align: middle;
         padding: 15px; 
-        border: 1px solid #dee2e6; /* Borde más suave */
-        color: #343a40; /* Texto más oscuro */
+        border: 1px solid #dee2e6; 
+        color: #0a0b0c; 
     }
 
     .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #f2f2f2; /* Color más claro para filas impares */
+        background-color: #f2f2f2; 
     }
 
     .btn-danger {
         padding: 12px 45px;
         font-size: 1.2em;
         transition: background-color 0.3s;
-        border-radius: 25px; /* Bordes redondeados para el botón */
+        border-radius: 25px; 
     }
 
     .btn-danger:hover {
@@ -150,14 +150,14 @@
         };
 
         var options = {
-            high: Math.max({{ total_sufragantes }}, 1500),
+            high: Math.max({{ total_sufragantes }}, 600),
             plugins: [Chartist.plugins.tooltip()],
             axisX: {
                 offset: 30,
                 labelInterpolationFnc: function(value, index) {
                     return value.length > 30 ? value.slice(0, 30) + '...' : value;
                 },
-                labelOffset: { x: 0, y: 10 }, // Espaciado de las etiquetas
+                labelOffset: { x: 0, y: 10 }, 
             },
             axisY: {
                 offset: 40,
