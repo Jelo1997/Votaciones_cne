@@ -15,19 +15,19 @@
                 {% if user.is_staff %}
                     <li><a href="{% url 'lista_procesos_electorales' %}"><i class="fas fa-list"></i> <span class="menu-text">Lista de Procesos Electorales</span></a></li>
                     <li><a href="{% url 'crear_proceso_electoral' %}"><i class="fas fa-plus"></i> <span class="menu-text">Crear proceso electoral</span></a></li>
-                    <li><a href="{% url 'agregar_candidato' proceso_id=5 %}"><i class="fas fa-user-plus"></i> <span class="menu-text">Agregar Candidato</span></a></li>
-                    <li><a href="{% url 'resultados_votacion' proceso_id=5 %}"><i class="fas fa-poll"></i> <span class="menu-text">Resultados</span></a></li>
-                    <li><a href="{% url 'resultados_pdf' proceso_id=5 %}"><i class="fas fa-print"></i> <span class="menu-text">Imprimir Resultados</span></a></li>
-                    <li><a href="{% url 'registrar_sufragante' proceso_id=5 %}"><i class="fas fa-clipboard-check"></i> <span class="menu-text">Registrar Sufragante</span></a></li>
-                    <li><a href="{% url 'generar_padron_pdf' proceso_id=5 %}"><i class="fas fa-print"></i> <span class="menu-text">Imprimir Padrón de votación</span></a></li>
-                    <li><a href="{% url 'generar_pdf_padron_para_firmas' proceso_id=5 %}"><i class="fas fa-print"></i> <span class="menu-text">Imprimir Padrón para firmas</span></a></li>
+                    <li><a href="{% url 'agregar_candidato' proceso_id=6 %}"><i class="fas fa-user-plus"></i> <span class="menu-text">Agregar Candidato</span></a></li>
+                    <li><a href="{% url 'resultados_votacion' proceso_id=6 %}"><i class="fas fa-poll"></i> <span class="menu-text">Resultados</span></a></li>
+                    <li><a href="{% url 'resultados_pdf' proceso_id=6 %}"><i class="fas fa-print"></i> <span class="menu-text">Imprimir Resultados</span></a></li>
+                    <li><a href="{% url 'registrar_sufragante' proceso_id=6 %}"><i class="fas fa-clipboard-check"></i> <span class="menu-text">Registrar Sufragante</span></a></li>
+                    <li><a href="{% url 'generar_padron_pdf' proceso_id=6 %}"><i class="fas fa-print"></i> <span class="menu-text">Imprimir Padrón de votación</span></a></li>
+                    <li><a href="{% url 'generar_pdf_padron_para_firmas' proceso_id=6 %}"><i class="fas fa-print"></i> <span class="menu-text">Imprimir Padrón para firmas</span></a></li>
                     
                     
                 {% endif %}
                 
-                <li><a href="{% url 'verificar_cedula' proceso_id=5 %}"><i class="fas fa-id-card"></i> <span class="menu-text">Verificar Cédula</span></a></li> 
+                <li><a href="{% url 'verificar_cedula' proceso_id=6 %}"><i class="fas fa-id-card"></i> <span class="menu-text">Verificar Cédula</span></a></li> 
                 
-                <li><a href="{% url 'detalle_proceso_electoral' proceso_id=5 %}"><i class="fas fa-info-circle"></i> <span class="menu-text">Detalles de Proceso</span></a></li> 
+                <li><a href="{% url 'detalle_proceso_electoral' proceso_id=6 %}"><i class="fas fa-info-circle"></i> <span class="menu-text">Detalles de Proceso</span></a></li> 
 
                 <li>
                     {% if user.is_authenticated %}
