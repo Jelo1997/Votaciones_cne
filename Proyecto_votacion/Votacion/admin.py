@@ -24,7 +24,7 @@ class CandidatoAdmin(admin.ModelAdmin):
 @admin.register(Sufragante)
 class SufraganteAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre', 'apellido', 'cedula', 'curso', 'proceso')
-    list_filter = ('proceso',)
+    list_filter = ('proceso','curso',)
 
 @admin.register(Voto)
 class VotoAdmin(admin.ModelAdmin):
