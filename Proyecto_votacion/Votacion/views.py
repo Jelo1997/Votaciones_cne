@@ -308,7 +308,7 @@ def generar_pdf_padron(request, proceso_id):
 def generar_pdf_padron_para_firmas(request, proceso_id):
     # Obtener el proceso electoral
     proceso = ProcesoElectoral.objects.get(id=proceso_id)
-    sufragantes = Sufragante.objects.filter(proceso=proceso)
+    sufragantes = Sufragante.objects.filter(proceso=proceso).order_by('curso', 'apellido', 'nombre')
 
     # Diccionario para agrupar sufragantes por curso
     votantes_por_curso = {}
