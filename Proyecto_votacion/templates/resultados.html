@@ -6,13 +6,13 @@
 
 {% block content %}
 
-<header class="text-left mb-5">
-    <h1 class="font-weight-bold display-4 mb-3 text-align-center">Resultados Electorales</h1>
-    <h2 class="text-align-center font-weight-normal h3">{{ proceso.nombre }}</h2>
+<header class="mb-5">
+    <h1 class="text-center font-weight-bold display-4 mb-3 ">Resultados Electorales</h1>
+    <h2 class="text-center font-weight-normal h3">{{ proceso.nombre }}</h2>
     <div class="mt-4">
-        <h3 class="text-dark mb-2">🗳️ Total de Sufragantes: <strong>{{ total_sufragantes }}</strong></h3>
-        <h3 class="text-dark mb-2">👥 Total de Electores: <strong>{{ total_sufragantes_registrados }}</strong></h3>
-        <h3 class="text-dark">📈 Participación: <strong>{{ porcentaje_participacion }}%</strong></h3>
+        <h3 class="text-left text-dark mb-2">🗳️ Total de Sufragantes: <strong>{{ total_sufragantes }}</strong></h3>
+        <h3 class="text-left text-dark mb-2">👥 Total de Electores: <strong>{{ total_sufragantes_registrados }}</strong></h3>
+        <h3 class="text-left text-dark">📈 Participación: <strong>{{ porcentaje_participacion }}%</strong></h3>
     </div>
 </header>
 
