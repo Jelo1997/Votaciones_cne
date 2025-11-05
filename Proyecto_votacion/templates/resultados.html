@@ -21,7 +21,7 @@
         <div class="col-md-6 mb-4">
             <div class="card border-primary shadow-lg">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Resultados Totales</h4>
+                    <h4 class="mb-0 chart-title">Resultados Totales</h4>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -34,8 +34,8 @@
                         <tbody>
                             {% for candidato, votos in resultados.items %}
                             <tr>
-                                <td class="text-center">{{ candidato.nombre }}</td>
-                                <td class="text-center">{{ votos }}</td>
+                                <td class="text-center"><strong>{{ candidato.nombre }}</strong></td>
+                                <td class="text-center"><strong>{{ votos }}</strong></td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -47,7 +47,7 @@
         <div class="col-md-6 mb-4">
             <div class="card border-primary shadow-lg">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Gráfico de Resultados</h4>
+                    <h4 class="mb-0 chart-title">Gráfico de Resultados</h4>
                 </div>
                 <div class="card-body">
                     <div id="votacion-chart" class="ct-chart" style="height: 450px; padding: 20px;"></div>
@@ -73,65 +73,98 @@
 
     body {
         font-family: 'Roboto', sans-serif;
-        color: #343a40; /* Texto oscuro */
+        background-color: #f9fafc;
+        color: #212529;
     }
 
-    .container-fluid {
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    h1, h2, h3, h4 {
+        color: #212529;
+        font-weight: 700;
     }
 
-    h1, h2, h3 {
-        color: #343a40; 
-    }
-
-    h3 {
-        text-align: left;
-    }
-
-    table {
-        margin-bottom: 30px;
-        border-radius: 5px;
+    .card {
+        border-radius: 12px;
         overflow: hidden;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .table th, .table td {
-        text-align: center;
-        vertical-align: middle;
-        padding: 15px; 
-        border: 1px solid #dee2e6; 
-        color: #0a0b0c; 
+        font-size: 1.1em;
+        color: #212529;
     }
 
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #f2f2f2; 
+    .table thead th {
+        background-color: #007bff;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+        border: none;
     }
 
     .btn-danger {
         padding: 12px 45px;
         font-size: 1.2em;
-        transition: background-color 0.3s;
+        font-weight: bold;
         border-radius: 25px; 
+        background-color: #dc3545;
+        border: none;
     }
 
     .btn-danger:hover {
-        background-color: #c82333; /* Color más oscuro al pasar el mouse */
+        background-color: #bb2d3b;
     }
 
+    /* ======== GRÁFICO MEJORADO ======== */
     .ct-chart {
-        height: 450px; 
-        width: 100%; 
-    }
-
-    .ct-series .ct-bar {
-        stroke-width: 40px; /* Aumentar el grosor de las barras */
-        transition: stroke 0.3s; /* Transición suave al cambiar colores */
+        height: 450px;
+        width: 100%;
     }
 
     .ct-label {
-        color: #000; 
-        font-weight: bold; 
+        color: #000;
+        font-weight: 700;
+        font-size: 1em;
+    }
+
+    .ct-grid {
+        stroke: rgba(0, 0, 0, 0.08);
+        stroke-dasharray: 2px;
+    }
+
+    .ct-bar {
+        stroke-width: 50px;
+        stroke-linecap: round;
+        transition: all 0.3s ease;
+    }
+
+    .ct-bar:hover {
+        stroke-width: 60px;
+        opacity: 0.9;
+    }
+
+    .chart-title {
+        font-weight: bold;
+        font-size: 1.3rem;
+        color: #fff;
+    }
+
+    .card-header.bg-primary {
+        background: linear-gradient(90deg, #007bff, #0056b3);
+    }
+
+    /* ======== TOOLTIP ======== */
+    .chartist-tooltip {
+        background: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        border-radius: 6px;
+        padding: 8px 10px;
+        font-size: 1rem;
+        font-weight: bold;
     }
 </style>
 {% endblock %}
@@ -145,7 +178,7 @@
         var data = {
             labels: [
                 {% for candidato, votos in resultados.items %}
-                '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}{% endfor %},
+                '{{ candidato.nombre }}'{% if not forloop.last %}, {% endif %}{% endfor %}
             ],
             series: [[
                 {% for candidato, votos in resultados.items %}
@@ -154,45 +187,57 @@
         };
 
         var options = {
-            high: Math.max({{ total_sufragantes }}, 600),
+            high: Math.max({{ total_sufragantes }}, 10),
             plugins: [Chartist.plugins.tooltip()],
             axisX: {
-                offset: 30,
-                labelInterpolationFnc: function(value, index) {
-                    return value.length > 30 ? value.slice(0, 30) + '...' : value;
-                },
-                labelOffset: { x: 0, y: 10 }, 
+                offset: 40,
+                showGrid: false,
+                labelInterpolationFnc: function(value) {
+                    return value.length > 25 ? value.slice(0, 25) + '...' : value;
+                }
             },
             axisY: {
-                offset: 40,
-                onlyInteger: true
+                onlyInteger: true,
+                offset: 60,
+                labelOffset: { x: 0, y: 5 },
+                labelInterpolationFnc: function(value) {
+                    return value.toFixed(0);
+                }
             },
-            seriesBarDistance: 15,
+            seriesBarDistance: 25,
             chartPadding: {
-                left: 20,
-                right: 20,
-                top: 20,
-                bottom: 20
+                top: 30,
+                right: 40,
+                bottom: 10,
+                left: 10
             }
         };
 
         var responsiveOptions = [
-            ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
+            ['screen and (max-width: 768px)', {
+                seriesBarDistance: 10,
                 axisX: {
                     labelInterpolationFnc: function(value) {
-                        return value.split(' ').slice(0, 1).join(' ');
+                        return value.split(' ')[0];
                     }
                 }
             }]
         ];
 
-        new Chartist.Bar('#votacion-chart', data, options, responsiveOptions);
+        // Crear gráfico
+        var chart = new Chartist.Bar('#votacion-chart', data, options, responsiveOptions);
 
-        // Personalizar colores de las barras
-        data.series[0].forEach((value, index) => {
-            let color = '#007bff'; // Color para candidatos
-            document.querySelector(`#votacion-chart .ct-bar.ct-bar-${index}`).style.fill = color;
+        // Personalizar colores vivos para las barras
+        chart.on('draw', function(ctx) {
+            if (ctx.type === 'bar') {
+                var colors = [
+                    '#007bff', '#28a745', '#ffc107', '#dc3545', 
+                    '#6610f2', '#20c997', '#fd7e14'
+                ];
+                ctx.element.attr({
+                    style: 'stroke: ' + colors[ctx.index % colors.length] + ';'
+                });
+            }
         });
     });
 </script>
