@@ -112,16 +112,21 @@ def verificar_cedula(request, proceso_id):
         if form.is_valid():
             cedula = form.cleaned_data['cedula']
             try:
-                sufragante = Sufragante.objects.get(cedula=cedula)
+                #  Buscar al sufragante solo dentro del proceso actual
+                sufragante = Sufragante.objects.get(cedula=cedula, proceso=proceso)
                 
-                
+                # Verificar si ya votó en este proceso
                 if Voto.objects.filter(sufragante=sufragante, proceso=proceso).exists():
-                    mensaje = 'La cédula {} ya ha registrado un voto en este proceso electoral. No puedes votar nuevamente.'.format(sufragante.cedula)
+                    mensaje = f'La cédula {sufragante.cedula} ya ha registrado un voto en este proceso electoral.'
                 else:
                     request.session['cedula'] = sufragante.cedula  
                     return redirect('detalle_proceso_electoral', proceso_id=proceso.id)  
+
             except Sufragante.DoesNotExist:
-                form.add_error('cedula', 'Cédula no encontrada')
+                form.add_error('cedula', 'Cédula no encontrada en este proceso.')
+            except Sufragante.MultipleObjectsReturned:
+                form.add_error('cedula', 'Esta cédula está duplicada en este proceso, verifique el padrón.')
+
     else:
         form = CedulaForm()
 
