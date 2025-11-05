@@ -170,20 +170,41 @@ def detalle_proceso_electoral(request, proceso_id):
 
 @login_required_and_staff
 def resultados_votacion(request, proceso_id):
-    proceso = ProcesoElectoral.objects.get(id=proceso_id)
-    resultados = {}
+    # Obtener el proceso electoral
+    proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
+
+    # Obtener todos los votos del proceso
     total_votos = Voto.objects.filter(proceso=proceso)
 
+    # Calcular votos por candidato
+    resultados = {}
     for candidato in proceso.candidatos.all():
         resultados[candidato] = total_votos.filter(candidato=candidato).count()
 
+    # Total de sufragantes (quienes votaron)
     total_sufragantes = total_votos.values('sufragante').distinct().count()
+
+    # Total de electores registrados (sufragantes habilitados)
+    total_sufragantes_registrados = Sufragante.objects.filter(proceso=proceso).count()
+
+    # Calcular porcentaje de participación
+    if total_sufragantes_registrados > 0:
+        porcentaje_participacion = round(
+            (total_sufragantes / total_sufragantes_registrados) * 100, 2
+        )
+    else:
+        porcentaje_participacion = 0
+
+    # Fecha de generación del reporte
     fecha_generacion = timezone.now().strftime('%d de %B de %Y')
 
+    # Contexto para la plantilla
     context = {
         'proceso': proceso,
         'resultados': resultados,
         'total_sufragantes': total_sufragantes,
+        'total_sufragantes_registrados': total_sufragantes_registrados,
+        'porcentaje_participacion': porcentaje_participacion,
         'fecha_generacion': fecha_generacion,
     }
 
