@@ -145,7 +145,8 @@ def detalle_proceso_electoral(request, proceso_id):
     if not cedula:
         return redirect('verificar_cedula', proceso_id=proceso.id)
 
-    sufragante = get_object_or_404(Sufragante, cedula=cedula)
+    #  Buscar el sufragante solo dentro del proceso actual
+    sufragante = get_object_or_404(Sufragante, cedula=cedula, proceso=proceso)
 
     if request.method == 'POST':
         candidato_id = request.POST.get('candidato')
@@ -160,7 +161,12 @@ def detalle_proceso_electoral(request, proceso_id):
         del request.session['cedula']
         return redirect('verificar_cedula', proceso_id=proceso.id)
 
-    return render(request, 'detalle_proceso.html', {'proceso': proceso, 'candidatos': candidatos, 'sufragante': sufragante,'curso': sufragante.curso})
+    return render(request, 'detalle_proceso.html', {
+        'proceso': proceso,
+        'candidatos': candidatos,
+        'sufragante': sufragante,
+        'curso': sufragante.curso
+    })
 
 @login_required_and_staff
 def resultados_votacion(request, proceso_id):
