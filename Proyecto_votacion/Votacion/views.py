@@ -65,6 +65,7 @@ def agregar_candidato(request, proceso_id):
 
     return render(request, 'agregar_candidato.html', {'form': form, 'proceso': proceso})
 
+
 @login_required_and_staff
 def registrar_sufragante(request, proceso_id):
     proceso = get_object_or_404(ProcesoElectoral, pk=proceso_id)
@@ -79,27 +80,26 @@ def registrar_sufragante(request, proceso_id):
 
                 # Iterar sobre las filas del archivo Excel (nombre, apellido, cédula, curso)
                 for row in sheet.iter_rows(min_row=2, values_only=True):
-                    nombre, apellido, cedula, curso = row  # Asegúrate de que la columna de curso esté en el Excel
+                    nombre, apellido, cedula, curso = row  # columnas en tu Excel
 
-                    # Verificar si el sufragante ya está registrado por cédula
-                    if not Sufragante.objects.filter(cedula=cedula).exists():
-                        # Crear el sufragante y asociarlo al proceso y al curso
+                    # Verificar duplicado solo dentro del mismo proceso
+                    if not Sufragante.objects.filter(cedula=cedula, proceso=proceso).exists():
+                        # Crear el sufragante en el proceso actual
                         Sufragante.objects.create(
                             apellido=apellido,
                             nombre=nombre,
                             cedula=cedula,
-                            proceso=proceso,  # Relacionar con el proceso actual
-                            curso=curso  # Registrar el curso
+                            proceso=proceso,
+                            curso=curso
                         )
-                
+
+                messages.success(request, "Sufragantes registrados correctamente.")
                 return redirect('lista_procesos_electorales')
 
             except Exception as e:
-                return render(request, 'registrar_sufragante.html', {
-                    'error': 'Error al procesar el archivo. Verifique el formato.',
-                    'proceso': proceso
-                })
-    
+                messages.error(request, f"Error al procesar el archivo: {e}")
+                return render(request, 'registrar_sufragante.html', {'proceso': proceso})
+
     return render(request, 'registrar_sufragante.html', {'proceso': proceso})
 
 @login_required
