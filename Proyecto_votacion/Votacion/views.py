@@ -384,4 +384,58 @@ def reiniciar_votacion(request, proceso_id):
     
     return redirect('resultados_votacion', proceso_id=proceso.id)
 
-    
+@login_required_and_staff
+def resultados_por_curso_pdf(request, proceso_id):
+    proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
+
+    # Obtener candidatos y votos
+    candidatos = Candidato.objects.filter(proceso=proceso)
+    votos = Voto.objects.filter(proceso=proceso, tipo_voto='valido')
+
+    # Diccionario final:
+    # votos_por_curso = {
+    #    "1ro A": [
+    #        {"candidato": "Candidato 1", "votos": 18},
+    #        {"candidato": "Candidato 2", "votos": 7},
+    #    ],
+    #    "2do B": [...]
+    # }
+    votos_por_curso = {}
+
+    # Agrupar por curso
+    for voto in votos:
+        curso = voto.curso
+        if curso not in votos_por_curso:
+            votos_por_curso[curso] = {}
+
+        # Contar votos para cada candidato en ese curso
+        candidato_nombre = voto.candidato.nombre
+        if candidato_nombre not in votos_por_curso[curso]:
+            votos_por_curso[curso][candidato_nombre] = 0
+
+        votos_por_curso[curso][candidato_nombre] += 1
+
+    # Convertir dict interno a lista ordenada
+    votos_por_curso_final = {}
+    for curso, datos in votos_por_curso.items():
+        votos_por_curso_final[curso] = [
+            {"candidato": candidato, "votos": votos}
+            for candidato, votos in datos.items()
+        ]
+
+    # Render PDF
+    context = {
+        "proceso": proceso,
+        "votos_por_curso": votos_por_curso_final,
+    }
+
+    html = render_to_string("resultados_por_curso_pdf.html", context)
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="votos_por_curso_{proceso.nombre}.pdf"'
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse("Error al generar PDF")
+
+    return response
