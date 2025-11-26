@@ -388,34 +388,26 @@ def reiniciar_votacion(request, proceso_id):
 def resultados_por_curso_pdf(request, proceso_id):
     proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
 
-    # Obtener candidatos y votos
-    candidatos = Candidato.objects.filter(proceso=proceso)
+    # Votos válidos del proceso
     votos = Voto.objects.filter(proceso=proceso, tipo_voto='valido')
 
-    # Diccionario final:
-    # votos_por_curso = {
-    #    "1ro A": [
-    #        {"candidato": "Candidato 1", "votos": 18},
-    #        {"candidato": "Candidato 2", "votos": 7},
-    #    ],
-    #    "2do B": [...]
-    # }
+    # Diccionario base
     votos_por_curso = {}
 
-    # Agrupar por curso
     for voto in votos:
-        curso = voto.curso
+        curso = voto.curso.strip() if voto.curso else "SIN CURSO"
+
         if curso not in votos_por_curso:
             votos_por_curso[curso] = {}
 
-        # Contar votos para cada candidato en ese curso
         candidato_nombre = voto.candidato.nombre
+
         if candidato_nombre not in votos_por_curso[curso]:
             votos_por_curso[curso][candidato_nombre] = 0
 
         votos_por_curso[curso][candidato_nombre] += 1
 
-    # Convertir dict interno a lista ordenada
+    # Convertir a estructura final (lista)
     votos_por_curso_final = {}
     for curso, datos in votos_por_curso.items():
         votos_por_curso_final[curso] = [
@@ -423,15 +415,25 @@ def resultados_por_curso_pdf(request, proceso_id):
             for candidato, votos in datos.items()
         ]
 
-    # Render PDF
+        # Ordenar por número de votos (descendente)
+        votos_por_curso_final[curso].sort(key=lambda x: x["votos"], reverse=True)
+
+    # Ordenar cursos alfabéticamente
+    votos_por_curso_final = dict(sorted(votos_por_curso_final.items()))
+
+    # Contexto
     context = {
         "proceso": proceso,
         "votos_por_curso": votos_por_curso_final,
     }
 
+    # Render HTML → PDF
     html = render_to_string("resultados_por_curso_pdf.html", context)
+
     response = HttpResponse(content_type="application/pdf")
-    response["Content-Disposition"] = f'attachment; filename="votos_por_curso_{proceso.nombre}.pdf"'
+    response["Content-Disposition"] = (
+        f'attachment; filename="votos_por_curso_{proceso.nombre}.pdf"'
+    )
 
     pisa_status = pisa.CreatePDF(html, dest=response)
 
