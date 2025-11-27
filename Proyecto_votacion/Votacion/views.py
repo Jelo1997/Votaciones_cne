@@ -388,7 +388,7 @@ def reiniciar_votacion(request, proceso_id):
 def resultados_por_curso_pdf(request, proceso_id):
     proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
 
-    # Obtener todos los cursos del proceso
+    # Cursos existentes
     cursos = (
         Sufragante.objects.filter(proceso=proceso)
         .exclude(curso="")
@@ -398,7 +398,7 @@ def resultados_por_curso_pdf(request, proceso_id):
 
     candidatos = Candidato.objects.filter(proceso=proceso)
 
-    # Diccionario final
+    # Diccionario: { "1ro A": [ {candidato: X, votos: Y}, ... ] }
     resultados_por_curso = {}
 
     for curso in cursos:
@@ -417,30 +417,28 @@ def resultados_por_curso_pdf(request, proceso_id):
                 "votos": votos_count
             })
 
-    # Ordenar alfabéticamente los cursos
+    # Ordenar cursos
     resultados_por_curso = dict(sorted(resultados_por_curso.items()))
 
-    # Contexto para la plantilla
+    # Contexto
     context = {
         "proceso": proceso,
         "resultados_por_curso": resultados_por_curso,
         "fecha_generacion": timezone.now(),
     }
 
-    # Cargar plantilla PDF
-    template = get_template('resultados_por_curso_pdf.html')
-    html = template.render(context)
+    # Render HTML → string
+    html = render_to_string("resultados_por_curso_pdf.html", context)
 
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="resultados_por_curso_{proceso.nombre}.pdf"'
+    # Preparar respuesta PDF
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="resultados_por_curso_{proceso.nombre}.pdf"'
 
-    pisa_status = pisa.CreatePDF(
-        BytesIO(html.encode("UTF-8")),
-        dest=response
-    )
+    # Generar PDF
+    pisa_status = pisa.CreatePDF(html, dest=response)
 
     if pisa_status.err:
-        return HttpResponse("Error al generar PDF", content_type='text/plain')
+        return HttpResponse("Error al generar PDF.")
 
     return response
 
