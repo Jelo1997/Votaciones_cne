@@ -6,26 +6,32 @@
         body { font-family: Arial, sans-serif; font-size: 12px; }
         h1 { text-align: center; }
         h2 { margin-top: 20px; border-bottom: 1px solid #000; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 5px;
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
         td, th {
             border: 1px solid #000;
             padding: 6px;
             text-align: left;
         }
+        .resumen { margin-top: 10px; font-size: 12px; }
+        .totales-finales { margin-top: 30px; border-top: 2px solid #000; padding-top: 10px; }
     </style>
 </head>
 <body>
 
 <h1>Resultados por Curso</h1>
+
 <p><strong>Proceso:</strong> {{ proceso.nombre }}</p>
 <p><strong>Fecha de generación:</strong> {{ fecha_generacion }}</p>
 
 {% for curso, datos in resultados_por_curso.items %}
     <h2>Curso: {{ curso }}</h2>
+
+    <p class="resumen">
+        <strong>Total estudiantes:</strong> {{ datos.total_estudiantes }} <br>
+        <strong>Total votantes:</strong> {{ datos.total_votantes }} <br>
+        <strong>No votaron:</strong> {{ datos.no_votaron }} <br>
+        <strong>Participación:</strong> {{ datos.participacion }}%
+    </p>
 
     <table>
         <thead>
@@ -35,15 +41,26 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in datos %}
-            <tr>
-                <td>{{ item.candidato }}</td>
-                <td>{{ item.votos }}</td>
-            </tr>
+            {% for item in datos.votos_por_candidato %}
+                <tr>
+                    <td>{{ item.candidato }}</td>
+                    <td>{{ item.votos }}</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
+
 {% endfor %}
+
+<div class="totales-finales">
+    <h2>TOTALES GENERALES</h2>
+    <p>
+        <strong>Total estudiantes:</strong> {{ totales.total_estudiantes }} <br>
+        <strong>Total votantes:</strong> {{ totales.total_votantes }} <br>
+        <strong>No votaron:</strong> {{ totales.no_votaron }} <br>
+        <strong>Participación general:</strong> {{ totales.participacion }}%
+    </p>
+</div>
 
 </body>
 </html>

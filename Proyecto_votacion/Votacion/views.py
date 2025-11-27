@@ -398,12 +398,32 @@ def resultados_por_curso_pdf(request, proceso_id):
 
     candidatos = Candidato.objects.filter(proceso=proceso)
 
-    # Diccionario: { "1ro A": [ {candidato: X, votos: Y}, ... ] }
+    # Diccionario final estructurado para el HTML
     resultados_por_curso = {}
 
-    for curso in cursos:
-        resultados_por_curso[curso] = []
+    # Totales globales
+    total_estudiantes_global = 0
+    total_votaron_global = 0
+    total_no_votaron_global = 0
 
+    for curso in cursos:
+        # Estudiantes por curso
+        estudiantes_curso = Sufragante.objects.filter(proceso=proceso, curso=curso).count()
+
+        # Votaron (cualquier tipo de voto)
+        votaron_curso = Voto.objects.filter(proceso=proceso, curso=curso).count()
+
+        # No votaron
+        no_votaron_curso = estudiantes_curso - votaron_curso
+
+        # % participación
+        participacion = (
+            (votaron_curso / estudiantes_curso) * 100
+            if estudiantes_curso > 0 else 0
+        )
+
+        # Resultados por candidato
+        resultados_candidatos = []
         for candidato in candidatos:
             votos_count = Voto.objects.filter(
                 proceso=proceso,
@@ -412,29 +432,50 @@ def resultados_por_curso_pdf(request, proceso_id):
                 curso=curso
             ).count()
 
-            resultados_por_curso[curso].append({
+            resultados_candidatos.append({
                 "candidato": candidato.nombre,
                 "votos": votos_count
             })
 
-    # Ordenar cursos
+        # Guardamos todo
+        resultados_por_curso[curso] = {
+            "estudiantes": estudiantes_curso,
+            "votaron": votaron_curso,
+            "no_votaron": no_votaron_curso,
+            "participacion": round(participacion, 2),
+            "resultados": resultados_candidatos
+        }
+
+        # Sumar globales
+        total_estudiantes_global += estudiantes_curso
+        total_votaron_global += votaron_curso
+        total_no_votaron_global += no_votaron_curso
+
+    # Participación global
+    participacion_global = (
+        (total_votaron_global / total_estudiantes_global) * 100
+        if total_estudiantes_global > 0 else 0
+    )
+
+    # Ordenar alfabéticamente
     resultados_por_curso = dict(sorted(resultados_por_curso.items()))
 
-    # Contexto
+    # Contexto FINAL
     context = {
         "proceso": proceso,
         "resultados_por_curso": resultados_por_curso,
         "fecha_generacion": timezone.now(),
+        "total_estudiantes": total_estudiantes_global,
+        "total_votaron": total_votaron_global,
+        "total_no_votaron": total_no_votaron_global,
+        "participacion_total": round(participacion_global, 2),
     }
 
-    # Render HTML → string
+    # Render HTML → PDF
     html = render_to_string("resultados_por_curso_pdf.html", context)
-
-    # Preparar respuesta PDF
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = f'attachment; filename="resultados_por_curso_{proceso.nombre}.pdf"'
 
-    # Generar PDF
     pisa_status = pisa.CreatePDF(html, dest=response)
 
     if pisa_status.err:
