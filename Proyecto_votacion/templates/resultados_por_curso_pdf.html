@@ -90,7 +90,16 @@
 
 <div class="info-proceso">
     <strong>Fecha de generación:</strong> {{ fecha_generacion }}
+    <h2>TOTALES GENERALES</h2>
+    <p>
+        <strong>Total estudiantes:</strong> {{ total_estudiantes }} <br>
+        <strong>Total votantes:</strong> {{ total_votaron }} <br>
+        <strong>No votaron:</strong> {{ total_no_votaron }} <br>
+        <strong>Participación general:</strong> {{ participacion_total }}%
+    </p>
 </div>
+
+
 
 {% for curso, datos in resultados_por_curso.items %}
     <h2>Curso: {{ curso }}</h2>
@@ -120,16 +129,6 @@
     </table>
 
 {% endfor %}
-
-<div class="footer-total">
-    <h2>TOTALES GENERALES</h2>
-    <p>
-        <strong>Total estudiantes:</strong> {{ total_estudiantes }} <br>
-        <strong>Total votantes:</strong> {{ total_votaron }} <br>
-        <strong>No votaron:</strong> {{ total_no_votaron }} <br>
-        <strong>Participación general:</strong> {{ participacion_total }}%
-    </p>
-</div>
 
 </body>
 </html>
