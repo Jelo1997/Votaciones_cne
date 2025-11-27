@@ -27,8 +27,8 @@
     <h2>Curso: {{ curso }}</h2>
 
     <p class="resumen">
-        <strong>Total estudiantes:</strong> {{ datos.total_estudiantes }} <br>
-        <strong>Total votantes:</strong> {{ datos.total_votantes }} <br>
+        <strong>Total estudiantes:</strong> {{ datos.estudiantes }} <br>
+        <strong>Total votantes:</strong> {{ datos.votaron }} <br>
         <strong>No votaron:</strong> {{ datos.no_votaron }} <br>
         <strong>Participación:</strong> {{ datos.participacion }}%
     </p>
@@ -41,7 +41,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in datos.votos_por_candidato %}
+            {% for item in datos.resultados %}
                 <tr>
                     <td>{{ item.candidato }}</td>
                     <td>{{ item.votos }}</td>
@@ -55,10 +55,10 @@
 <div class="totales-finales">
     <h2>TOTALES GENERALES</h2>
     <p>
-        <strong>Total estudiantes:</strong> {{ totales.total_estudiantes }} <br>
-        <strong>Total votantes:</strong> {{ totales.total_votantes }} <br>
-        <strong>No votaron:</strong> {{ totales.no_votaron }} <br>
-        <strong>Participación general:</strong> {{ totales.participacion }}%
+        <strong>Total estudiantes:</strong> {{ total_estudiantes }} <br>
+        <strong>Total votantes:</strong> {{ total_votaron }} <br>
+        <strong>No votaron:</strong> {{ total_no_votaron }} <br>
+        <strong>Participación general:</strong> {{ participacion_total }}%
     </p>
 </div>
 
