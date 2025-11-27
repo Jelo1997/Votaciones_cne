@@ -3,64 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: Arial, sans-serif; font-size: 12px; }
-        h1 { text-align: center; }
-        h2 { margin-top: 20px; border-bottom: 1px solid #000; }
-        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        td, th {
-            border: 1px solid #000;
-            padding: 6px;
+        body { 
+            font-family: Arial, sans-serif; 
+            font-size: 12px; 
+            margin: 20px;
+        }
+        h1 { 
+            text-align: center; 
+            margin-bottom: 5px;
+        }
+        .subtitulo {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        h2 { 
+            margin-top: 25px; 
+            padding-bottom: 4px;
+            border-bottom: 2px solid #000; 
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 8px; 
+        }
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        td, th { 
+            border: 1px solid #000; 
+            padding: 6px; 
             text-align: left;
         }
-        .resumen { margin-top: 10px; font-size: 12px; }
-        .totales-finales { margin-top: 30px; border-top: 2px solid #000; padding-top: 10px; }
+        .resumen {
+            margin-top: 8px;
+            padding: 8px;
+            border: 1px solid #000;
+            background: #fafafa;
+            width: 50%;
+        }
+        .caja-curso {
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #777;
+        }
+        .totales-finales {
+            margin-top: 35px; 
+            padding-top: 15px;
+            border-top: 3px solid #000;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 11px;
+            color: #444;
+        }
     </style>
 </head>
 <body>
 
 <h1>Resultados por Curso</h1>
-
-<p><strong>Proceso:</strong> {{ proceso.nombre }}</p>
-<p><strong>Fecha de generación:</strong> {{ fecha_generacion }}</p>
+<p class="subtitulo"><strong>Proceso:</strong> {{ proceso.nombre }} &nbsp; | &nbsp; <strong>Fecha:</strong> {{ fecha_generacion }}</p>
 
 {% for curso, datos in resultados_por_curso.items %}
+<div class="caja-curso">
     <h2>Curso: {{ curso }}</h2>
 
-    <p class="resumen">
-        <strong>Total estudiantes:</strong> {{ datos.estudiantes }} <br>
-        <strong>Total votantes:</strong> {{ datos.votaron }} <br>
-        <strong>No votaron:</strong> {{ datos.no_votaron }} <br>
+    <div class="resumen">
+        <strong>Total estudiantes:</strong> {{ datos.estudiantes }}<br>
+        <strong>Total votantes:</strong> {{ datos.votaron }}<br>
+        <strong>No votaron:</strong> {{ datos.no_votaron }}<br>
         <strong>Participación:</strong> {{ datos.participacion }}%
-    </p>
+    </div>
 
     <table>
         <thead>
             <tr>
                 <th>Candidato</th>
-                <th>Votos</th>
+                <th>Votos obtenidos</th>
             </tr>
         </thead>
         <tbody>
             {% for item in datos.resultados %}
-                <tr>
-                    <td>{{ item.candidato }}</td>
-                    <td>{{ item.votos }}</td>
-                </tr>
+            <tr>
+                <td>{{ item.candidato }}</td>
+                <td>{{ item.votos }}</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
 
+</div>
 {% endfor %}
 
 <div class="totales-finales">
-    <h2>TOTALES GENERALES</h2>
+    <h2>Totales Generales</h2>
     <p>
-        <strong>Total estudiantes:</strong> {{ total_estudiantes }} <br>
-        <strong>Total votantes:</strong> {{ total_votaron }} <br>
-        <strong>No votaron:</strong> {{ total_no_votaron }} <br>
+        <strong>Total estudiantes:</strong> {{ total_estudiantes }}<br>
+        <strong>Total votantes:</strong> {{ total_votaron }}<br>
+        <strong>No votaron:</strong> {{ total_no_votaron }}<br>
         <strong>Participación general:</strong> {{ participacion_total }}%
     </p>
 </div>
+
+<p class="footer">Sistema de Votación — CNE Pastaza</p>
 
 </body>
 </html>
