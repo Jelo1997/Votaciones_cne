@@ -384,3 +384,63 @@ def reiniciar_votacion(request, proceso_id):
     
     return redirect('resultados_votacion', proceso_id=proceso.id)
 
+@login_required_and_staff
+def resultados_por_curso_pdf(request, proceso_id):
+    proceso = get_object_or_404(ProcesoElectoral, id=proceso_id)
+
+    # Obtener todos los cursos del proceso
+    cursos = (
+        Sufragante.objects.filter(proceso=proceso)
+        .exclude(curso="")
+        .values_list("curso", flat=True)
+        .distinct()
+    )
+
+    candidatos = Candidato.objects.filter(proceso=proceso)
+
+    # Diccionario final
+    resultados_por_curso = {}
+
+    for curso in cursos:
+        resultados_por_curso[curso] = []
+
+        for candidato in candidatos:
+            votos_count = Voto.objects.filter(
+                proceso=proceso,
+                candidato=candidato,
+                tipo_voto="valido",
+                curso=curso
+            ).count()
+
+            resultados_por_curso[curso].append({
+                "candidato": candidato.nombre,
+                "votos": votos_count
+            })
+
+    # Ordenar alfabéticamente los cursos
+    resultados_por_curso = dict(sorted(resultados_por_curso.items()))
+
+    # Contexto para la plantilla
+    context = {
+        "proceso": proceso,
+        "resultados_por_curso": resultados_por_curso,
+        "fecha_generacion": timezone.now(),
+    }
+
+    # Cargar plantilla PDF
+    template = get_template('resultados_por_curso_pdf.html')
+    html = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="resultados_por_curso_{proceso.nombre}.pdf"'
+
+    pisa_status = pisa.CreatePDF(
+        BytesIO(html.encode("UTF-8")),
+        dest=response
+    )
+
+    if pisa_status.err:
+        return HttpResponse("Error al generar PDF", content_type='text/plain')
+
+    return response
+
