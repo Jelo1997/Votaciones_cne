@@ -251,20 +251,92 @@ def resultados_pdf(request, proceso_id):
     porcentaje_no_sufragantes = (no_sufragantes / total_sufragantes_registrados) * 100 if total_sufragantes_registrados > 0 else 0
 
     # Generar gráfico con Matplotlib
-    fig, ax = plt.subplots(figsize=(4, 3))
-    labels = [candidato.nombre for candidato in candidatos] 
-    votos_data = [data['votos'] for data in resultados.values()]
+    #fig, ax = plt.subplots(figsize=(4, 3))
+    #labels = [candidato.nombre for candidato in candidatos] 
+    #votos_data = [data['votos'] for data in resultados.values()]
 
-    ax.bar(labels, votos_data, color=['#007bff', '#28a745', '#dc3545'])  # Colores para barras
-    ax.set_ylabel('Votos')
-    ax.set_title('Resultados de Votación')
+    #ax.bar(labels, votos_data, color=['#007bff', '#28a745', '#dc3545'])  # Colores para barras
+    #ax.set_ylabel('Votos')
+    #ax.set_title('Resultados de Votación')
+
+    # Generar gráfico con Matplotlib: barras horizontales
+    labels = [candidato.nombre for candidato in candidatos]
+    votos_data = [
+        resultados[candidato]['votos']
+        for candidato in candidatos
+    ]
+
+    # Adaptar la altura a la cantidad de candidatos
+    altura_por_candidato = 0.65
+    altura = max(3, len(labels) * altura_por_candidato)
+
+    fig, ax = plt.subplots(figsize=(10, altura))
+
+    colores = [
+        '#007bff',
+        '#28a745',
+        '#dc3545',
+        '#ffc107',
+        '#6f42c1',
+        '#20c997',
+        '#fd7e14'
+    ]
+
+    # Barras horizontales
+    y_posiciones = list(range(len(labels)))
+
+    barras = ax.barh(
+        y_posiciones,
+        votos_data,
+        color=[colores[i % len(colores)] for i in range(len(labels))],
+        height=0.55
+    )
+
+    # Nombres completos a la izquierda
+    ax.set_yticks(y_posiciones)
+    ax.set_yticklabels(labels, fontsize=9)
+    ax.invert_yaxis()
+
+    ax.set_xlabel('Cantidad de votos', fontsize=10)
+    ax.set_title('Resultados de Votación', fontsize=13, pad=15)
+
+    # Dejar espacio para nombres largos y cifras al final de las barras
+    ax.set_xlim(
+        left=0,
+        right=max(votos_data, default=0) * 1.18
+        if max(votos_data, default=0) > 0 else 1
+    )
+
+    # Mostrar el número de votos al final de cada barra
+    for barra, cantidad in zip(barras, votos_data):
+        ax.text(
+            barra.get_width(),
+            barra.get_y() + barra.get_height() / 2,
+            f' {cantidad}',
+            va='center',
+            ha='left',
+            fontsize=9
+        )
+
+    ax.grid(axis='x', linestyle='--', alpha=0.3)
+    ax.set_axisbelow(True)
+
+    # Mejorar distribución y evitar recortes
+    fig.tight_layout()
 
     # Guardar el gráfico en un buffer
     buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    plt.close(fig)
+    fig.savefig(
+        buffer,
+        format='png',
+        dpi=200,
+        bbox_inches='tight',
+        facecolor='white'
+    )
 
     # Codificar la imagen en base64
+    plt.close(fig)
+    
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
     image_uri = 'data:image/png;base64,' + image_base64
