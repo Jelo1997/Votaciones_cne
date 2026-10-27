@@ -7,228 +7,162 @@
 
     <style>
         @page {
-            size: A4 portrait;
-            margin: 7mm;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Times New Roman', serif;
-            font-size: 9px;
-            color: #000;
-            background: #fff;
+            size: A4;
+            margin: 8mm 10mm;
         }
 
         body {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #fff;
+            font-size: 10px;
+            color: #000;
         }
 
         header {
             text-align: center;
+            margin-bottom: 1px;
+        }
+
+        header img {
+            width: 50px;
         }
 
         .header-container {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 10px;
             border-bottom: 2px solid #080808;
-            padding-bottom: 4px;
-            margin-bottom: 6px;
+            padding-bottom: 10px;
         }
 
         .header-container h1 {
             margin: 0;
-            font-size: 16px;
-            line-height: 1.2;
-        }
-
-        .container {
-            width: 100%;
-            margin: 0 auto;
-            padding: 0;
+            font-size: 1.5em;
+            color: #020202;
+            text-align: center;
         }
 
         h2 {
-            color: #000;
-            font-size: 10px;
-            margin: 4px 0;
-            padding: 0 0 2px;
-            border-bottom: 1px solid #333;
-            line-height: 1.2;
-        }
-
-        /* Datos generales */
-        .datos-generales {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3px 12px;
+            color: #000102;
             margin-bottom: 5px;
+            border-bottom: 1px solid #01070e;
+            padding-bottom: 5px;
+            font-size: 1.2em;
         }
 
-        .dato {
-            font-size: 9px;
-            padding: 2px 0;
+        p {
+            color: #000;
+            font-size: 1.1em;
         }
 
-        .dato.proceso {
-            grid-column: 1 / -1;
+        .container {
+            background-color: white;
+            padding: 10px;
+            margin: 0 auto;
+            max-width: 100%;
         }
 
-        .dato strong {
-            font-weight: bold;
-        }
-
-        /* Tabla de resultados */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 3px 0 5px;
-            table-layout: fixed;
+            margin-bottom: 10px;
+            font-size: 1em;
         }
 
         th, td {
-            border: 1px solid #999;
-            padding: 3px 5px;
+            padding: 4px;
             text-align: left;
-            font-size: 9px;
-            line-height: 1.15;
-            overflow-wrap: break-word;
+            border: 1px solid #ccc;
         }
 
         th {
             background-color: #003366;
-            color: #fff;
+            color: white;
             font-weight: bold;
         }
 
-        th:nth-child(1),
-        td:nth-child(1) {
-            width: 55%;
+        td {
+            font-size: 1em;
         }
 
-        th:nth-child(2),
-        td:nth-child(2) {
-            width: 20%;
+        /* PIE DE PÁGINA AJUSTADO */
+        footer {
             text-align: center;
+            color: #666;
+            font-size: 8px;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 0;
+            line-height: 1;
         }
 
-        th:nth-child(3),
-        td:nth-child(3) {
-            width: 25%;
-            text-align: center;
+        footer p {
+            font-size: 8px;
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
         }
 
-        .titulo-seccion {
-            margin-top: 5px;
-            margin-bottom: 3px;
-            font-size: 10px;
-            font-weight: bold;
-            border-bottom: 1px solid #333;
-            padding-bottom: 2px;
-        }
-
-        /* Gráfico de resultados */
-        .grafico {
-            width: 100%;
-            text-align: center;
-            margin: 3px auto 5px;
-        }
-
-        .grafico img {
-            display: block;
-            width: auto;
-            max-width: 100%;
-            height: auto;
-            max-height: 95px;
-            margin: 0 auto;
-            object-fit: contain;
-        }
-
-        /* Área de firmas más abajo */
         .signature-table {
             width: 100%;
-            margin-top: 35px;
+            margin-top: 50px;
+            margin-bottom: 0;
             border: none;
-            table-layout: fixed;
         }
 
         .signature-table td {
-            width: 33.33%;
-            border: none;
             text-align: center;
-            vertical-align: top;
-            padding: 0 5px;
-            font-size: 8px;
+            font-size: 1em;
+            border: none;
         }
 
         .signature-line {
             border-top: 1px solid #000;
-            width: 80%;
-            margin: 0 auto 5px;
-            height: 1px;
+            margin: 15px 0;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .signature-table p {
-            margin: 0;
-            font-size: 8px;
-            line-height: 1.3;
+        .centered-graph {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Pie de página más separado de las firmas */
-        footer {
-            text-align: center;
-            font-size: 8px;
-            margin-top: 25px;
-            line-height: 1.3;
-            color: #333;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
-        /* Configuración de impresión */
+        /* AJUSTES SOLO PARA IMPRESIÓN */
         @media print {
             html, body {
-                width: 100%;
                 margin: 0 !important;
-                padding: 0 !important;
             }
 
             .container {
-                width: 100%;
-                padding: 0 !important;
+                padding: 10px;
             }
 
-            header,
-            .datos-generales,
-            table,
-            .grafico,
-            .signature-table,
             footer {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding: 0 !important;
+                font-size: 8px;
+                line-height: 1;
                 break-inside: avoid;
                 page-break-inside: avoid;
             }
 
-            h2, .titulo-seccion {
-                break-after: avoid;
-                page-break-after: avoid;
-            }
-
-            .grafico img {
-                max-height: 95px;
+            footer p {
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 8px;
+                line-height: 1.2;
             }
 
             .signature-table {
-                margin-top: 35px;
-            }
-
-            footer {
-                margin-top: 25px;
+                margin-bottom: 0;
             }
         }
     </style>
@@ -236,42 +170,30 @@
 
 <body>
 
-    <!-- ENCABEZADO -->
     <header class="header-container">
         <h1>CONSEJO NACIONAL ELECTORAL</h1>
     </header>
 
     <div class="container">
 
-        <!-- INFORMACIÓN GENERAL -->
-        <div class="datos-generales">
+        <h2>Proceso Electoral: {{ proceso.nombre }}</h2>
 
-            <div class="dato proceso">
-                <strong>Proceso Electoral:</strong>
-                {{ proceso.nombre }}
-            </div>
+        <h2>
+            Fecha de Impresión:
+            {{ fecha_generacion|date:"d/m/Y H:i:s" }}
+        </h2>
 
-            <div class="dato">
-                <strong>Fecha de Impresión:</strong>
-                {{ fecha_generacion|date:"d/m/Y H:i:s" }}
-            </div>
+        <h2>
+            Total de Electores:
+            {{ total_sufragantes_registrados }}
+        </h2>
 
-            <div class="dato">
-                <strong>Total de Electores:</strong>
-                {{ total_sufragantes_registrados }}
-            </div>
+        <h2>
+            Total de Sufragantes:
+            {{ total_sufragantes }}
+        </h2>
 
-            <div class="dato">
-                <strong>Total de Sufragantes:</strong>
-                {{ total_sufragantes }}
-            </div>
-
-        </div>
-
-        <!-- RESULTADOS ELECTORALES -->
-        <div class="titulo-seccion">
-            RESULTADOS DEL PROCESO ELECTORAL
-        </div>
+        <h2>Resultados del Proceso Electoral</h2>
 
         <table>
             <thead>
@@ -292,25 +214,26 @@
                 {% endfor %}
 
                 <tr>
-                    <td><strong>No Sufragantes</strong></td>
+                    <td>No Sufragantes</td>
                     <td>{{ no_sufragantes }}</td>
-                    <td>{{ porcentaje_no_sufragantes|floatformat:2 }}%</td>
+                    <td>
+                        {{ porcentaje_no_sufragantes|floatformat:2 }}%
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- GRÁFICO -->
-        <div class="titulo-seccion">
-            GRÁFICO DE RESULTADOS
-        </div>
+        <h2>Gráfico de Resultados</h2>
 
-        <div class="grafico">
+        <div style="text-align: center;">
             <img
                 src="{{ image_uri }}"
-                alt="Gráfico de Resultados">
+                alt="Gráfico de Resultados"
+                style="width: 100%; height: auto;">
         </div>
 
-        <!-- ÁREA DE FIRMAS -->
+        <br>
+
         <table class="signature-table">
             <tr>
                 <td>
@@ -341,7 +264,6 @@
 
     </div>
 
-    <!-- PIE DE PÁGINA -->
     <footer>
         <p>
             Unidad Provincial de Seguridad Informática y Proyectos
