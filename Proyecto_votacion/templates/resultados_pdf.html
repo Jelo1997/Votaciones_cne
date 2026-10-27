@@ -1,138 +1,268 @@
+HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados Oficiales</title>
+
     <style>
         @page {
-            size: A4;
-            margin: 10mm;
+            size: A4 portrait;
+            margin: 7mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', serif;
+            font-size: 9px;
+            color: #000;
+            background: #fff;
         }
 
         body {
-            font-family: 'Times New Roman', serif;
-            margin: 0;
-            padding: 10px;
-            background-color: #fff;
-            font-size: 10px; 
-            color: #000; /* Cambiar color del texto a negro para todo el documento */
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         header {
             text-align: center;
-            margin-bottom: 1px;
-        }
-
-        header img {
-            width: 50px; 
         }
 
         .header-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            margin-bottom: 10px;
+            text-align: center;
             border-bottom: 2px solid #080808;
-            padding-bottom: 10px; 
+            padding-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .header-container h1 {
             margin: 0;
-            font-size: 1.5em; 
-            color: #020202; /* Color del encabezado */
-            text-align: center;
-        }
-
-        h2 {
-            color: #000102; /* Color de los subtítulos */
-            margin-bottom: 5px; 
-            border-bottom: 1px solid #01070e;
-            padding-bottom: 5px;
-            font-size: 1.2em; 
-        }
-
-        p {
-            color: #000; /* Cambiar color de párrafos a negro */
-            font-size: 1.1em; 
+            font-size: 16px;
+            line-height: 1.2;
         }
 
         .container {
-            background-color: white;
-            padding: 10px;
+            width: 100%;
             margin: 0 auto;
-            max-width: 100%; 
+            padding: 0;
         }
 
+        h2 {
+            color: #000;
+            font-size: 10px;
+            margin: 4px 0;
+            padding: 0 0 2px;
+            border-bottom: 1px solid #333;
+            line-height: 1.2;
+        }
+
+        /* Datos generales compactos */
+        .datos-generales {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px 12px;
+            margin-bottom: 5px;
+        }
+
+        .dato {
+            font-size: 9px;
+            padding: 2px 0;
+        }
+
+        .dato.proceso {
+            grid-column: 1 / -1;
+        }
+
+        .dato strong {
+            font-weight: bold;
+        }
+
+        /* Tabla de resultados */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px;
-            font-size: 1em; 
+            margin: 3px 0 5px;
+            table-layout: fixed;
         }
 
         th, td {
-            padding: 4px; 
+            border: 1px solid #999;
+            padding: 3px 5px;
             text-align: left;
-            border: 1px solid #ccc; /* Mantener borde en las tablas de resultados */
+            font-size: 9px;
+            line-height: 1.15;
+            overflow-wrap: break-word;
         }
 
         th {
             background-color: #003366;
-            color: white; /* Color de las letras en la cabecera de la tabla */
+            color: #fff;
             font-weight: bold;
         }
 
-        td {
-            font-size: 1em; 
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 55%;
         }
 
-        footer {
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 20%;
             text-align: center;
-            color: #666; /* Color del texto del pie de página */
-            font-size: 1em; 
-            margin-top: 5px;
         }
 
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 25%;
+            text-align: center;
+        }
+
+        .titulo-seccion {
+            margin-top: 5px;
+            margin-bottom: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            border-bottom: 1px solid #333;
+            padding-bottom: 2px;
+        }
+
+        /* Gráfico compacto */
+        .grafico {
+            width: 100%;
+            text-align: center;
+            margin: 3px auto 5px;
+        }
+
+        .grafico img {
+            display: block;
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 95px;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        /* Firmas */
         .signature-table {
             width: 100%;
-            margin-top: 50px; 
-            border: none; /* Sin borde para la tabla de firmas */
+            margin-top: 12px;
+            border: none;
+            table-layout: fixed;
         }
 
         .signature-table td {
+            width: 33.33%;
+            border: none;
             text-align: center;
-            font-size: 1em; 
-            border: none; /* Sin borde en las celdas de la tabla de firmas */
+            vertical-align: top;
+            padding: 0 5px;
+            font-size: 8px;
         }
 
         .signature-line {
             border-top: 1px solid #000;
-            margin: 15px 0; 
-            width: 70%; 
-            margin-left: auto;
-            margin-right: auto; 
+            width: 80%;
+            margin: 0 auto 4px;
+            height: 1px;
         }
 
-        .centered-graph {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .signature-table p {
+            margin: 0;
+            font-size: 8px;
+            line-height: 1.2;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 8px;
+            margin-top: 7px;
+            line-height: 1.2;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Reglas exclusivas para impresión */
+        @media print {
+            html, body {
+                width: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .container {
+                width: 100%;
+                padding: 0 !important;
+            }
+
+            header,
+            .datos-generales,
+            table,
+            .grafico,
+            .signature-table,
+            footer {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            h2, .titulo-seccion {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+
+            .grafico img {
+                max-height: 95px;
+            }
         }
     </style>
 </head>
+
 <body>
+
 <header class="header-container">
     <h1>CONSEJO NACIONAL ELECTORAL</h1>
 </header>
-<div class="container">
-    <h2>Proceso Electoral: {{ proceso.nombre }}</h2>
-    <h2>Fecha de Impresión: {{ fecha_generacion|date:"d/m/Y H:i:s" }}</h2>
-    <h2>Total de Electores: {{ total_sufragantes_registrados }}</h2>
-    <h2>Total de Sufragantes: {{ total_sufragantes }}</h2>
 
-    <h2>Resultados del Proceso Electoral</h2>
+<div class="container">
+
+    <!-- Datos generales -->
+    <div class="datos-generales">
+
+        <div class="dato proceso">
+            <strong>Proceso Electoral:</strong>
+            {{ proceso.nombre }}
+        </div>
+
+        <div class="dato">
+            <strong>Fecha de Impresión:</strong>
+            {{ fecha_generacion|date:"d/m/Y H:i:s" }}
+        </div>
+
+        <div class="dato">
+            <strong>Total de Electores:</strong>
+            {{ total_sufragantes_registrados }}
+        </div>
+
+        <div class="dato">
+            <strong>Total de Sufragantes:</strong>
+            {{ total_sufragantes }}
+        </div>
+
+    </div>
+
+    <!-- Tabla de resultados -->
+    <div class="titulo-seccion">
+        RESULTADOS DEL PROCESO ELECTORAL
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -141,46 +271,71 @@
                 <th>Porcentaje</th>
             </tr>
         </thead>
+
         <tbody>
             {% for candidato, data in resultados.items %}
             <tr>
                 <td>{{ candidato.nombre }}</td>
                 <td>{{ data.votos }}</td>
-                <td>{{ data.porcentaje | floatformat:2 }}%</td>
+                <td>{{ data.porcentaje|floatformat:2 }}%</td>
             </tr>
             {% endfor %}
+
             <tr>
-                <td>No Sufragantes</td>
+                <td><strong>No Sufragantes</strong></td>
                 <td>{{ no_sufragantes }}</td>
-                <td>{{ porcentaje_no_sufragantes | floatformat:2 }}%</td>
+                <td>{{ porcentaje_no_sufragantes|floatformat:2 }}%</td>
             </tr>
         </tbody>
     </table>
-    <h2>Gráfico de Resultados</h2>
-    <div style="text-align: center;">
-        <img src="{{ image_uri }}" alt="Gráfico de Resultados" style="width: 100%; height: auto;">
+
+    <!-- Gráfico -->
+    <div class="titulo-seccion">
+        GRÁFICO DE RESULTADOS
     </div>
-    <br>
+
+    <div class="grafico">
+        <img
+            src="{{ image_uri }}"
+            alt="Gráfico de Resultados">
+    </div>
+
+    <!-- Firmas -->
     <table class="signature-table">
         <tr>
             <td>
                 <div class="signature-line"></div>
-                <p>FIRMA 1<br><strong>TRIBUNAL ELECTORAL</strong></p>
+                <p>
+                    FIRMA 1<br>
+                    <strong>TRIBUNAL ELECTORAL</strong>
+                </p>
             </td>
+
             <td>
                 <div class="signature-line"></div>
-                <p>FIRMA 2<br><strong>TRIBUNAL ELECTORAL</strong></p>
+                <p>
+                    FIRMA 2<br>
+                    <strong>TRIBUNAL ELECTORAL</strong>
+                </p>
             </td>
+
             <td>
                 <div class="signature-line"></div>
-                <p>FIRMA 3<br><strong>TRIBUNAL ELECTORAL</strong></p>
+                <p>
+                    FIRMA 3<br>
+                    <strong>TRIBUNAL ELECTORAL</strong>
+                </p>
             </td>
         </tr>
     </table>
+
 </div>
 
 <footer>
-    <p>Unidad Provincial de Seguridad Informática y Proyectos Tecnológicos Electorales de Pastaza || 2026 </p>
+    <p>
+        Unidad Provincial de Seguridad Informática y Proyectos Tecnológicos
+        Electorales de Pastaza || 2026
+    </p>
 </footer>
 
 </body>
