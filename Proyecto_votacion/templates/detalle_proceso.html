@@ -1,110 +1,186 @@
 {% extends 'partials/base.html' %}
 {% load crispy_forms_tags %}
+
 {% block content %}
-<div class="container-fluid mt-3"> 
-    <div class="text-center mb-1"> 
-        <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1> 
-        <h3 style="font-size: 1.1rem;"><strong>BIENVENIDO:</strong> {{ sufragante.nombre }} {{ sufragante.apellido }}</h3>
-        <h3 style="font-size: 1rem;">Cédula: {{ sufragante.cedula }}</h3>
+<div class="container-fluid mt-3">
+
+    <div class="text-center mb-3">
+        <h1 style="font-size: 1.5rem;">{{ proceso.nombre }}</h1>
+        <h3 style="font-size: 1.1rem;">
+            <strong>BIENVENIDO:</strong>
+            {{ sufragante.nombre }} {{ sufragante.apellido }}
+        </h3>
+        <h3 style="font-size: 1rem;">
+            Cédula: {{ sufragante.cedula }}
+        </h3>
     </div>
-    
+
     <div class="card">
         <div class="card-body">
+
             <form method="post" id="votoForm">
                 {% csrf_token %}
-            
-                <h3 style="font-size: 1.2rem;">Candidatos:</h3> 
-                <div class="row mb-2 justify-content-center"> 
+
+                <h3 class="text-center mb-3" style="font-size: 1.2rem;">
+                    Candidatos:
+                </h3>
+
+                <div class="row row-cols-5 g-2 justify-content-center">
+
                     {% for candidato in candidatos %}
-                    <div class="col-12 col-md-3 text-center mb-3"> 
-                        <label for="candidato_{{ candidato.id }}" style="font-size: 0.9rem;"> 
-                            <!-- Nombre del candidato con ajuste automático -->
+                    <div class="col text-center">
+
+                        <label for="candidato_{{ candidato.id }}"
+                               class="d-block h-100"
+                               style="cursor: pointer;">
+
+                            <!-- Nombre del candidato -->
                             <div style="
-                                min-height: 40px;
-                                max-width: 220px;
-                                margin: 0 auto;
-                                font-size: 1.2rem;
+                                min-height: 45px;
+                                font-size: 0.95rem;
+                                font-weight: bold;
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
                                 text-align: center;
-                                word-wrap: break-word;
-                                overflow-wrap: break-word;
-                                white-space: normal;
+                                overflow-wrap: anywhere;
                             ">
                                 {{ candidato.nombre }}
                             </div>
+
+                            <!-- Fotografía del candidato -->
                             <div class="mb-2">
-                                <!-- Imagen del candidato -->
-                                <img src="{{ candidato.imagen.url }}" alt="Imagen de {{ candidato.nombre }}" 
-                                     class="img-fluid" 
-                                     style="width: 200px; height: 200px; object-fit: contain; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);">
+                                <img
+                                    src="{{ candidato.imagen.url }}"
+                                    alt="Imagen de {{ candidato.nombre }}"
+                                    class="img-fluid"
+                                    style="
+                                        width: 100%;
+                                        max-width: 160px;
+                                        height: 160px;
+                                        object-fit: contain;
+                                        border-radius: 8px;
+                                        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                                    ">
                             </div>
-                            <div>
-                                <!-- Logo o slogan del candidato -->
-                                <img src="{{ candidato.imagen_slogan.url }}" alt="Slogan de {{ candidato.nombre }}" 
-                                     class="img-fluid" 
-                                     style="width: 200px; height: 200px; object-fit: contain; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);">
+
+                            <!-- Logo o slogan -->
+                            <div class="mb-2">
+                                <img
+                                    src="{{ candidato.imagen_slogan.url }}"
+                                    alt="Slogan de {{ candidato.nombre }}"
+                                    class="img-fluid"
+                                    style="
+                                        width: 100%;
+                                        max-width: 160px;
+                                        height: 120px;
+                                        object-fit: contain;
+                                        border-radius: 8px;
+                                        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                                    ">
                             </div>
-                            <br>
-                            <input type="radio" name="candidato" value="{{ candidato.id }}" id="candidato_{{ candidato.id }}" 
-                                   class="mt-2" style="transform: scale(1.2);" required>
+
+                            <!-- Selección del candidato -->
+                            <div class="mt-2">
+                                <input
+                                    type="radio"
+                                    name="candidato"
+                                    value="{{ candidato.id }}"
+                                    id="candidato_{{ candidato.id }}"
+                                    style="transform: scale(1.3);"
+                                    required>
+                            </div>
+
                         </label>
                     </div>
                     {% endfor %}
+
                 </div>
-                <div class="text-center mb-1"> 
-                    <!-- Botón de confirmar voto agrandado -->
-                    <button type="button" class="btn btn-success btn-lg" id="abrirModalBtn" 
-                            style="font-size: 1.2rem; padding: 15px 40px;">Confirmar Voto</button>
+
+                <!-- Botón de confirmar voto -->
+                <div class="text-center mt-4 mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-success btn-lg"
+                        id="abrirModalBtn"
+                        style="font-size: 1.1rem; padding: 12px 35px;">
+                        Confirmar Voto
+                    </button>
                 </div>
+
             </form>
-            
-            <!-- Modal para confirmar cualquier voto -->
-            <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmarModalLabel">Confirmar Voto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ¿Estás seguro de que deseas confirmar tu voto?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-success" id="confirmarBtn">Confirmar</button>
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade"
+     id="confirmarModal"
+     tabindex="-1"
+     aria-labelledby="confirmarModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmarModalLabel">
+                    Confirmar Voto
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
             </div>
 
+            <div class="modal-body">
+                ¿Estás seguro de que deseas confirmar tu voto?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <button type="button"
+                        class="btn btn-success"
+                        id="confirmarBtn">
+                    Confirmar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Verificar si se seleccionó un candidato antes de abrir el modal
-        document.getElementById('abrirModalBtn').onclick = function() {
-            const candidatos = document.querySelectorAll('input[name="candidato"]');
-            let seleccionado = false;
+document.addEventListener('DOMContentLoaded', function () {
 
-            candidatos.forEach(function(candidato) {
-                if (candidato.checked) {
-                    seleccionado = true;
-                }
-            });
+    const abrirModalBtn = document.getElementById('abrirModalBtn');
+    const confirmarBtn = document.getElementById('confirmarBtn');
+    const votoForm = document.getElementById('votoForm');
 
-            if (seleccionado) {
-                var modal = new bootstrap.Modal(document.getElementById('confirmarModal'));
-                modal.show();
-            } else {
-                alert('Por favor selecciona un candidato antes de confirmar.');
-            }
-        };
+    abrirModalBtn.addEventListener('click', function () {
+        const seleccionado = document.querySelector(
+            'input[name="candidato"]:checked'
+        );
 
-        // Confirmar el voto (envía el formulario)
-        document.getElementById('confirmarBtn').onclick = function() {
-            document.getElementById('votoForm').submit();
-        };
+        if (seleccionado) {
+            const modal = new bootstrap.Modal(
+                document.getElementById('confirmarModal')
+            );
+            modal.show();
+        } else {
+            alert('Por favor selecciona un candidato antes de confirmar.');
+        }
     });
+
+    confirmarBtn.addEventListener('click', function () {
+        votoForm.submit();
+    });
+
+});
 </script>
 {% endblock %}
-
